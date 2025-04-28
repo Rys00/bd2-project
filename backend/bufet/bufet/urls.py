@@ -18,10 +18,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import auth
+from . import products
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/login", auth.login),
     path("auth/register", auth.register),
     path("auth/test", auth.authenticated_view),
+    path("products/get_all", products.get_all),
+    path("products/get_by_id", products.get_by_id),
+    path("products/add", products.add_product),
 ]

@@ -14,6 +14,7 @@ from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from bufet.cookie_auth import CookieJWTAuthentication
 from bufet.models.user import UserModel
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.db.utils import IntegrityError
 
 
 def index(request: HttpRequest):
@@ -87,7 +88,11 @@ def register(request: HttpRequest):
         email=body["email"],
         password=hash,
     )
-    user.save()
+    try:
+        user.save()
+    except IntegrityError:
+        return HttpResponse("Error during registration")
+
     if user.id:
         # Success
         return make_auth_cookie_response(user)
@@ -114,4 +119,5 @@ def verify_jwt(request: HttpRequest):
     [CookieJWTAuthentication]
 )  # Custom authentication class
 def authenticated_view(request: HttpRequest):
-    return HttpResponse("Hi")
+
+    return HttpResponse(f"Hi {request.user.first_name}")
