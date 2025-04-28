@@ -1,7 +1,7 @@
 from django.http import HttpResponseForbidden
 from rest_framework.exceptions import AuthenticationFailed
 
-from bufet.cookie_auth import CookieJWTAuthentication
+from bufet.django_auth.cookie_auth import CookieJWTAuthentication
 
 
 def admin_required(view_func):

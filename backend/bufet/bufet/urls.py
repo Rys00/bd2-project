@@ -17,8 +17,8 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from . import auth
-from . import products
+from .routes import auth
+from .routes import products
 
 urlpatterns = [
     path("admin/", admin.site.urls),

@@ -11,7 +11,7 @@ from rest_framework.decorators import (
 )
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
-from bufet.cookie_auth import CookieJWTAuthentication
+from bufet.django_auth.cookie_auth import CookieJWTAuthentication
 from bufet.models.user import UserModel
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db.utils import IntegrityError
