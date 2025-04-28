@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "bufet",
+    "rest_framework",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -73,7 +75,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "bufet.wsgi.application"
-
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "bufet.cookie_auth.CookieJWTAuthentication",
+    ],
+    # Add any other settings as needed
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
