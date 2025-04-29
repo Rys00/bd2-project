@@ -13,3 +13,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductModel
         fields = ["full_name", "category", "price", "expiration_date"]
+
+
+class ProductListSerializer(serializers.Serializer):
+    products = ProductSerializer(many=True)

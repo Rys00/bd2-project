@@ -1,6 +1,10 @@
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import (
+    AccessToken,
+    ExpiredTokenError,
+    RefreshToken,
+)
 
 from bufet.models.user import UserModel
 

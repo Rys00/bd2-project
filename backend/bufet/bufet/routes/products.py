@@ -17,6 +17,7 @@ from bufet.django_auth.cookie_auth import CookieJWTAuthentication
 from bufet.models.user import UserModel
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db.utils import IntegrityError
+from django.core import serializers
 
 
 @api_view(["GET"])
@@ -29,8 +30,18 @@ def get_all(request: HttpRequest):
 @api_view(["GET"])
 def get_by_id(request: HttpRequest):
     product_id = request.GET.get("id")
-    data = ProductModel.objects.filter(id=product_id)
-    print(data)
+    data = list(ProductModel.objects.filter(id=product_id).values())[0]
+
+    # return JsonResponse(serializers.serialize("json", data), safe=False)
+    return JsonResponse(data, safe=False)
+
+
+@api_view(["GET"])
+def get_by_name(request: HttpRequest):
+    product_name = request.GET.get("name")
+    data = list(ProductModel.objects.filter(full_name=product_name).values())[
+        0
+    ]
     return JsonResponse(data, safe=False)
 
 
@@ -42,6 +53,7 @@ def add_product(request: HttpRequest):
     if product.is_valid():
         product.save()
         print(product.data)
+        return HttpResponse("OK")
     else:
         print(product.errors)
-    return HttpResponse("OK")
+        return HttpResponse("There was an error adding the product")

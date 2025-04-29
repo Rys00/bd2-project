@@ -15,6 +15,7 @@ from bufet.django_auth.cookie_auth import CookieJWTAuthentication
 from bufet.models.user import UserModel
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db.utils import IntegrityError
+import datetime
 
 
 def index(request: HttpRequest):
@@ -22,9 +23,12 @@ def index(request: HttpRequest):
 
 
 def make_auth_cookie_response(user: UserModel) -> Response:
-    refresh = RefreshToken.for_user(user)
+    access_token = AccessToken.for_user(user)
+    access_token.set_exp(
+        from_time=datetime.datetime.now() + datetime.timedelta(days=3)
+    )
     # Access the token
-    access_token = str(refresh.access_token)
+    access_token = str(access_token)
     response = Response(
         status=status.HTTP_200_OK,
     )
@@ -34,8 +38,15 @@ def make_auth_cookie_response(user: UserModel) -> Response:
         httponly=True,  # Prevent client-side JavaScript access
         secure=False,  # Set to True in production (HTTPS only)
         max_age=86400,  # Cookie expiration time (in seconds)
-        expires=86400,  # Expiration date for cookie (optional)
+        domain="127.0.0.1",
     )
+    # response.set_cookie(
+    #     "refresh_token",  # The cookie name
+    #     refresh,  # The value to store (JWT)
+    #     httponly=True,  # Prevent client-side JavaScript access
+    #     secure=False,  # Set to True in production (HTTPS only)
+    #     max_age=86400,  # Cookie expiration time (in seconds)
+    # )
     return response
 
 
@@ -57,7 +68,8 @@ def login(request: HttpRequest):
         print(f"user: {body['email']}, pass: {body["password"]}")
         # Create JWT tokens
         return make_auth_cookie_response(user)
-    except Exception:
+    except Exception as e:
+        print(e)
         return Response(
             {"detail": "Invalid credentials"},
             status=status.HTTP_401_UNAUTHORIZED,

@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.urls import path
 from .routes import auth
 from .routes import products
+from .routes import cart
+from .routes import orders
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,5 +29,8 @@ urlpatterns = [
     path("auth/test", auth.authenticated_view),
     path("products/get_all", products.get_all),
     path("products/get_by_id", products.get_by_id),
+    path("products/get_by_name", products.get_by_name),
     path("products/add", products.add_product),
+    path("cart/add", cart.add_to_cart),
+    path("orders/new", orders.order),
 ]
