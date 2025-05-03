@@ -1,3 +1,4 @@
+from bufet.models.order import OrderAmountProductModel, OrderModel
 from bufet.django_auth.admin_auth import admin_required
 from bufet.models.product import (
     ProductListSerializer,
@@ -22,6 +23,8 @@ from bufet.models.user import UserModel
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db.utils import IntegrityError
 from django.core import serializers
+import datetime
+from django.db.models import Prefetch
 
 
 @api_view(["POST"])
@@ -44,10 +47,67 @@ def order(request: HttpRequest):
         id__in=product_dict.keys()
     )
     order_total = 0
-    print(product_dict)
+    order = OrderModel.objects.create(
+        user_id=request.user,
+        date=datetime.datetime.now(),
+        price=0,  # will update later
+    )
+
+    # For each product, create the through model entry
     for product in product_list:
-        order_total += product_dict[str(product.pk)] * product.price
+        product_id_str = str(product.pk)
+        amount = product_dict[product_id_str]
+        order_total += amount * product.price
+
+        # Create entry in through model
+        OrderAmountProductModel.objects.create(
+            order_id=order, product_id=product, amount=amount
+        )
+
+    # Update the total price on the order
+    order.price = order_total
+    order.save()
+
     return JsonResponse(
-        {"order_total": order_total},
+        {"order_id": order.id, "order_total": order_total},
         safe=False,
     )
+
+
+@api_view(["GET"])
+@admin_required
+def get_all_orders(request: HttpRequest):
+    orders = OrderModel.objects.prefetch_related(
+        Prefetch(
+            "orderamountproductmodel_set",
+            queryset=OrderAmountProductModel.objects.select_related(
+                "product_id"
+            ),
+            to_attr="order_products",
+        )
+    ).select_related("user_id")
+
+    orders_data = []
+
+    for order in orders:
+        products = [
+            {
+                "product_id": op.product_id.id,
+                "product_name": op.product_id.full_name,
+                "amount": op.amount,
+                "unit_price": op.product_id.price,
+            }
+            for op in order.order_products
+        ]
+
+        orders_data.append(
+            {
+                "order_id": order.id,
+                "user_id": order.user_id.id,
+                "date": order.date,
+                "price": order.price,
+                "products": products,
+            }
+        )
+
+    return JsonResponse(orders_data, safe=False)

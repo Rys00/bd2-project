@@ -33,4 +33,5 @@ urlpatterns = [
     path("products/add", products.add_product),
     path("cart/add", cart.add_to_cart),
     path("orders/new", orders.order),
+    path("orders/get_all", orders.get_all_orders),
 ]
