@@ -13,7 +13,6 @@ class CookieJWTAuthentication(BaseAuthentication):
     def authenticate(self, request):
         # Retrieve the token from the cookies
         token = request.COOKIES.get("access_token")
-        print(token)
         if not token:
             raise AuthenticationFailed("No token found in cookies")
 
@@ -25,6 +24,8 @@ class CookieJWTAuthentication(BaseAuthentication):
             # TODO this is probably terrible but it works
             user.is_authenticated = True
             return (user, access_token)  # Return the user and the token
+        except ExpiredTokenError:
+            raise AuthenticationFailed("Token expired")
         except Exception as e:
             print(e)
             raise AuthenticationFailed("Invalid token or user does not exist")

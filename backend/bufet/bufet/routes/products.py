@@ -57,3 +57,17 @@ def add_product(request: HttpRequest):
     else:
         print(product.errors)
         return HttpResponse("There was an error adding the product")
+
+
+@api_view(["POST"])
+@admin_required
+def change_product_category(request: HttpRequest):
+    # Parse the request for product parameters
+    body = json.loads(request.body)
+    product = list(
+        ProductModel.objects.filter(full_name=body["product_name"])
+    )[0]
+    # TODO verify categoru validity
+    product.category = body["category_name"]
+    product.save()
+    return HttpResponse("OK")
