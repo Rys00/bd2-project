@@ -2,22 +2,10 @@ from bufet.django_auth.admin_auth import admin_required
 from bufet.models.product import ProductModel, ProductSerializer
 from django.http import HttpResponse, HttpRequest, JsonResponse
 import json
-from argon2 import PasswordHasher
 
-from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.decorators import (
     api_view,
-    permission_classes,
-    authentication_classes,
 )
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from rest_framework_simplejwt.exceptions import AuthenticationFailed
-from bufet.django_auth.cookie_auth import CookieJWTAuthentication
-from bufet.models.user import UserModel
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.db.utils import IntegrityError
-from django.core import serializers
 
 
 @api_view(["GET"])
@@ -70,4 +58,13 @@ def change_product_category(request: HttpRequest):
     # TODO verify categoru validity
     product.category = body["category_name"]
     product.save()
+    return HttpResponse("OK")
+
+
+@api_view(["POST"])
+@admin_required
+def delete_product(request: HttpRequest):
+    # Parse the request for product parameters
+    body = json.loads(request.body)
+    ProductModel.objects.filter(full_name=body["name"]).delete()
     return HttpResponse("OK")

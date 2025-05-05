@@ -1,28 +1,18 @@
 from bufet.models.order import OrderAmountProductModel, OrderModel
 from bufet.django_auth.admin_auth import admin_required
 from bufet.models.product import (
-    ProductListSerializer,
     ProductModel,
-    ProductSerializer,
 )
-from django.http import HttpResponse, HttpRequest, JsonResponse
+from django.http import HttpRequest, JsonResponse
 import json
-from argon2 import PasswordHasher
 
-from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.decorators import (
     api_view,
     permission_classes,
     authentication_classes,
 )
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from bufet.django_auth.cookie_auth import CookieJWTAuthentication
-from bufet.models.user import UserModel
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.db.utils import IntegrityError
-from django.core import serializers
+from rest_framework.permissions import IsAuthenticated
 import datetime
 from django.db.models import Prefetch
 
@@ -35,7 +25,6 @@ from django.db.models import Prefetch
     [CookieJWTAuthentication]
 )  # Custom authentication class
 def order(request: HttpRequest):
-    # We can get all other info from cookies
     # Data format
     # {
     #   products:{
@@ -53,7 +42,6 @@ def order(request: HttpRequest):
         price=0,  # will update later
     )
 
-    # For each product, create the through model entry
     for product in product_list:
         product_id_str = str(product.pk)
         amount = product_dict[product_id_str]
@@ -74,21 +62,8 @@ def order(request: HttpRequest):
     )
 
 
-@api_view(["GET"])
-@admin_required
-def get_all_orders(request: HttpRequest):
-    orders = OrderModel.objects.prefetch_related(
-        Prefetch(
-            "orderamountproductmodel_set",
-            queryset=OrderAmountProductModel.objects.select_related(
-                "product_id"
-            ),
-            to_attr="order_products",
-        )
-    ).select_related("user_id")
-
+def format_order_list(orders):
     orders_data = []
-
     for order in orders:
         products = [
             {
@@ -96,6 +71,7 @@ def get_all_orders(request: HttpRequest):
                 "product_name": op.product_id.full_name,
                 "amount": op.amount,
                 "unit_price": op.product_id.price,
+                "category": op.product_id.category,
             }
             for op in order.order_products
         ]
@@ -109,5 +85,38 @@ def get_all_orders(request: HttpRequest):
                 "products": products,
             }
         )
+    return orders_data
+
+
+def prefetch_orders():
+    return OrderModel.objects.prefetch_related(
+        Prefetch(
+            "orderamountproductmodel_set",
+            queryset=OrderAmountProductModel.objects.select_related(
+                "product_id"
+            ),
+            to_attr="order_products",
+        )
+    ).select_related("user_id")
+
+
+@api_view(["GET"])
+@admin_required
+def get_all_orders(request: HttpRequest):
+    orders = prefetch_orders()
+
+    orders_data = format_order_list(orders)
+
+    return JsonResponse(orders_data, safe=False)
+
+
+@api_view(["GET"])
+@admin_required
+def get_all_user_orders(request: HttpRequest):
+    orders = prefetch_orders().filter(user_id=request.user)
+
+    orders_data = []
+
+    orders_data = format_order_list(orders)
 
     return JsonResponse(orders_data, safe=False)

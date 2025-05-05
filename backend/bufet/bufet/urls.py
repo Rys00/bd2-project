@@ -31,8 +31,10 @@ urlpatterns = [
     path("products/get_by_id", products.get_by_id),
     path("products/get_by_name", products.get_by_name),
     path("products/change_product_category", products.change_product_category),
+    path("products/delete", products.delete_product),
     path("products/add", products.add_product),
     path("cart/add", cart.add_to_cart),
     path("orders/new", orders.order),
     path("orders/get_all", orders.get_all_orders),
+    path("orders/get_all_user", orders.get_all_user_orders),
 ]
