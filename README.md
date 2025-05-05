@@ -4,17 +4,22 @@
 
 ### Funkcjonalności klienta
 
-1) Kupowanie produktów - katalog produktów
+1) Kupowanie produktów - katalog produktów 
+    + katalog wszystkich produktów dodany na backendzie
+    + możliwość składania zamówień dodana na backendzie
 2) System koszyk, checkout po którym na bazę
+    + dodane na backendzie - koszyk jako ciasteczko
 3) Teoretyczna weryfikacji płatności (dane karty) - później jak się uda
 4) Statystyki per klient  - ile czego kupuje, jakie kwoty na danym przedziale czasowym wydaje
 
 ### Funkcjonalności admina
 
 1) Dodawanie produktów do towarów bufetu
-2) Usuniecie produktów z menu bufetu
+    + in progress
+2) Usuniecie produktów z menu bufetu 
+    + dodane na backendzie
 3) Modyfikacja encji słownikowych - składy kanapek, alergeny ...
-4) Bieżące monitorowanie liczby produktów na stanie bufetu.
+4) Bieżące monitorowanie liczby produktów na stanie bufetu. - dodane na backendzie
 5) Analiza zysków z sprzedazy
 
     - Mamy mieć przychód z danych okresów czasowych

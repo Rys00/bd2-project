@@ -32,6 +32,8 @@ urlpatterns = [
     path("products/get_by_name", products.get_by_name),
     path("products/change_product_category", products.change_product_category),
     path("products/delete", products.delete_product),
+    path("products/check_all_stock", products.check_all_stock),
+    path("products/add_stock_by_name", products.add_stock_by_name),
     path("products/add", products.add_product),
     path("cart/add", cart.add_to_cart),
     path("orders/new", orders.order),
