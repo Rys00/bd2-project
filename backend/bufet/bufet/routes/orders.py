@@ -5,7 +5,7 @@ from bufet.models.product import (
     ProductModel,
 )
 from django.http import HttpRequest, JsonResponse
-from django.db.models import Count
+from django.db.models import Count, Sum
 import json
 
 from rest_framework.decorators import (
@@ -17,6 +17,7 @@ from bufet.django_auth.cookie_auth import CookieJWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 import datetime
 from django.db.models import Prefetch
+from django.utils import timezone
 
 
 class NotEnoughStockException(Exception):
@@ -36,7 +37,7 @@ def order(request: HttpRequest):
     order_total = 0
     order = OrderModel.objects.create(
         user_id=request.user,
-        date=datetime.datetime.now(),
+        date=timezone.now(),
         price=0,  # will update later
     )
     order_amount_instances = []
@@ -136,3 +137,54 @@ def get_all_user_orders(request: HttpRequest):
     orders_data = format_order_list(orders)
 
     return JsonResponse(orders_data, safe=False)
+
+
+# def format_response ==
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+@authentication_classes([CookieJWTAuthentication])
+def total_bought_by_name(request: HttpRequest):
+    product_totals = (
+        OrderAmountProductModel.objects.filter(order_id__user_id=request.user)
+        .select_related("product_id")
+        .values("product_id", "product_id__full_name", "product_id__price")
+        .annotate(total_amount=Sum("amount"))
+        .annotate(total_sum=Sum("product_id__price"))
+    )
+
+    response_values = []
+    for product in product_totals:
+        response_values.append(
+            {
+                "full_name": product["product_id__full_name"],
+                "amount": product["total_amount"],
+                "total": product["total_sum"],
+            }
+        )
+    return JsonResponse(response_values, safe=False)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+@authentication_classes([CookieJWTAuthentication])
+def total_bought_by_category(request: HttpRequest):
+    product_totals = (
+        OrderAmountProductModel.objects.filter(order_id__user_id=request.user)
+        .select_related("product_id")
+        .values("product_id__category", "product_id__price")
+        .annotate(total_amount=Sum("amount"))
+        .annotate(total_sum=Sum("product_id__price"))
+    )
+
+    response_values = []
+    for product in product_totals:
+        response_values.append(
+            {
+                "category": product["product_id__category"],
+                "amount": product["total_amount"],
+                "total": product["total_sum"],
+            }
+        )
+    return JsonResponse(response_values, safe=False)

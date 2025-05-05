@@ -3,3 +3,4 @@ bufet/__pycache__
 bufet/models/__pycache__
 bufet/routes/__pycache__
 bufet/django_auth/__pycache__
+*.code-workspace
