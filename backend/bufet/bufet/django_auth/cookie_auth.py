@@ -20,7 +20,8 @@ class CookieJWTAuthentication(BaseAuthentication):
             access_token = AccessToken(token)
             # Get the user associated with the token
             user = UserModel.objects.get(id=access_token["user_id"])
-
+            # TODO this is bad but probably necessary
+            user.is_authenticated = True
             return (user, access_token)  # Return the user and the token
         except ExpiredTokenError:
             raise AuthenticationFailed("Token expired")
