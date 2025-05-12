@@ -5,7 +5,7 @@ from bufet.models.product import (
     ProductModel,
 )
 from django.http import HttpRequest, JsonResponse
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, F
 import json
 
 from rest_framework.decorators import (
@@ -132,14 +132,9 @@ def get_all_orders(request: HttpRequest):
 def get_all_user_orders(request: HttpRequest):
     orders = prefetch_orders().filter(user_id=request.user)
 
-    orders_data = []
-
     orders_data = format_order_list(orders)
 
     return JsonResponse(orders_data, safe=False)
-
-
-# def format_response ==
 
 
 def product_category_stats_fetch(request, filter_user):
@@ -148,7 +143,7 @@ def product_category_stats_fetch(request, filter_user):
         .select_related("product_id")
         .values("product_id__category", "product_id__price")
         .annotate(total_amount=Sum("amount"))
-        .annotate(total_sum=Sum("product_id__price"))
+        .annotate(total_sum=Sum(F("product_id__price") * F("amount")))
     )
 
     response_values = []
@@ -169,7 +164,7 @@ def product_name_stats_fetch(request, filter_user):
         product_totals.select_related("product_id")
         .values("product_id", "product_id__full_name", "product_id__price")
         .annotate(total_amount=Sum("amount"))
-        .annotate(total_sum=Sum("product_id__price"))
+        .annotate(total_sum=Sum(F("product_id__price") * F("amount")))
     )
 
     response_values = []
