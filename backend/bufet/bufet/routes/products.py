@@ -1,3 +1,4 @@
+from bufet.models.alergen import AlergenModel
 from bufet.django_auth.admin_auth import admin_required
 from bufet.models.product import ProductModel, ProductSerializer
 from bufet.models.product_instance import ProductInstanceModel
@@ -20,23 +21,38 @@ def get_all(request: HttpRequest):
 @api_view(["GET"])
 def get_by_id(request: HttpRequest):
     product_id = request.GET.get("id")
-    data = list(ProductModel.objects.filter(id=product_id).values())[0]
+    data = list(
+        ProductModel.objects.prefetch_related("alergens").filter(id=product_id)
+    )[0]
 
     # return JsonResponse(serializers.serialize("json", data), safe=False)
-    return JsonResponse(data, safe=False)
+    return JsonResponse(serialize_product(data), safe=False)
+
+
+def serialize_product(product: ProductModel) -> dict:
+    return {
+        "id": product.id,
+        "full_name": product.full_name,
+        "category": product.category,
+        "base_price": product.price,
+        "alergens": [alergen.name for alergen in product.alergens.all()],
+    }
 
 
 @api_view(["GET"])
 def get_by_name(request: HttpRequest):
     product_name = request.GET.get("name")
-    data = list(ProductModel.objects.filter(full_name=product_name).values())[
-        0
-    ]
-    return JsonResponse(data, safe=False)
+    product = list(
+        ProductModel.objects.prefetch_related("alergens").filter(
+            full_name=product_name
+        )
+    )[0]
+    return JsonResponse(serialize_product(product), safe=False)
 
 
 @api_view(["POST"])
 @admin_required
+# TODO add alergens
 def add_product(request: HttpRequest):
     # Parse the request for product parameters
     product = ProductSerializer(data=request.data)
@@ -76,9 +92,15 @@ def delete_product(request: HttpRequest):
 @admin_required
 def check_stock_by_name(request: HttpRequest):
     # Parse the request for product parameters
-    body = json.loads(request.body)
-    # ProductInstanceModel.objects.filter(full_name=body["name"]).delete()
-    return HttpResponse("OK")
+    products_with_instance_count = list(
+        ProductModel.objects.filter(
+            full_name=request.GET.get("full_name")
+        ).annotate(instance_count=Count("productinstancemodel"))
+    )[0]
+    response_data = {
+        products_with_instance_count.full_name: products_with_instance_count.instance_count
+    }
+    return JsonResponse(response_data, safe=False)
 
 
 @api_view(["GET"])
@@ -115,5 +137,25 @@ def add_stock_by_name(request: HttpRequest):
         for _ in range(data["quantity"])
     ]
     ProductInstanceModel.objects.bulk_create(instances)
+
+    return HttpResponse("OK")
+
+
+@api_view(["POST"])
+@admin_required
+def add_alergens(request: HttpRequest):
+    # Parse the request for product parameters
+    data: dict = json.loads(request.body)
+    # Annotate each ProductModel with the count of related ProductInstanceModel
+    product = list(
+        ProductModel.objects.filter(full_name=data["product_name"])
+    )[0]
+    alergens = list(AlergenModel.objects.filter(name__in=data["alergens"]))
+    if len(alergens) < len(data["alergens"]):
+        print("Error, an alergen was not found")
+        return HttpResponse("Not OK")
+    alergen_ids = [alergen.id for alergen in alergens]
+    product.alergens.add(*alergen_ids)
+    product.save()
 
     return HttpResponse("OK")
