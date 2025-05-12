@@ -42,5 +42,7 @@ urlpatterns = [
     path("orders/get_all", orders.get_all_orders),
     path("orders/get_all_user", orders.get_all_user_orders),
     path("orders/get_total_bought_by_name", orders.total_bought_by_name),
+    path("orders/get_user_bought_by_name", orders.user_bought_by_name),
     path("orders/get_total_bought_by_cat", orders.total_bought_by_category),
+    path("orders/get_user_bought_by_cat", orders.user_bought_by_category),
 ]

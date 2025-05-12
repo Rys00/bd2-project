@@ -142,36 +142,9 @@ def get_all_user_orders(request: HttpRequest):
 # def format_response ==
 
 
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-@authentication_classes([CookieJWTAuthentication])
-def total_bought_by_name(request: HttpRequest):
+def product_category_stats_fetch(request, filter_user):
     product_totals = (
-        OrderAmountProductModel.objects.filter(order_id__user_id=request.user)
-        .select_related("product_id")
-        .values("product_id", "product_id__full_name", "product_id__price")
-        .annotate(total_amount=Sum("amount"))
-        .annotate(total_sum=Sum("product_id__price"))
-    )
-
-    response_values = []
-    for product in product_totals:
-        response_values.append(
-            {
-                "full_name": product["product_id__full_name"],
-                "amount": product["total_amount"],
-                "total": product["total_sum"],
-            }
-        )
-    return JsonResponse(response_values, safe=False)
-
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-@authentication_classes([CookieJWTAuthentication])
-def total_bought_by_category(request: HttpRequest):
-    product_totals = (
-        OrderAmountProductModel.objects.filter(order_id__user_id=request.user)
+        filter_order_stats_by_date(request, filter_user)
         .select_related("product_id")
         .values("product_id__category", "product_id__price")
         .annotate(total_amount=Sum("amount"))
@@ -188,3 +161,65 @@ def total_bought_by_category(request: HttpRequest):
             }
         )
     return JsonResponse(response_values, safe=False)
+
+
+def product_name_stats_fetch(request, filter_user):
+    product_totals = filter_order_stats_by_date(request, filter_user)
+    result = (
+        product_totals.select_related("product_id")
+        .values("product_id", "product_id__full_name", "product_id__price")
+        .annotate(total_amount=Sum("amount"))
+        .annotate(total_sum=Sum("product_id__price"))
+    )
+
+    response_values = []
+    for product in result:
+        response_values.append(
+            {
+                "full_name": product["product_id__full_name"],
+                "amount": product["total_amount"],
+                "total": product["total_sum"],
+            }
+        )
+    return JsonResponse(response_values, safe=False)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+@authentication_classes([CookieJWTAuthentication])
+def user_bought_by_name(request: HttpRequest):
+    return product_name_stats_fetch(request, True)
+
+
+@api_view(["GET"])
+@admin_required
+def total_bought_by_name(request: HttpRequest):
+    return product_name_stats_fetch(request, False)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+@authentication_classes([CookieJWTAuthentication])
+def user_bought_by_category(request: HttpRequest):
+    return product_category_stats_fetch(request, True)
+
+
+@api_view(["GET"])
+@admin_required
+def total_bought_by_category(request: HttpRequest):
+    return product_category_stats_fetch(request, False)
+
+
+def filter_order_stats_by_date(request, filter_by_user=True):
+    product_totals = OrderAmountProductModel.objects
+    if filter_by_user:
+        product_totals = product_totals.filter(order_id__user_id=request.user)
+    if date_start_str := request.GET.get("start_date"):
+        print("Caught date")
+        date_start = datetime.datetime.strptime(date_start_str, "%Y-%m-%d")
+        product_totals = product_totals.filter(order_id__date__gt=date_start)
+    if date_end_str := request.GET.get("end_date"):
+        print("Caught date")
+        date_start = datetime.datetime.strptime(date_end_str, "%Y-%m-%d")
+        product_totals = product_totals.filter(order_id__date__lt=date_start)
+    return product_totals
