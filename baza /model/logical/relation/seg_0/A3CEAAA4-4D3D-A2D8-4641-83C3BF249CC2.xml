@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="products_in_ord_pst" directorySegmentName="seg_0" id="A3CEAAA4-4D3D-A2D8-4641-83C3BF249CC2">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:13:27 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<sourcePk>F1645D37-D63C-A192-A5A2-AAAE98E67167</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>appers in </nameOnSource>
+<nameOnTarget>has product</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>07F3E39E-62DD-C498-50B6-A79335046F17</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>4DD16A87-0E11-D97F-454A-A1CC89EE5457</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

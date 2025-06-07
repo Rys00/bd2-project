@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="alergen_products_in" directorySegmentName="seg_0" id="D99C447C-2A8A-8632-5662-970F0D106049">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:52:50 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<sourcePk>9B962E75-30C7-6B7C-A645-713122F368FE</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>allergen appers in</nameOnSource>
+<nameOnTarget>-</nameOnTarget>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>B43F8E21-A2B4-E18F-DFA7-75CADC2FC10D</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>3D7E735F-C8A3-A9A2-7E53-576EAC5F8E96</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

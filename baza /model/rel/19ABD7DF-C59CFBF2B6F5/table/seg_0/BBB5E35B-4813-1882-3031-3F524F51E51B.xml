@@ -1,0 +1,122 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="BBB5E35B-4813-1882-3031-3F524F51E51B" name="Product">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>07F3E39E-62DD-C498-50B6-A79335046F17</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<abbreviation>prod</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="prod_id" id="B904A1FD-B93F-F3B0-8512-1A032D59FA18">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>08F7B3CC-A706-8733-60E0-F2C44300E917</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="name" id="F8152E5C-3446-333C-42EA-4FCDEB74EBE3">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>1AA19D08-76FC-4F76-E15E-8EF32194CB26</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="price" id="11A8B041-7B1D-FF99-9075-4FBC71E7BDE7">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>65A83A8B-F527-11A5-7C3D-9D95B7433AED</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT026</logicalDatatype>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="cost" id="C9A77916-413C-5A5C-C717-4547F6A9871A">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>2723C994-48C4-D60A-F715-9CA77FC264EF</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT026</logicalDatatype>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="margin" id="A5A18693-EC94-C335-F01B-F489EC054912">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>399E018D-FAD6-B864-7DE6-D71A15DD2CA7</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="active" id="B4AC940C-1C18-D3A6-BA43-602628E8051C">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>E0BDFDE9-C445-58F3-A926-32A13E38FB3B</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="category_id" id="8767155B-1FD6-4232-D97A-DD34181B49B4">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>66E5EA51-13CC-BC22-489B-C24BDDD5430D</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0BBB52C4-B9D2-E436-919C-27003B034D8D" referredColumn="C325B531-E5FE-4C42-5709-CA535BCC92E8"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="9E8C9352-157E-A791-DEF1-18197221D578" name="Product_PK">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>F1645D37-D63C-A192-A5A2-AAAE98E67167</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B904A1FD-B93F-F3B0-8512-1A032D59FA18"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7C53A280-E3A5-D80B-EF5E-FBF794AD41BA" name="Product_ProductCategory_FK">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>1B1BB39C-F893-ADF3-18C9-121D5AFD2F95</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8767155B-1FD6-4232-D97A-DD34181B49B4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

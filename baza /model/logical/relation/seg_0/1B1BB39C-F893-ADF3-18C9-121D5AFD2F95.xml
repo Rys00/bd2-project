@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="product_category_identyfication" directorySegmentName="seg_0" id="1B1BB39C-F893-ADF3-18C9-121D5AFD2F95">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:33:00 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<sourcePk>0892705F-0982-AC7E-78E5-ABFCFFB55AD1</sourcePk>
+<identifying>false</identifying>
+<nameOnSource> consists of</nameOnSource>
+<nameOnTarget>is in category</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>B1EAB903-A770-D97D-81BC-BE0B28DA4EA9</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>07F3E39E-62DD-C498-50B6-A79335046F17</targetEntity>
+<transferable>true</transferable>
+<deleteRule>SET NULL</deleteRule>
+</Relation>

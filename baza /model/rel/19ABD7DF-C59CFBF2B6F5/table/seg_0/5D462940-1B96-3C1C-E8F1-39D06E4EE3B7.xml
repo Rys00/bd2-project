@@ -1,0 +1,90 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5D462940-1B96-3C1C-E8F1-39D06E4EE3B7" name="ConntactAlergens">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>3D7E735F-C8A3-A9A2-7E53-576EAC5F8E96</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<abbreviation>prod_alg</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="in_alergen_id" id="E2A50F84-0579-7B2B-2D6E-4C6152E77BE9">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>EA6CC2A2-D9E0-95F5-9DAB-29F481C29582</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="product_id" id="03CA0DB6-3D34-35EB-9886-C8FAA5758E44">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>5668203C-498E-89B5-48FE-137B1303C149</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="89C38BB9-F8AC-2BFD-C4F8-17C03A462C21" referredColumn="B904A1FD-B93F-F3B0-8512-1A032D59FA18"/>
+</associations>
+</Column>
+<Column name="alergen_id" id="81593A02-D9B2-3D0B-F313-F9D8565DE4DD">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>F7EB8A33-1EDE-5C72-D211-6F0FD20ACA08</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A57C8A7C-97F0-2E4E-FBFD-56550F55E496" referredColumn="F6D10AF7-736E-F687-3EBC-BEA7D67A8D8F"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="4761A8AB-4599-2EC7-5E97-8BB13DAAC071" name="Prod-Alergen_PK">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:39:26 UTC</createdTime>
+<generatorID>52ED94E3-46B7-379B-0B15-6680FC55443B</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E2A50F84-0579-7B2B-2D6E-4C6152E77BE9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4D570228-2037-D53C-5E1F-D6A0048D6CE7" name="ConntactAlergens_Alergen_FK">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>D99C447C-2A8A-8632-5662-970F0D106049</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="81593A02-D9B2-3D0B-F313-F9D8565DE4DD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="18A8D98A-29DD-7E70-5BD2-E9642A6627F6" name="ConntactAlergens_Product_FK">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>D9479824-42D6-518A-0FC2-69D676E9864F</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="03CA0DB6-3D34-35EB-9886-C8FAA5758E44"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
