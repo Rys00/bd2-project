@@ -24,28 +24,47 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { PasswordInputInteractive } from "@/components/ui/password-input-interactive";
 
-// Improved schema with additional validation rules
-const formSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters long" })
-    .regex(/[a-zA-Z0-9]/, { message: "Password must be alphanumeric" }),
-});
+// Define validation schema using Zod
+const formSchema = z
+  .object({
+    name: z.string().min(2, { message: "Imię musi mieć minium 2 znaki" }),
+    surname: z
+      .string()
+      .min(2, { message: "Nazwisko musi mieć minium 2 znaki" }),
+    email: z.string().email({ message: "Nieprawidłowy adres e-mail" }),
+    password: z
+      .string()
+      .min(8, { message: "Hasło musi mieć minimum 8 znaków" })
+      .regex(/[0-9]/, { message: "Hasło musi mieć co najmniej 1 cyfra" })
+      .regex(/[a-z]/, {
+        message: "Hasło musi mieć co najmniej jedną małą literę",
+      })
+      .regex(/[A-Z]/, {
+        message: "Hasło musi mieć co najmniej jedna dużą literę",
+      }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
 
-export default function LoginPreview() {
+export default function RegisterPreview() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // Assuming an async login function
+      // Assuming an async registration function
       console.log(values);
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
@@ -59,18 +78,34 @@ export default function LoginPreview() {
   }
 
   return (
-    <div className="flex flex-col min-h-[80vh] h-full w-full items-center justify-center px-4">
+    <div className="flex min-h-[100vh] h-full w-full items-center justify-center px-4">
       <Card className="mx-auto max-w-sm min-w-1/3">
         <CardHeader>
-          <CardTitle className="text-2xl">Zaloguj się</CardTitle>
+          <CardTitle className="text-2xl">Zarejestruj się</CardTitle>
           <CardDescription>
-            Wpisz swój adres email oraz hasło aby się zalogować.
+            Cześć! Uzupełnij poniższe informacje aby utworzyć nowe konto.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <div className="grid gap-4">
+                {/* Name Field */}
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem className="grid gap-2">
+                      <FormLabel htmlFor="name">Imię i Nazwisko</FormLabel>
+                      <FormControl>
+                        <Input id="name" placeholder="John Doe" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Email Field */}
                 <FormField
                   control={form.control}
                   name="email"
@@ -90,6 +125,8 @@ export default function LoginPreview() {
                     </FormItem>
                   )}
                 />
+
+                {/* Password Field */}
                 <FormField
                   control={form.control}
                   name="password"
@@ -97,10 +134,10 @@ export default function LoginPreview() {
                     <FormItem className="grid gap-2">
                       <FormLabel htmlFor="password">Hasło</FormLabel>
                       <FormControl>
-                        <PasswordInput
+                        <PasswordInputInteractive
                           id="password"
                           placeholder="******"
-                          autoComplete="current-password"
+                          autoComplete="new-password"
                           {...field}
                         />
                       </FormControl>
@@ -108,16 +145,39 @@ export default function LoginPreview() {
                     </FormItem>
                   )}
                 />
+
+                {/* Confirm Password Field */}
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem className="grid gap-2">
+                      <FormLabel htmlFor="confirmPassword">
+                        Powtórz hasło
+                      </FormLabel>
+                      <FormControl>
+                        <PasswordInput
+                          id="confirmPassword"
+                          placeholder="******"
+                          autoComplete="new-password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <Button type="submit" className="w-full">
-                  Zaloguj się
+                  Zarejestruj
                 </Button>
               </div>
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
-            Nie masz konta?{" "}
+            Masz już konto?{" "}
             <Link href="#" className="underline">
-              Zarejestruj się
+              Zaloguj się
             </Link>
           </div>
         </CardContent>
