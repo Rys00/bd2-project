@@ -1,3 +1,6 @@
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
+import { Header } from "@/components/sidebar/header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -27,7 +30,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <SidebarProvider
+          style={
+            {
+              "--sidebar-width": "calc(var(--spacing) * 72)",
+              "--header-height": "calc(var(--spacing) * 12)",
+            } as React.CSSProperties
+          }
+        >
+          <AppSidebar variant="inset" />
+          <SidebarInset>
+            <Header />
+            {children}
+          </SidebarInset>
+        </SidebarProvider>
       </body>
     </html>
   );

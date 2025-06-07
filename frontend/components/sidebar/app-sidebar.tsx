@@ -10,10 +10,10 @@ import {
 } from "@tabler/icons-react";
 import * as React from "react";
 
-import { NavDocuments } from "@/components/dashboard/nav-documents";
-import { NavMain } from "@/components/dashboard/nav-main";
-import { NavSecondary } from "@/components/dashboard/nav-secondary";
-import { NavUser } from "@/components/dashboard/nav-user";
+import { NavDocuments } from "@/components/sidebar/nav-documents";
+import { NavMain } from "@/components/sidebar/nav-main";
+import { NavSecondary } from "@/components/sidebar/nav-secondary";
+import { NavUser } from "@/components/sidebar/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -35,7 +35,7 @@ const data = {
   navMain: [
     {
       title: "Przeglądaj produkty",
-      url: "/products",
+      url: "/browse",
       icon: IconShoppingBag,
     },
     {
@@ -58,21 +58,19 @@ const data = {
       icon: IconActivity,
     },
     {
-      name: "Zarobki",
+      name: "Przychody",
       url: "/dashboard/income",
       icon: IconChartLine,
     },
     {
       name: "Popularność produktów",
-      url: "/dashboard/items-popularity",
+      url: "/dashboard/products",
       icon: IconStar,
     },
   ],
 };
 
-export function DashboardSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
