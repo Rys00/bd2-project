@@ -25,35 +25,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { PasswordInputInteractive } from "@/components/ui/password-input-interactive";
-
-// Define validation schema using Zod
-const formSchema = z
-  .object({
-    name: z.string().min(2, { message: "Imię musi mieć minium 2 znaki" }),
-    surname: z
-      .string()
-      .min(2, { message: "Nazwisko musi mieć minium 2 znaki" }),
-    email: z.string().email({ message: "Nieprawidłowy adres e-mail" }),
-    password: z
-      .string()
-      .min(8, { message: "Hasło musi mieć minimum 8 znaków" })
-      .regex(/[0-9]/, { message: "Hasło musi mieć co najmniej 1 cyfra" })
-      .regex(/[a-z]/, {
-        message: "Hasło musi mieć co najmniej jedną małą literę",
-      })
-      .regex(/[A-Z]/, {
-        message: "Hasło musi mieć co najmniej jedna dużą literę",
-      }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  });
+import { signUpWithCredentials } from "@/lib/auth";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { signUpSchema } from "@/lib/zod/auth";
+import { makeRequest } from "@/utils/misc";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export default function RegisterPreview() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -61,19 +42,26 @@ export default function RegisterPreview() {
       confirmPassword: "",
     },
   });
+  const searchParams = useSearchParams();
+  const dispatch = useAppDispatch();
+  const session = useSession();
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof signUpSchema>) {
     try {
-      // Assuming an async registration function
-      console.log(values);
+      await makeRequest(
+        signUpWithCredentials,
+        [values, searchParams.get("callbackUrl") || undefined],
+        dispatch
+      );
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
         </pre>
       );
     } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      const message = (error as Error).message;
+      if (message.startsWith("NEXT_REDIRECT")) await session.update();
+      throw error;
     }
   }
 
@@ -176,7 +164,7 @@ export default function RegisterPreview() {
           </Form>
           <div className="mt-4 text-center text-sm">
             Masz już konto?{" "}
-            <Link href="#" className="underline">
+            <Link href="/auth/login" className="underline">
               Zaloguj się
             </Link>
           </div>
