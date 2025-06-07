@@ -1,6 +1,5 @@
-from .order import OrderModel, OrderAmountProductModel
-from .user import  UserModel
-from .product import ProductModel, ProductSerializer, ProductListSerializer
-from .product_instance import ProductInstanceModel
-from .ingredient import IngredientModel
-from .alergen import AlergenModel
+from .order import Order, OrderPosition
+from .product import ProductCategory, Product, ProductStock
+from .allergen import Allergen
+from .conntact_allergen import ConntactAllergens
+from .user import UserModel
