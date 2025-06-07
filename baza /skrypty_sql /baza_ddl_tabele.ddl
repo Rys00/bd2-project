@@ -9,20 +9,20 @@
 
 -- predefined type, no DDL - XMLTYPE
 
-CREATE TABLE alergen (
-    alergen_id INTEGER NOT NULL,
+CREATE TABLE allergen (
+    allergen_id INTEGER NOT NULL,
     name       CLOB NOT NULL
 );
 
-ALTER TABLE alergen ADD CONSTRAINT alergen_pk PRIMARY KEY ( alergen_id );
+ALTER TABLE allergen ADD CONSTRAINT allergen_pk PRIMARY KEY ( allergen_id );
 
-CREATE TABLE conntactalergens (
-    in_alergen_id INTEGER NOT NULL,
+CREATE TABLE conntactallergens (
+    in_allergen_id INTEGER NOT NULL,
     product_id    INTEGER NOT NULL,
-    alergen_id    INTEGER NOT NULL
+    allergen_id    INTEGER NOT NULL
 );
 
-ALTER TABLE conntactalergens ADD CONSTRAINT "Prod-Alergen_PK" PRIMARY KEY ( in_alergen_id );
+ALTER TABLE conntactallergens ADD CONSTRAINT "Prod-Allergen_PK" PRIMARY KEY ( in_allergen_id );
 
 CREATE TABLE "Order" (
     order_id     INTEGER NOT NULL,
@@ -78,12 +78,12 @@ CREATE UNIQUE INDEX productstock__idx ON
 
 ALTER TABLE productstock ADD CONSTRAINT productstock_pk PRIMARY KEY ( stock_id );
 
-ALTER TABLE conntactalergens
-    ADD CONSTRAINT conntactalergens_alergen_fk FOREIGN KEY ( alergen_id )
-        REFERENCES alergen ( alergen_id );
+ALTER TABLE conntactallergens
+    ADD CONSTRAINT conntactallergens_allergen_fk FOREIGN KEY ( allergen_id )
+        REFERENCES allergen ( allergen_id );
 
-ALTER TABLE conntactalergens
-    ADD CONSTRAINT conntactalergens_product_fk
+ALTER TABLE conntactallergens
+    ADD CONSTRAINT conntactallergens_product_fk
         FOREIGN KEY ( product_id )
             REFERENCES product ( prod_id )
                 ON DELETE CASCADE;
@@ -108,8 +108,8 @@ ALTER TABLE productstock
 
 
 
--- Oracle SQL Developer Data Modeler Summary Report: 
--- 
+-- Oracle SQL Developer Data Modeler Summary Report:
+--
 -- CREATE TABLE                             7
 -- CREATE INDEX                             1
 -- ALTER TABLE                             13
@@ -138,15 +138,15 @@ ALTER TABLE productstock
 -- CREATE SYNONYM                           0
 -- CREATE TABLESPACE                        0
 -- CREATE USER                              0
--- 
+--
 -- DROP TABLESPACE                          0
 -- DROP DATABASE                            0
--- 
+--
 -- REDACTION POLICY                         0
--- 
+--
 -- ORDS DROP SCHEMA                         0
 -- ORDS ENABLE SCHEMA                       0
 -- ORDS ENABLE OBJECT                       0
--- 
+--
 -- ERRORS                                   0
 -- WARNINGS                                 0
