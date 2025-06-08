@@ -9,7 +9,7 @@ class ProductCategory(models.Model):
         return self.name
 
 class Product(models.Model):
-    prod_id = models.AutoField(primary_key=True)
+    product_id = models.AutoField(primary_key=True)
     name = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
     cost = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])

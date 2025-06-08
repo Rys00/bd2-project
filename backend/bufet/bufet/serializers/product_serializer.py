@@ -9,6 +9,7 @@ class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductCategory
         fields = [
+            'category_id',
             'name',
         ]
 
@@ -19,7 +20,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'prod_id',
+            'product_id',
             'name',
             'category',
             'price',
@@ -28,17 +29,21 @@ class ProductSerializer(serializers.ModelSerializer):
             'active',
             'allergens'
         ]
+        read_only_fields = ["product_id"]
 
     def get_allergens(self, obj):
         contacts  = ContactAllergens.objects.filter(product=obj).select_related('allergen')
         return AllergensSerializer([c.allergen for c in contacts], many=True).data
 
 class ProductForStockSerializer(serializers.ModelSerializer):
+    category = ProductCategorySerializer(read_only=True)
+
     class Meta:
         model = Product
         fields = [
-            'prod_id',
+            'product_id',
             'name',
+            'category'
         ]
 
 class ProductForOrderSerializer(serializers.ModelSerializer):
@@ -46,7 +51,7 @@ class ProductForOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'prod_id',
+            'product_id',
             'name',
             'price'
         ]
