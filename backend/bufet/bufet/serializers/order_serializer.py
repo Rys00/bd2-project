@@ -1,11 +1,10 @@
 from rest_framework import serializers
-
 from bufet.models.order import Order, OrderPosition
-from bufet.serializers.product_serializer import ProductSerializer, Product_For_OrderSerializer
+from bufet.serializers.product_serializer import ProductForOrderSerializer
 
 
 class OrderPositionSerializer(serializers.ModelSerializer):
-    product = Product_For_OrderSerializer(read_only=True)
+    product = ProductForOrderSerializer(read_only=True)
     class Meta:
         model = OrderPosition
         fields = [

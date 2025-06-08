@@ -25,7 +25,7 @@ class ProductStock(models.Model):
     amount = models.IntegerField(validators=[MinValueValidator(0)])
     last_delivery = models.DateTimeField()
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
-    earlies_exp = models.DateField(null=True, blank=True)
+    earliest_exp = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"Stock for {self.product.name}"
