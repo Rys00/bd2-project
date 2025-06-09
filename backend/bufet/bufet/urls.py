@@ -21,13 +21,16 @@ from .routes import auth
 from .routes import products
 from .routes import cart
 from .routes import orders
-from .views.products_view import ProductDetailView, ProductsByCategoryView, AllProductsCategories
+from .views.products_view import ProductDetailView, ProductsByCategoryView, AllProductsCategorieView
+from .views.allergens_view import AllergenDetailView, AllergenListView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/products/<int:pk>', ProductDetailView.as_view(),name='product-detail'),
     path('api/category/<int:category_id>/products', ProductsByCategoryView.as_view(),name='products-by-category'),
-    path('api/categories/', AllProductsCategories.as_view(),name='all-products-categories'),
+    path('api/categories/', AllProductsCategorieView.as_view(), name='all-products-categories'),
+    path('api/allergens/<int:pk>', AllergenDetailView.as_view(), name='allergen-detail' ),
+    path('api/allergens/', AllergenListView.as_view(), name='allergen-list'),
     # path("auth/login",auth.login),
     # path("auth/register", auth.register),
     # path("auth/test", auth.authenticated_view),

@@ -18,7 +18,7 @@ class ProductsByCategoryView(ListAPIView):
         return Product.objects.filter(category_id=category_id, active=True)
 
 
-class AllProductsCategories(ListAPIView):
+class AllProductsCategorieView(ListAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
