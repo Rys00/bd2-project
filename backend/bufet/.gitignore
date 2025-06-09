@@ -1,9 +1,8 @@
-bufet/.idea
-bufet/.venv
+.idea
+.venv
 bufet/migrations
-bufet/__pycache__
-bufet/models/__pycache__
-bufet/routes/__pycache__
-bufet/django_auth/__pycache__
+__pycache__
 *.code-workspace
 .env
+build
+back.egg-info
