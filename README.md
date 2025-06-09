@@ -50,12 +50,3 @@
 - Dynamiczność dodawania kategorii produktów na bazie, frontend po komponentach.
 - Jak na razie rzeczy bazowe na git labie.
 
-## Terminy etapów
-
-1) Model pojęciowy i logiczny - 4.05.2025 => Ryzko
-2) Backend - odwzorowanie obiektów (kwestia czy ORM pozwala na np. encje słownikowe); wstępne projekt UI z figmy - 11.05.2025
-3) Cały gotowy klient - 18.05.2025 => Ryzko
-4) Podstawowy panel admina  - 25.05.2025
-5) FINAL APP - 4.06.2025 => Ryzko.
-Ewentualne poprawki ... do 10.06.2025
-
