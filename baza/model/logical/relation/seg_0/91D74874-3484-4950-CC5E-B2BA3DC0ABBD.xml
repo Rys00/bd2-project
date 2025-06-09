@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="products_amount_info" directorySegmentName="seg_0" id="91D74874-3484-4950-CC5E-B2BA3DC0ABBD">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:00:20 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<sourcePk>F1645D37-D63C-A192-A5A2-AAAE98E67167</sourcePk>
+<targetPk>8E1EF512-ED27-5720-39EE-5977ACC45E9C</targetPk>
+<identifying>false</identifying>
+<nameOnSource>is avaible in amount</nameOnSource>
+<nameOnTarget>details amount of</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>07F3E39E-62DD-C498-50B6-A79335046F17</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>F009A7D1-487F-3C93-0337-E21D5BBD0C05</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

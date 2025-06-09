@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="order_includes" directorySegmentName="seg_0" id="071F83FC-6598-D506-37BE-70D67A1E99E9">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:21:54 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<sourcePk>BE99176E-B588-E9DF-546C-63704C1444FE</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>has positions</nameOnSource>
+<nameOnTarget>is part of</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>10CA2B24-7A3B-B5F6-C3A0-05DB06AE0D0A</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>4DD16A87-0E11-D97F-454A-A1CC89EE5457</targetEntity>
+<transferable>true</transferable>
+<deleteRule>CASCADE</deleteRule>
+</Relation>

@@ -1,0 +1,109 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5824A597-967C-0C44-09DF-53567516A168" name="ProductStock">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>F009A7D1-487F-3C93-0337-E21D5BBD0C05</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<abbreviation>pord_stc</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="stock_id" id="8B5C833D-D9D3-5CD8-9BCB-52596DA9910E">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>BEAA0076-EBBC-D4B5-984E-4A1BB9BC2118</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="amount" id="CF862A50-C24D-86EA-132C-440003AEB318">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>9EE2FB81-256B-B28B-7D7F-7AD0A2CDC78D</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="last_delivery" id="ED0FC524-A5DD-FB5D-AFD7-8E04EAE57F21">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>A671D9C6-0B2C-DEE1-B093-7B7A54251061</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="product_id" id="9972904F-B238-B481-2AA7-3F53ED143A95">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>76E96E15-6101-DD60-09BF-F15D432F3C77</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="348A7D00-171D-B411-9D99-4F7C7BC32A46" referredColumn="B904A1FD-B93F-F3B0-8512-1A032D59FA18"/>
+</associations>
+</Column>
+<Column name="earlies_exp" id="6C1F783D-98AC-108B-F866-2FE8B7C6072E">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>C0981827-27F2-41BD-A67E-3BEEBC8AC9B2</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="4C8D5616-5D91-292C-2269-71A0552184DA" name="ProductStock_PK">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>8E1EF512-ED27-5720-39EE-5977ACC45E9C</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8B5C833D-D9D3-5CD8-9BCB-52596DA9910E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D69F551F-345C-8BF8-3630-B0149D552CB6" name="ProductStock__IDX">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>91D74874-3484-4950-CC5E-B2BA3DC0ABBD</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="9972904F-B238-B481-2AA7-3F53ED143A95"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7D83F60A-937E-D6F3-E1C1-F28DEE547264" name="ProductStock_Product_FK">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 20:08:06 UTC</createdTime>
+<generatorID>91D74874-3484-4950-CC5E-B2BA3DC0ABBD</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9972904F-B238-B481-2AA7-3F53ED143A95"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

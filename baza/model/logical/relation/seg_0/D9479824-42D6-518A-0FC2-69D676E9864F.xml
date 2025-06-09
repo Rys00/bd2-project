@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="product_alergens" directorySegmentName="seg_0" id="D9479824-42D6-518A-0FC2-69D676E9864F">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 18:50:06 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<sourcePk>F1645D37-D63C-A192-A5A2-AAAE98E67167</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>has alergens</nameOnSource>
+<nameOnTarget>-</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>07F3E39E-62DD-C498-50B6-A79335046F17</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>3D7E735F-C8A3-A9A2-7E53-576EAC5F8E96</targetEntity>
+<transferable>true</transferable>
+<deleteRule>CASCADE</deleteRule>
+</Relation>

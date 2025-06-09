@@ -1,0 +1,113 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="4DD16A87-0E11-D97F-454A-A1CC89EE5457" name="OrderPosition">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:00:54 UTC</createdTime>
+<comment><![CDATA[# profit is calculated by trigger]]></comment>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>ord_pst</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="position_id" id="73A6A4DE-75CE-E54C-BC2D-42CED44E6E97">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:01:21 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="amount" id="39CF7CC2-2D85-8FC3-7F8A-7D0BB7C5F136">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:01:38 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="value" id="752DFB3B-DEE8-9ECE-FA9D-5D7C1CED491E">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:02:53 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT026</logicalDatatype>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="profit" id="0AD1AC62-9FF0-9D7E-B180-C29971B3F62B">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:05:32 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT026</logicalDatatype>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="prod_id" id="A6CFDC5C-CF52-4FBD-5263-D6919A582A67">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:13:27 UTC</createdTime>
+<generatorID>A3CEAAA4-4D3D-A2D8-4641-83C3BF249CC2</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<referedAttribute>08F7B3CC-A706-8733-60E0-F2C44300E917</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="order_id" id="BA3A2A70-8196-5044-859F-664B73C4A05A">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:21:54 UTC</createdTime>
+<generatorID>071F83FC-6598-D506-37BE-70D67A1E99E9</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<referedAttribute>BC0A85D2-B878-BBA7-F38B-FC406CB9DD03</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="06A7D1A4-E1E5-13B7-2D4F-78DD937B9D34" name="OrderPosition PK">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-07 19:01:37 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>73A6A4DE-75CE-E54C-BC2D-42CED44E6E97</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
