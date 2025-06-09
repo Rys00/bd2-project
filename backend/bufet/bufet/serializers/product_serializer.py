@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from bufet.models import Product, ProductCategory
+from bufet.models import Product, ProductCategory, ProductStock
 from bufet.serializers.allergens_serilizer import AllergensSerializer
 from bufet.models.contact_allergen import ContactAllergens
 
@@ -45,6 +45,13 @@ class ProductForStockSerializer(serializers.ModelSerializer):
             'name',
             'category'
         ]
+
+class ProductStockSerializer(serializers.ModelSerializer):
+    product = ProductForStockSerializer(read_only=True)
+
+    class Meta:
+        model = ProductStock
+        fields = '__all__'
 
 class ProductForOrderSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
