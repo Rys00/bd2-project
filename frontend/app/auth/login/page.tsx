@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { signInWithCredentials } from "@/lib/auth";
 import { useAppDispatch } from "@/lib/store/hooks";
+import { addSnackbar } from "@/lib/store/ui/ui.slice";
 import { signInSchema } from "@/lib/zod/auth";
 import { makeRequest } from "@/utils/misc";
 import { useSession } from "next-auth/react";
@@ -45,11 +46,10 @@ export default function LoginPreview() {
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     try {
-      await makeRequest(
-        signInWithCredentials,
-        [values, searchParams.get("callbackUrl") || undefined],
-        dispatch
-      );
+      await makeRequest(signInWithCredentials, [
+        values,
+        searchParams.get("callbackUrl") || undefined,
+      ]);
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
@@ -57,6 +57,17 @@ export default function LoginPreview() {
       );
     } catch (error) {
       const message = (error as Error).message;
+      if (message.startsWith("PWB_ERROR")) {
+        if (message.split(";")[1] === "401")
+          dispatch(
+            addSnackbar({
+              message: "Nieprawidłowe dane logowania!",
+              type: "error",
+            })
+          );
+        else dispatch(addSnackbar({ message, type: "error" }));
+        return;
+      }
       if (message.startsWith("NEXT_REDIRECT")) await session.update();
       throw error;
     }

@@ -28,12 +28,12 @@ import Link from "next/link";
 const data = {
   navMain: [
     {
-      title: "Przeglądaj produkty",
-      url: "/browse",
+      title: "Złóż zamówienia",
+      url: "/order",
       icon: IconShoppingBag,
     },
     {
-      title: "Panel zarządzania",
+      title: "Panel statystyczny",
       url: "/dashboard",
       icon: IconDashboard,
     },

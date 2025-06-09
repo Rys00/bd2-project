@@ -5,12 +5,12 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 
 const pathTitles = {
-  "/dashboard": "Panel zarządzania",
+  "/dashboard": "Panel statystyczny",
   "/dashboard/activity": "Aktywność klientów",
   "/dashboard/income": "Przychody",
   "/dashboard/products": "Popularność produktów",
   "/dashboard/settings": "Ustawienia",
-  "/browse": "Przeglądaj produkty",
+  "/order": "Złóż zamówienia",
 };
 
 export function Header() {
