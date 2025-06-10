@@ -17,6 +17,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 from .routes import auth
 from .routes import products
 from .routes import cart
@@ -28,6 +33,8 @@ from .views.stock_view import AllStockView, ProductStockView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/products/<int:pk>', ProductDetailView.as_view(),name='product-detail'),
     path('api/category/<int:category_id>/products', ProductsByCategoryView.as_view(),name='products-by-category'),
     path('api/categories/', AllProductsCategoriesView.as_view(), name='all-products-categories'),

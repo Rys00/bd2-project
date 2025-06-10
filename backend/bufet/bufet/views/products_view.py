@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
 from bufet.models.product import ProductStock, Product, ProductCategory
 from bufet.serializers.create.add_product_serializer import ProductCreateSerializer
@@ -22,15 +23,18 @@ class ProductsByCategoryView(ListAPIView):
         return Product.objects.filter(category_id=category_id, active=True)
 
 class AllProductsView(ListAPIView):
+    permission_classes = [AllowAny]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 class AllProductsCategoriesView(ListAPIView):
+    permission_classes = [AllowAny]
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
 
 class AddProductCategoryView(CreateAPIView):
+    permission_classes = [IsAdminUser]
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
