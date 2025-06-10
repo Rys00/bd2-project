@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "bufet",
     "rest_framework",
     "rest_framework_simplejwt",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -80,9 +81,13 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         # "bufet.cookie_auth.CookieJWTAuthentication",
     ],
-    # Add any other settings as needed
 }
 
+CORS_ORIGIN_ALLOW_ALL = True #for testing
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
