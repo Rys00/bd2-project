@@ -2,13 +2,17 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+import uuid
 
 class CUserManager(BaseUserManager):
      def create_user(self, email, password=None, **extra_fields):
           if not email:
                raise ValueError(_('A user must have an email address'))
-          user = self.model(email=self.normalize_email(email))
+          if 'id' not in extra_fields:
+               extra_fields['id'] = str(uuid.uuid4())
+          user = self.model(email=self.normalize_email(email), **extra_fields)
           user.set_password(password)
+          user.date_joined = timezone.now()
           user.save()
           return user
 
@@ -28,6 +32,7 @@ class CUser(AbstractBaseUser, PermissionsMixin):
      image = models.TextField(null=True, blank=True) #it can be long so txt
      #things from django user
      is_staff = models.BooleanField(_("staff status"), default=False) #controlling access to django admin
+     is_cashier = models.BooleanField(_("cashier status"), default=True) #to control access in auth
      is_active = models.BooleanField(_("active"), default=True)
      date_joined = models.DateTimeField(_("date joined"), auto_now_add=True) #prisma equivalent is createdAt
      updated_at = models.DateTimeField(_("date updated"), auto_now=True)
