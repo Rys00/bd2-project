@@ -12,7 +12,7 @@ class JSVerificationToken(models.Model):
         unique_together = (('identifier', 'token'),)
 
 class JSAccount(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.CharField(primary_key=True, max_length=255)
     user = models.ForeignKey(CUser, on_delete=models.CASCADE, related_name='accounts')
     type = models.CharField(max_length=255)
     provider = models.CharField(max_length=255)
@@ -29,9 +29,10 @@ class JSAccount(models.Model):
 
     class Meta:
         db_table = 'js_accounts'
+        unique_together = (('provider', 'provider_account_id'),)
 
 class JSSession(models.Model):
-    id = models.AutoField(primary_key=True)
+    id =models.CharField(primary_key=True, max_length=255)
     user = models.ForeignKey(CUser, on_delete=models.CASCADE, related_name='sessions')
     expires = models.DateTimeField()
     session_token = models.CharField(max_length=255, unique=True)
