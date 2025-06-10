@@ -21,7 +21,7 @@ from .routes import auth
 from .routes import products
 from .routes import cart
 from .routes import orders
-from .views.products_view import ProductDetailView, ProductsByCategoryView, AllProductsByCategoryView, \
+from .views.products_view import ProductDetailView, ProductsByCategoryView, AllProductsCategoriesView, \
     AddProductCategoryView, AddProductView, AllProductsView
 from .views.allergens_view import AllergenDetailView, AllergenListView, AddAllergenView
 from .views.stock_view import AllStockView, ProductStockView
@@ -30,7 +30,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/products/<int:pk>', ProductDetailView.as_view(),name='product-detail'),
     path('api/category/<int:category_id>/products', ProductsByCategoryView.as_view(),name='products-by-category'),
-    path('api/categories/', AllProductsByCategoryView.as_view(), name='all-products-categories'),
+    path('api/categories/', AllProductsCategoriesView.as_view(), name='all-products-categories'),
     path('api/allergens/<int:pk>', AllergenDetailView.as_view(), name='allergen-detail' ),
     path('api/allergens/', AllergenListView.as_view(), name='allergen-list'),
     path('api/products/', AllProductsView.as_view(), name='all-products'),
