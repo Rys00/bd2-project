@@ -21,6 +21,9 @@ class ProductsByCategoryView(ListAPIView):
         category_id = self.kwargs.get("category_id")
         return Product.objects.filter(category_id=category_id, active=True)
 
+class AllProductsView(ListAPIView):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductSerializer
 
 class AllProductsByCategoryView(ListAPIView):
     queryset = ProductCategory.objects.all()
