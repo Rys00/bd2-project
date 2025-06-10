@@ -1,12 +1,9 @@
-"use client";
-
 import { ProductTable } from "@/components/tables/product-table";
+import { getProductById } from "@/lib/backend-requests";
 
-const OrderPage = () => {
+const OrderPage = async () => {
   return (
-    <div>
-      <ProductTable></ProductTable>
-    </div>
+    <div>{<ProductTable data={[await getProductById(1)]}></ProductTable>}</div>
   );
 };
 

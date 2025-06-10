@@ -7,6 +7,25 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model ProductCategory {
+  category_id Int    @id @default(autoincrement()) @map("category_id")
+  name        String
+}
+
+model Product {
+  product_id Int     @id @default(autoincrement()) @map("product_id")
+  name       String
+  price      Decimal
+  cost       Decimal
+  margin     Int
+  active     Boolean
+}
+
+model Allergen {
+  allergen_id Int    @id @default(autoincrement()) @map("allergen_id")
+  name        String
+}
+
 model User {
   id            String          @id @default(cuid())
   name          String?
