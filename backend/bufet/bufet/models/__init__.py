@@ -5,4 +5,4 @@ from .allergen import Allergen
 from .contact_allergen import ContactAllergens
 from .daily_sales_report import DailySalesReport
 from .clients_avg_per_hour import ClientsAvgPerHour
-from .auth_js import JSAccount, JSSession, JSVerificationToken
+from .auth_js import JSAccount, JSSession, JSVerificationToken, JSUserPasswordHash

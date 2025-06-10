@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from .user import CUser
 
@@ -12,7 +14,7 @@ class JSVerificationToken(models.Model):
         unique_together = (('identifier', 'token'),)
 
 class JSAccount(models.Model):
-    id = models.CharField(primary_key=True, max_length=255)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(CUser, on_delete=models.CASCADE, related_name='accounts')
     type = models.CharField(max_length=255)
     provider = models.CharField(max_length=255)
@@ -32,7 +34,7 @@ class JSAccount(models.Model):
         unique_together = (('provider', 'provider_account_id'),)
 
 class JSSession(models.Model):
-    id =models.CharField(primary_key=True, max_length=255)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(CUser, on_delete=models.CASCADE, related_name='sessions')
     expires = models.DateTimeField()
     session_token = models.CharField(max_length=255, unique=True)
