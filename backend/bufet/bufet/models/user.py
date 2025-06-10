@@ -29,8 +29,8 @@ class CUser(AbstractBaseUser, PermissionsMixin):
      #things from django user
      is_staff = models.BooleanField(_("staff status"), default=False) #controlling access to django admin
      is_active = models.BooleanField(_("active"), default=True)
-     date_joined = models.DateTimeField(_("date joined"), default=timezone.now) #prisma equivalent is createdAt
-     updated_at = models.DateTimeField(_("date updated"), default=timezone.now)
+     date_joined = models.DateTimeField(_("date joined"), auto_now_add=True) #prisma equivalent is createdAt
+     updated_at = models.DateTimeField(_("date updated"), auto_now=True)
 
      #setting up email as primary source of id
      USERNAME_FIELD = 'email'
