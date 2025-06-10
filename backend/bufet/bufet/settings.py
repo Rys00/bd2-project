@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import dotenv
+#from bufet.django_auth.user import CUser
 
 dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -106,22 +107,24 @@ DATABASES = {
     }
 }
 
+#Setting up custom user as default to use in django_auth actions (so it connects with nextAuth)
+AUTH_USER_MODEL = "bufet.CUser"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.django_auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.django_auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.django_auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.django_auth.password_validation.NumericPasswordValidator",
     },
 ]
 
