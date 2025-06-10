@@ -38,3 +38,9 @@ class JSSession(models.Model):
 
     class Meta:
         db_table = 'js_sessions'
+
+class JSUserPasswordHash(models.Model):
+    hash = models.TextField()
+    user = models.ForeignKey(CUser, on_delete=models.CASCADE, related_name='password_hashes')
+    class Meta:
+        db_table = 'js_user_password_hashes'
