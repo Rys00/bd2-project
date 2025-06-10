@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation";
 
 const pathTitles = {
   "/dashboard": "Panel statystyczny",
-  "/dashboard/activity": "Aktywność klientów",
+  "/dashboard/orders": "Historia zamówień",
   "/dashboard/income": "Przychody",
-  "/dashboard/products": "Popularność produktów",
+  "/dashboard/products": "Moje produkty",
   "/dashboard/settings": "Ustawienia",
-  "/order": "Złóż zamówienia",
+  "/order": "Panel kasjera",
 };
 
 export function Header() {
