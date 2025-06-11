@@ -21,7 +21,7 @@ export function NavDocuments({
 }) {
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Dokumenty</SidebarGroupLabel>
+      <SidebarGroupLabel>Raporty</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>

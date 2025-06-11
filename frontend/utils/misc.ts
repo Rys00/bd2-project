@@ -42,6 +42,47 @@ export function throwParsedZodError(error: ZodError, dispatch?: AppDispatch) {
   throw new Error(message);
 }
 
+export async function makeBackendRequest<RetType>(
+  endpoint: string,
+  dispatch?: AppDispatch,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  postData?: any
+) {
+  const config =
+    postData != undefined
+      ? {
+          method: "POST",
+          headers: {
+            "content-type": "application/json;charset=UTF-8",
+          },
+          body: JSON.stringify(postData),
+        }
+      : {
+          method: "GET",
+        };
+
+  let res: Response | undefined = undefined;
+  try {
+    res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${endpoint}`,
+      config
+    );
+  } catch (error) {
+    const message = (error as Error).message;
+    if (dispatch) dispatch(addSnackbar({ message: message, type: "error" }));
+    throw error;
+  }
+
+  const data = await res.json();
+  if (res.ok) {
+    return data as RetType;
+  } else {
+    const message = "Nieznany błąd";
+    if (dispatch) dispatch(addSnackbar({ message: message, type: "error" }));
+    throw new Error(message);
+  }
+}
+
 export async function makeRequest<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Func extends (...args: any[]) => Promise<any>

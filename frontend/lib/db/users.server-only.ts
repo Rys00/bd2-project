@@ -29,6 +29,11 @@ export async function createUserWithEmailNameAndPassword(
           hash: hash,
         },
       },
+      is_superuser: false,
+      is_active: true,
+      is_cashier: true,
+      is_staff: false,
+      password: "",
     },
   });
 }

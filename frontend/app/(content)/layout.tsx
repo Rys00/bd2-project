@@ -2,7 +2,6 @@ import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Header } from "@/components/sidebar/header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { getCurrentUser } from "@/utils/users";
-import { redirect } from "next/navigation";
 
 export default async function ContentLayout({
   children,
@@ -10,7 +9,7 @@ export default async function ContentLayout({
   children: React.ReactNode;
 }>) {
   const currentUser = await getCurrentUser();
-  if (!currentUser) redirect("/auth/login");
+  // if (!currentUser) redirect("/auth/login");
 
   return (
     <SidebarProvider

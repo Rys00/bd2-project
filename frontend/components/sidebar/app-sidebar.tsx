@@ -1,12 +1,12 @@
 "use client";
 
 import {
-  IconActivity,
-  IconChartLine,
-  IconDashboard,
+  IconCashRegister,
+  IconChartBar,
+  IconCup,
   IconSettings,
   IconShoppingBag,
-  IconStar,
+  IconTrendingUp,
 } from "@tabler/icons-react";
 import * as React from "react";
 
@@ -28,14 +28,14 @@ import Link from "next/link";
 const data = {
   navMain: [
     {
-      title: "Złóż zamówienia",
+      title: "Panel kasjera",
       url: "/order",
-      icon: IconShoppingBag,
+      icon: IconCashRegister,
     },
     {
       title: "Panel statystyczny",
       url: "/dashboard",
-      icon: IconDashboard,
+      icon: IconChartBar,
     },
   ],
   navSecondary: [
@@ -47,19 +47,19 @@ const data = {
   ],
   documents: [
     {
-      name: "Aktywność klientów",
-      url: "/dashboard/activity",
-      icon: IconActivity,
+      name: "Zamówienia",
+      url: "/dashboard/orders",
+      icon: IconShoppingBag,
     },
     {
       name: "Przychody",
       url: "/dashboard/income",
-      icon: IconChartLine,
+      icon: IconTrendingUp,
     },
     {
-      name: "Popularność produktów",
+      name: "Produkty",
       url: "/dashboard/products",
-      icon: IconStar,
+      icon: IconCup,
     },
   ],
 };

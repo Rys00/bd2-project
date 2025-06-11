@@ -70,6 +70,8 @@ export async function signUpWithCredentials(
       await signInWithCredentials({ email, password }, callbackUrl);
       // redirect(`/auth/verify/${user.id}?callbackUrl${callbackUrl}`);
     } catch (error) {
+      console.log(error);
+
       if ((error as Error).message.startsWith("NEXT_REDIRECT")) throw error;
       return badData("User with this email already exists!");
     }
