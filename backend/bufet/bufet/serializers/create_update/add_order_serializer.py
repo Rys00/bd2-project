@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import transaction
+from django.utils import timezone
 from rest_framework import serializers
 from bufet.models import OrderPosition, Order, Product, ProductStock
 
@@ -12,7 +13,7 @@ class OrderPositionCreateSerializer(serializers.ModelSerializer):
         model = OrderPosition
         fields = ['product_id', 'amount']
 
-class OrderCreateSerializer(serializers.ModelSerializer):
+class OrderCreateUpdateSerializer(serializers.ModelSerializer):
     items = OrderPositionCreateSerializer(many=True)
 
     class Meta:
@@ -119,6 +120,80 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         order.save()
 
         return order
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        """
+        Updating order within the same day will change the product stock.
+        """
+        new_items = validated_data.get('items', [])
+        now = timezone.now()
+
+        existing_positions = {pos.product.product_id: pos for pos in instance.items.all()}
+        new_product_ids = {item['product_id'] for item in new_items}
+        same_day = instance.date.date() == now.date()
+
+        for item in new_items:
+            pid = item['product_id']
+            amount = item['amount']
+
+            #updating existing order position
+            if pid in existing_positions:
+                pos = existing_positions[pid]
+                old_amount = pos.amount
+                diff = amount - old_amount
+
+                if same_day and diff != 0:
+                    stock = ProductStock.objects.select_for_update().get(product_id=pid)
+                    if diff > 0 and stock.amount < diff:
+                        raise serializers.ValidationError(
+                            f"Insufficient stock for product {pid}. Available: {stock.amount}, requested increase: {diff}")
+                    stock.amount -= diff
+                    stock.save()
+
+                pos.amount = amount
+                pos.value = pos.unit_price * amount
+                pos.profit = (pos.unit_price - pos.product.cost) * amount
+                pos.save()
+
+            #updating by adding new order position
+            else:
+                product = Product.objects.get(product_id=pid)
+                unit_price = product.price
+
+                if same_day:
+                    stock = ProductStock.objects.select_for_update().get(product_id=pid)
+                    if stock.amount < amount:
+                        raise serializers.ValidationError(
+                            f"Insufficient stock for product {pid}. Available: {stock.amount}, requested: {amount}")
+                    stock.amount -= amount
+                    stock.save()
+
+                OrderPosition.objects.create(
+                    order=instance,
+                    product=product,
+                    amount=amount,
+                    unit_price=unit_price,
+                    value=unit_price * amount,
+                    profit=(unit_price - product.cost) * amount
+                )
+        # removing positions not needed
+        to_remove_pids = set(existing_positions.keys()) - new_product_ids
+        for pid in to_remove_pids:
+            pos = existing_positions[pid]
+            if same_day:
+                stock = ProductStock.objects.select_for_update().get(product_id=pid)
+                stock.amount += pos.amount
+                stock.save()
+            pos.delete()
+
+        instance.sum = sum(pos.value for pos in instance.items.all())
+        instance.total_profit = sum(pos.profit for pos in instance.items.all())
+        instance.save()
+
+        return instance
+
+
 
 
 

@@ -21,7 +21,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .views.order_view import AllOrdersView, OrderDetailsView, AddOrderView
+from .views.order_view import AllOrdersView, OrderDetailsView, AddOrderView, UpdateOrderView
 from .views.products_view import ProductDetailView, ProductsByCategoryView, AllProductsCategoriesView, \
     AddProductCategoryView, AddProductView, AllProductsView, UpdateProductView, ProductCategoryDetailView, \
     DeleteProductCategoryView
@@ -51,6 +51,7 @@ urlpatterns = [
     path('api/add/order', AddOrderView.as_view(), name='add-order'),
     #updating
     path('api/update/product/<int:product_id>', UpdateProductView.as_view(), name='update-product'), #put and patch
+    path('api/update/order/<int:order_id>', UpdateOrderView.as_view(), name='update-order'),
     #deleting
     path('api/delete/product_category/<int:category_id>', DeleteProductCategoryView.as_view(), name='delete-product-category'),
     path('api/delete/allergen/<int:allergen_id>', DeleteAllergenView.as_view(), name='delete-allergen'),
