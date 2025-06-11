@@ -42,6 +42,12 @@ export function throwParsedZodError(error: ZodError, dispatch?: AppDispatch) {
   throw new Error(message);
 }
 
+export function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift();
+}
+
 export async function makeBackendRequest<RetType>(
   endpoint: string,
   dispatch?: AppDispatch,
@@ -54,11 +60,16 @@ export async function makeBackendRequest<RetType>(
           method: "POST",
           headers: {
             "content-type": "application/json;charset=UTF-8",
+            jwt: getCookie("authjs.session-token") || "",
           },
           body: JSON.stringify(postData),
         }
       : {
           method: "GET",
+          headers: {
+            "content-type": "application/json;charset=UTF-8",
+            jwt: getCookie("authjs.session-token") || "",
+          },
         };
 
   let res: Response | undefined = undefined;
