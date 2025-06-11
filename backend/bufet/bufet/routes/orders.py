@@ -32,7 +32,7 @@
 #     ).filter(id__in=product_dict.keys())
 #
 #     order_total = 0
-#     order = OrderModel.objects.create(
+#     order = OrderModel.objects.create_update(
 #         user_id=request.user,
 #         date=timezone.now(),
 #         price=0,  # will update later

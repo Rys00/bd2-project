@@ -27,7 +27,7 @@ from .routes import products
 from .routes import cart
 from .routes import orders
 from .views.products_view import ProductDetailView, ProductsByCategoryView, AllProductsCategoriesView, \
-    AddProductCategoryView, AddProductView, AllProductsView
+    AddProductCategoryView, AddProductView, AllProductsView, UpdateProductView
 from .views.allergens_view import AllergenDetailView, AllergenListView, AddAllergenView
 from .views.stock_view import AllStockView, ProductStockView
 
@@ -46,6 +46,7 @@ urlpatterns = [
     path('api/add/product-category', AddProductCategoryView.as_view(), name='add-product-category'),
     path('api/add/allergen', AddAllergenView.as_view(), name='add-allergen'),
     path('api/add/product', AddProductView.as_view(), name='add-product'),
+    path('api/update/product/<int:product_id>', UpdateProductView.as_view(), name='update-product'),
     # path("auth/login",auth.login),
     # path("auth/register", auth.register),
     # path("auth/test", auth.authenticated_view),
