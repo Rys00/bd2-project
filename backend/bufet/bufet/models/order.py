@@ -19,7 +19,7 @@ class OrderPosition(models.Model):
     value = models.DecimalField(max_digits=10, decimal_places=2)
     profit = models.DecimalField(max_digits=10, decimal_places=2)
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
 
     def __str__(self):
         return f"Position #{self.position_id} for Order #{self.order.order_id}"

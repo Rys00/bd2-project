@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import dotenv
-#from bufet.django_auth.user import CUser
 
 dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

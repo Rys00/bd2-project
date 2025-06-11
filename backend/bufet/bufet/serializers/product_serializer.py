@@ -52,7 +52,6 @@ class ProductStockSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProductForOrderSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(read_only=True)
     class Meta:
         model = Product
         fields = [

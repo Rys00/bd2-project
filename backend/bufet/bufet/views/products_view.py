@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, RetrieveUpdateAPIView, DestroyAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
@@ -50,7 +50,7 @@ class AddProductView(CreateAPIView):
         product = Product.objects.get(pk=response.data['product_id'])
         return Response(ProductSerializer(product).data, status=status.HTTP_201_CREATED)
 
-class UpdateProductView(RetrieveUpdateAPIView):
+class UpdateProductView(UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductCreateUpdateSerializer
     lookup_field = 'product_id'
