@@ -27,45 +27,39 @@ from .routes import products
 from .routes import cart
 from .routes import orders
 from .views.products_view import ProductDetailView, ProductsByCategoryView, AllProductsCategoriesView, \
-    AddProductCategoryView, AddProductView, AllProductsView, UpdateProductView
-from .views.allergens_view import AllergenDetailView, AllergenListView, AddAllergenView
+    AddProductCategoryView, AddProductView, AllProductsView, UpdateProductView, ProductCategoryDetailView, \
+    DeleteProductCategoryView
+from .views.allergens_view import AllergenDetailView, AllAllergensView, AddAllergenView, DeleteAllergenView
 from .views.stock_view import AllStockView, ProductStockView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/products/<int:pk>', ProductDetailView.as_view(),name='product-detail'),
+
+    #details of object
+    path('api/products/<int:product_id>', ProductDetailView.as_view(),name='product-detail'),
+    path('api/products_category/<int:category_id>', ProductCategoryDetailView.as_view(),name='category-detail'),
+    path('api/allergens/<int:pk>', AllergenDetailView.as_view(), name='allergen-detail'),
+
+    #lists
     path('api/category/<int:category_id>/products', ProductsByCategoryView.as_view(),name='products-by-category'),
     path('api/categories/', AllProductsCategoriesView.as_view(), name='all-products-categories'),
-    path('api/allergens/<int:pk>', AllergenDetailView.as_view(), name='allergen-detail' ),
-    path('api/allergens/', AllergenListView.as_view(), name='allergen-list'),
+    path('api/allergens/', AllAllergensView.as_view(), name='all-allergens'),
     path('api/products/', AllProductsView.as_view(), name='all-products'),
-    path('api/stock/', AllStockView.as_view(), name='stock'),
+    path('api/stock/', AllStockView.as_view(), name='all-stock'),
     path('api/stock/product/<int:product_id>', ProductStockView.as_view(), name='stock-product'),
-    path('api/add/product-category', AddProductCategoryView.as_view(), name='add-product-category'),
+
+    #adding objects
+    path('api/add/product_category', AddProductCategoryView.as_view(), name='add-product-category'),
     path('api/add/allergen', AddAllergenView.as_view(), name='add-allergen'),
     path('api/add/product', AddProductView.as_view(), name='add-product'),
-    path('api/update/product/<int:product_id>', UpdateProductView.as_view(), name='update-product'),
-    # path("auth/login",auth.login),
-    # path("auth/register", auth.register),
-    # path("auth/test", auth.authenticated_view),
-    # path("products/get_all", products.get_all),
-    # path("products/get_by_id", products.get_by_id),
-    # path("products/get_by_name", products.get_by_name),
-    # path("products/change_product_category", products.change_product_category),
-    # path("products/delete", products.delete_product),
-    # path("products/check_all_stock", products.check_all_stock),
-    # path("products/check_stock_by_name", products.check_stock_by_name),
-    # path("products/add_stock_by_name", products.add_stock_by_name),
-    # path("products/add", products.add_product),
-    # path("products/add_alllergens", products.add_allergens),
-    # path("cart/add", cart.add_to_cart),
-    # path("orders/new", orders.order),
-    # path("orders/get_all", orders.get_all_orders),
-    # path("orders/get_all_user", orders.get_all_user_orders),
-    # path("orders/get_total_bought_by_name", orders.total_bought_by_name),
-    # path("orders/get_user_bought_by_name", orders.user_bought_by_name),
-    # path("orders/get_total_bought_by_cat", orders.total_bought_by_category),
-    # path("orders/get_user_bought_by_cat", orders.user_bought_by_category),
+
+    #updating
+    path('api/update/product/<int:product_id>', UpdateProductView.as_view(), name='update-product'), #put and patch
+
+    #deleting
+    path('api/delete/product_category/<int:category_id>', DeleteProductCategoryView.as_view(), name='delete-product-category'),
+    path('api/delete/allergen/<int:allergen_id>', DeleteAllergenView.as_view(), name='delete-allergen'),
+
 ]

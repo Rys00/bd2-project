@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, RetrieveUpdateAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
@@ -7,13 +7,7 @@ from bufet.models.product import ProductStock, Product, ProductCategory
 from bufet.serializers.create_update.add_product_serializer import ProductCreateUpdateSerializer
 from bufet.serializers.product_serializer import ProductSerializer, ProductCategorySerializer
 
-
-class ProductDetailView(RetrieveAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    lookup_field = 'pk'
-
-
+#viewing all
 class ProductsByCategoryView(ListAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductSerializer
@@ -28,13 +22,22 @@ class AllProductsView(ListAPIView):
     serializer_class = ProductSerializer
 
 class AllProductsCategoriesView(ListAPIView):
-    permission_classes = [AllowAny]
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
+# viewing one sth by id
+class ProductDetailView(RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'product_id'
 
+class ProductCategoryDetailView(RetrieveAPIView):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
+    lookup_field = 'category_id'
+
+# adding and updating products
 class AddProductCategoryView(CreateAPIView):
-    permission_classes = [IsAdminUser]
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
@@ -56,3 +59,11 @@ class UpdateProductView(RetrieveUpdateAPIView):
         response = super().update(request, *args, **kwargs)
         product = Product.objects.get(pk=response.data['product_id'])
         return Response(ProductSerializer(product).data, status=status.HTTP_200_OK)
+
+
+#deleting by id - only category, since product is used as part of orders history
+class DeleteProductCategoryView(DestroyAPIView):
+    #it will only work if category is not used
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
+    lookup_field = 'category_id'

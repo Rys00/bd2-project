@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from bufet.models import Product, ProductCategory, Allergen, ContactAllergens  # Tabela pośrednia
+from bufet.models import Product, ProductCategory, Allergen, ContactAllergens
 
 class ProductCreateUpdateSerializer(serializers.ModelSerializer):
     category_id = serializers.IntegerField(write_only=True)
@@ -42,10 +42,11 @@ class ProductCreateUpdateSerializer(serializers.ModelSerializer):
 
         if 'allergens' in validated_data:
             allergen_ids = self.validate_allergens(validated_data.pop('allergens'))
-            # Wyczyść stare i dodaj nowe powiązania
             ContactAllergens.objects.filter(product=instance).delete()
-            for allergen_id in allergen_ids:
-                ContactAllergens.objects.create(product=instance, allergen_id=allergen_id)
+            ContactAllergens.objects.bulk_create([
+                ContactAllergens(product=instance, allergen_id=aid)
+                for aid in allergen_ids
+            ])
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
