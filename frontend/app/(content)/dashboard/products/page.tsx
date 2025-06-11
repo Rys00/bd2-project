@@ -1,15 +1,24 @@
+"use client";
+
 import { ProductTable } from "@/components/tables/product-table";
 import { getProductById, ProductView } from "@/lib/backend-requests";
+import { useEffect, useState } from "react";
 
-const OrderPage = async () => {
-  let products: ProductView[] = [];
-  try {
-    products = [await getProductById(1)];
-  } catch (error) {
-    console.log(error);
-  }
+const OrderPage = () => {
+  const [products, setProducts] = useState<ProductView[]>([]);
 
-  return <div>{<ProductTable data={products}></ProductTable>}</div>;
+  useEffect(() => {
+    const exec = async () => {
+      setProducts([await getProductById(1)]);
+    };
+    exec();
+  }, []);
+
+  return (
+    <div>
+      {products.length > 0 ? <ProductTable data={products}></ProductTable> : ""}
+    </div>
+  );
 };
 
 export default OrderPage;
