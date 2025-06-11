@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -30,30 +30,39 @@ model User {
   id            String          @id @default(cuid())
   name          String?
   email         String?         @unique
-  emailVerified DateTime?
+  emailVerified DateTime?       @map("email_verified")
   image         String?
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
+  createdAt    DateTime          @default(now()) @map("date_joined")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
   // Custom
   passwordHash UserPasswordHash?
 
-  @@map("auth_user")
+  //Django
+  is_superuser Boolean
+  is_staff     Boolean
+  is_active    Boolean
+  is_cashier   Boolean
+  password     String
+
+  @@map("bufet_cuser")
 }
 
 model UserPasswordHash {
-  user         User   @relation(fields: [forUserEmail], references: [email], onDelete: Cascade)
-  forUserEmail String @id
-  hash         String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @id @map("user_id")
+  hash   String
+
+  @@map("js_user_password_hashes")
 }
 
 model Account {
   id                String  @id @default(cuid())
-  userId            String
+  userId            String  @map("user_id")
   type              String
   provider          String
   providerAccountId String
@@ -71,17 +80,20 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@map("js_accounts")
 }
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("js_sessions")
 }
 
 model VerificationToken {
@@ -90,6 +102,7 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+  @@map("js_verification_token")
 }
 
 // Optional for WebAuthn support
