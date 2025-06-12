@@ -26,7 +26,7 @@ from .views.products_view import ProductDetailView, ProductsByCategoryView, AllP
     AddProductCategoryView, AddProductView, AllProductsView, UpdateProductView, ProductCategoryDetailView, \
     DeleteProductCategoryView
 from .views.allergens_view import AllergenDetailView, AllAllergensView, AddAllergenView, DeleteAllergenView
-from .views.stock_view import AllStockView, ProductStockView
+from .views.stock_view import AllStockView, ProductStockView, BulkUpdatingStockView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -53,6 +53,7 @@ urlpatterns = [
     #updating
     path('api/update/product/<int:product_id>', UpdateProductView.as_view(), name='update-product'), #put and patch
     path('api/update/order/<int:order_id>', UpdateOrderView.as_view(), name='update-order'),
+    path('api/update/stocks', BulkUpdatingStockView.as_view(), name='update-stocks'),
     #deleting
     path('api/delete/product_category/<int:category_id>', DeleteProductCategoryView.as_view(), name='delete-product-category'),
     path('api/delete/allergen/<int:allergen_id>', DeleteAllergenView.as_view(), name='delete-allergen'),
