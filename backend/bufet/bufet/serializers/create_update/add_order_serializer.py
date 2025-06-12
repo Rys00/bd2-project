@@ -21,12 +21,13 @@ class OrderCreateUpdateSerializer(serializers.ModelSerializer):
         fields = ['order_id', 'items']
         read_only_fields = ['order_id']
 
-    def validate_items(self, items):
+    @staticmethod
+    def validate_items(items):
         if not items:
             raise serializers.ValidationError("Order items can't be empty")
 
 
-        seen_ids = set() #so no duplicated product on order as seperate posiotions (less rows in table)
+        seen_ids = set() #so no duplicated product on order as separate positions (fewer rows in table)
         errors = []
         product_ids = []
 

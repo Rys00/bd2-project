@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from decimal import Decimal
 
 class ProductCategory(models.Model):
     category_id = models.AutoField(primary_key=True)
@@ -11,8 +12,16 @@ class ProductCategory(models.Model):
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     name = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
-    cost = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.01"))]
+    )
+    cost = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.01"))]
+    )
     margin = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     active = models.BooleanField(default=True)
     category = models.ForeignKey(ProductCategory, on_delete=models.DO_NOTHING)

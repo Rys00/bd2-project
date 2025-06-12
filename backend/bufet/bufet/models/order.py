@@ -1,4 +1,5 @@
 from django.core.validators import MinValueValidator
+from decimal import Decimal
 from django.db import models
 from .product import Product
 
@@ -15,7 +16,7 @@ class Order(models.Model):
 
 class OrderPosition(models.Model):
     position_id = models.AutoField(primary_key=True)
-    unit_price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)], null=False) #so in case product price change we have historical correct value
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))], null=False) #so in case product price change we have historical correct value
     amount = models.IntegerField(validators=[MinValueValidator(1)])
     value = models.DecimalField(max_digits=10, decimal_places=2)
     profit = models.DecimalField(max_digits=10, decimal_places=2)

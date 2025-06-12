@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
 from bufet.models.product import ProductStock, Product, ProductCategory
@@ -14,6 +15,8 @@ class ProductsByCategoryView(ListAPIView):
 
     def get_queryset(self):
         category_id = self.kwargs.get("category_id")
+        if not ProductCategory.objects.filter(pk=category_id).exists():
+            raise NotFound(detail=f"Category with id {category_id} does not exist.")
         return Product.objects.filter(category_id=category_id, active=True)
 
 class AllProductsView(ListAPIView):
