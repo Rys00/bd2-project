@@ -42,35 +42,31 @@ export function throwParsedZodError(error: ZodError, dispatch?: AppDispatch) {
   throw new Error(message);
 }
 
-export function getCookie(name: string) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop()?.split(";").shift();
-}
-
 export async function makeBackendRequest<RetType>(
   endpoint: string,
-  dispatch?: AppDispatch,
+  method: "GET" | "POST" | "DEL" | "PUT" | "PATCH",
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  postData?: any
+  requestData?: any,
+  dispatch?: AppDispatch
 ) {
-  const config =
-    postData != undefined
-      ? {
-          method: "POST",
-          headers: {
-            "content-type": "application/json;charset=UTF-8",
-            jwt: getCookie("authjs.session-token") || "",
-          },
-          body: JSON.stringify(postData),
-        }
-      : {
-          method: "GET",
-          headers: {
-            "content-type": "application/json;charset=UTF-8",
-            jwt: getCookie("authjs.session-token") || "",
-          },
-        };
+  let jwt = "";
+  try {
+    const res = await fetch("/api/jwt");
+    if (res.ok) {
+      jwt = await res.text();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+  const config = {
+    method,
+    headers: {
+      "content-type": "application/json;charset=UTF-8",
+      Authorization: jwt,
+    },
+    body: method !== "GET" ? JSON.stringify(requestData) : undefined,
+  };
 
   let res: Response | undefined = undefined;
   try {

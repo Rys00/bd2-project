@@ -21,9 +21,30 @@ model Product {
   active     Boolean
 }
 
+model ProductStock {
+  stock_id     Int      @id @default(autoincrement())
+  amount       Int
+  last_updated DateTime @updatedAt
+}
+
 model Allergen {
   allergen_id Int    @id @default(autoincrement()) @map("allergen_id")
   name        String
+}
+
+model Order {
+  order_id     Int      @id @default(autoincrement())
+  date         DateTime
+  sum          Decimal
+  total_profit Decimal
+}
+
+model OrderPosition {
+  position_id Int     @id @default(autoincrement())
+  amount      Int
+  profit      Decimal
+  unit_price  Decimal
+  value       Decimal
 }
 
 model User {
