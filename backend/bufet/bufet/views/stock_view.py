@@ -66,18 +66,8 @@ class BulkUpdatingStockView(GenericAPIView):
             product_id = update.get('product_id')
             change = update.get('change')
             stock = stock_map.get(product_id)
-
-            new_amount = stock.amount + change
-            if new_amount < 0:
-                raise ValidationError({
-                    "product_id": product_id,
-                    "error": f"Stock cannot be negative. Current: {stock.amount}, change: {change}"
-                })
-
-            stock.amount = new_amount
-            # positive if delivery, minus changed means corrections
-            if change > 0:
-                stock.last_delivery = timezone.now()
+            stock.amount = change
+            stock.last_updated= timezone.now()
             updated_stocks.append(stock)
 
         ProductStock.objects.bulk_update(updated_stocks, ['amount', 'last_updated'])
