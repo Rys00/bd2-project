@@ -16,6 +16,11 @@ import dotenv
 from corsheaders.defaults import default_headers
 
 dotenv.load_dotenv()
+AUTH_SECRET = os.getenv("AUTH_SECRET")
+AUTH_SALT = os.getenv("AUTH_SALT")
+AUTH_JWE_ALGORITHM = os.getenv("AUTH_JWE_ALGORITHM")
+AUTH_JWE_ENCRYPTION = os.getenv("AUTH_JWE_ENCRYPTION")
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -81,11 +86,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "bufet.wsgi.application"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-        # "bufet.cookie_auth.CookieJWTAuthentication",
+        "bufet.auth.jwt.JWEAuthentication",
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-            'rest_framework.permissions.AllowAny', #temporary
+            'rest_framework.permissions.IsAuthenticated', #temporary
     ],
 }
 
@@ -111,13 +115,13 @@ DATABASES = {
     }
 }
 
-#Setting up custom user as default to use in django_auth actions (so it connects with nextAuth)
+#Setting up custom user as default to use in auth actions (so it connects with nextAuth)
 AUTH_USER_MODEL = "bufet.CUser"
 
 #JWT auth
 SIMPLE_JWT = {
-    'SIGNING_KEY': os.getenv('JWT_SECRET') + os.getenv('JWT_SALT'),
-    'HEADER_TYPES': ['Bearer', 'Bearer ', ''],
+    'SIGNING_KEY': os.getenv('JWT_SECRET'),
+    #'HEADER_TYPES': ['Bearer', 'Bearer ',''],
 }
 
 # Password validation
