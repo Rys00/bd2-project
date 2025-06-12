@@ -3,6 +3,7 @@ from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView,
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from django.db.models import Case, When, Value, IntegerField
 
 from bufet.models.product import ProductStock, Product, ProductCategory
 from bufet.serializers.create_update.add_product_serializer import ProductCreateUpdateSerializer
@@ -17,11 +18,24 @@ class ProductsByCategoryView(ListAPIView):
         category_id = self.kwargs.get("category_id")
         if not ProductCategory.objects.filter(pk=category_id).exists():
             raise NotFound(detail=f"Category with id {category_id} does not exist.")
-        return Product.objects.filter(category_id=category_id, active=True)
+        return Product.objects.filter(category_id=category_id).annotate(
+            active_order=Case(
+                When(active=True, then=Value(0)),
+                When(active=False, then=Value(1)),
+                output_field=IntegerField(),
+            )
+        ).order_by('active_order', 'name')
+
 
 class AllProductsView(ListAPIView):
     permission_classes = [AllowAny]
-    queryset = Product.objects.all()
+    queryset = Product.objects.annotate(
+        active_order=Case(
+            When(active=True, then=Value(0)),
+            When(active=False, then=Value(1)),
+            output_field=IntegerField(),
+        )
+    ).order_by('active_order', 'name')
     serializer_class = ProductSerializer
 
 class AllProductsCategoriesView(ListAPIView):

@@ -13,6 +13,7 @@ class ProductCategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     category = ProductCategorySerializer(read_only=True)
     allergens = serializers.SerializerMethodField()
+    stock_amount = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -23,7 +24,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'price',
             'cost',
             'margin',
-            'active',
+            'stock_amount',
             'allergens'
         ]
         read_only_fields = ["product_id"]
@@ -32,6 +33,12 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_allergens(obj):
         contacts  = ContactAllergens.objects.filter(product=obj).select_related('allergen')
         return AllergensSerializer([c.allergen for c in contacts], many=True).data
+
+    def get_stock_amount(self, obj):
+        stock = ProductStock.objects.filter(product=obj).first()
+        if stock:
+            return stock.amount
+        return None
 
 class ProductForStockSerializer(serializers.ModelSerializer):
     category = ProductCategorySerializer(read_only=True)
