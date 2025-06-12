@@ -25,6 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'cost',
             'margin',
             'stock_amount',
+            'active',
             'allergens'
         ]
         read_only_fields = ["product_id"]
