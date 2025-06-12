@@ -16,15 +16,18 @@ export function ButtonDuplicateProduct({ product }: { product: ProductView }) {
 
   async function duplicate() {
     try {
-      await addProduct({
-        name: `${product.name} - kopia`,
-        category_id: product.category.category_id,
-        price: new Prisma.Decimal(product.price),
-        cost: new Prisma.Decimal(product.cost),
-        margin: product.margin,
-        allergens: product.allergens.map((a) => a.allergen_id),
-        active: product.active,
-      });
+      await addProduct(
+        {
+          name: `${product.name} - kopia`,
+          category_id: product.category.category_id,
+          price: new Prisma.Decimal(product.price),
+          cost: new Prisma.Decimal(product.cost),
+          margin: product.margin,
+          allergens: product.allergens.map((a) => a.allergen_id),
+          active: product.active,
+        },
+        dispatch
+      );
       dispatch(
         addSnackbar({
           message: `Pomyślnie skopiowano produkt`,
@@ -60,9 +63,13 @@ export function ButtonToggleProductActive({
 
   async function toggle(active: boolean) {
     try {
-      await updateProduct(id, {
-        active,
-      });
+      await updateProduct(
+        id,
+        {
+          active,
+        },
+        dispatch
+      );
       dispatch(
         addSnackbar({
           message: `Pomyślnie ${active ? "włączono" : "wyłączono"} produkt`,

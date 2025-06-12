@@ -10,6 +10,7 @@ import { AppDispatch } from "../store/store";
 export type ProductView = Product & {
   category: ProductCategory;
   allergens: Allergen[];
+  stock_amount: ProductStock["amount"];
 };
 
 export type ProductCreator = Omit<Product, "product_id"> & {
