@@ -107,8 +107,8 @@ export default function ProductTableCellViewer({
   }, [item]);
 
   const fetchData = async () => {
-    setCategories(await getCategories());
-    setAllergens(await getAllergens());
+    setCategories(await getCategories(dispatch));
+    setAllergens(await getAllergens(dispatch));
   };
 
   async function onSubmit(values: z.infer<typeof ProductDescriptorSchema>) {
