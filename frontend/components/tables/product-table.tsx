@@ -25,11 +25,10 @@ import {
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
-  IconCircleCheckFilled,
+  IconCircleFilled,
   IconDotsVertical,
   IconGripVertical,
   IconLayoutColumns,
-  IconLoader,
 } from "@tabler/icons-react";
 import {
   ColumnDef,
@@ -55,7 +54,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -76,9 +74,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { ProductView } from "@/lib/backend-requests";
+import { ProductView } from "@/lib/backend-requests/products";
 import { Prisma } from "@prisma/client";
-import ProductTableCellViewer from "./praduct-table-cell-viewer";
+import ProductTableCellViewer from "./product-table-cell-viewer";
+import {
+  ButtonDuplicateProduct,
+  ButtonToggleProductActive,
+} from "./product-table-row-buttons";
 // Create a separate component for the drag handle
 function DragHandle({ id }: { id: number }) {
   const { attributes, listeners } = useSortable({
@@ -156,12 +158,19 @@ const columns: ColumnDef<ProductView>[] = [
     cell: ({ row }) => (
       <Badge variant="outline" className="text-muted-foreground px-1.5">
         {row.original.name === "Done" ? (
-          <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
+          <IconCircleFilled className="fill-green-500 dark:fill-green-400" />
         ) : (
-          <IconLoader />
+          <IconCircleFilled className="fill-red-500 dark:fill-red-400" />
         )}
-        {row.original.name}
+        {0}
       </Badge>
+    ),
+  },
+  {
+    accessorKey: "cena",
+    header: () => <div className="w-full">Cena</div>,
+    cell: ({ row }) => (
+      <span>{new Prisma.Decimal(row.original.price).toString()} zł</span>
     ),
   },
   {
@@ -190,7 +199,7 @@ const columns: ColumnDef<ProductView>[] = [
   },
   {
     id: "actions",
-    cell: () => (
+    cell: ({ row }) => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -203,10 +212,12 @@ const columns: ColumnDef<ProductView>[] = [
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-32">
-          <DropdownMenuItem>Edytuj</DropdownMenuItem>
-          <DropdownMenuItem>Kopiuj</DropdownMenuItem>
+          <ButtonDuplicateProduct product={row.original} />
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+          <ButtonToggleProductActive
+            id={row.original.product_id}
+            active={row.original.active}
+          />
         </DropdownMenuContent>
       </DropdownMenu>
     ),
@@ -239,7 +250,7 @@ function DraggableRow({ row }: { row: Row<ProductView> }) {
 }
 
 export function ProductTable({ data: initialData }: { data: ProductView[] }) {
-  const [data, setData] = React.useState(() => initialData);
+  const [data, setData] = React.useState(initialData);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -257,6 +268,10 @@ export function ProductTable({ data: initialData }: { data: ProductView[] }) {
     useSensor(TouchSensor, {}),
     useSensor(KeyboardSensor, {})
   );
+
+  React.useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
 
   const dataIds = React.useMemo<UniqueIdentifier[]>(
     () => data?.map(({ product_id }) => product_id) || [],

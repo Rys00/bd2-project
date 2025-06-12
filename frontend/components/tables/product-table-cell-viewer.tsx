@@ -1,15 +1,17 @@
+"use client";
+
 import { useIsMobile } from "@/hooks/use-mobile";
-import { ProductView } from "@/lib/backend-requests";
+import { getAllergens, getCategories } from "@/lib/backend-requests/misc";
+import { ProductView, updateProduct } from "@/lib/backend-requests/products";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { addSnackbar } from "@/lib/store/ui/ui.slice";
 import { ProductDescriptorSchema } from "@/lib/zod/product";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Allergen, Prisma, ProductCategory } from "@prisma/client";
-import { IconTrendingUp } from "@tabler/icons-react";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
@@ -68,6 +70,7 @@ export default function ProductTableCellViewer({
   item: ProductView;
 }) {
   const isMobile = useIsMobile();
+  const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [allergens, setAllergens] = useState<Allergen[]>([]);
   const form = useForm<z.infer<typeof ProductDescriptorSchema>>({
@@ -76,28 +79,62 @@ export default function ProductTableCellViewer({
       id: item.product_id,
       name: item.name,
       categoryId: `${item.category.category_id}`,
+      price: new Prisma.Decimal(item.price).toNumber(),
       cost: new Prisma.Decimal(item.cost).toNumber(),
+      margin: item.margin,
       allergens: item.allergens.map((a) => `${a.allergen_id}`),
-      disabled: false,
+      active: item.active,
       quantity: 0,
     },
   });
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    form.setValue("id", item.product_id);
+    form.setValue("name", item.name);
+    form.setValue("categoryId", `${item.category.category_id}`);
+    form.setValue("price", new Prisma.Decimal(item.price).toNumber());
+    form.setValue("cost", new Prisma.Decimal(item.cost).toNumber());
+    form.setValue("margin", item.margin);
+    form.setValue(
+      "allergens",
+      item.allergens.map((a) => `${a.allergen_id}`)
+    );
+    form.setValue("active", item.active);
+    form.setValue("quantity", 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item]);
 
   const fetchData = async () => {
-    setCategories([{ category_id: 1, name: "test1" }]);
-    setAllergens([{ allergen_id: 1, name: "test2" }]);
+    setCategories(await getCategories());
+    setAllergens(await getAllergens());
   };
 
   async function onSubmit(values: z.infer<typeof ProductDescriptorSchema>) {
     try {
-      console.log(values);
-
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
+      await updateProduct(values.id, {
+        name: values.name,
+        category_id: Number(values.categoryId),
+        price: new Prisma.Decimal(values.price),
+        cost: new Prisma.Decimal(values.cost),
+        margin: values.margin,
+        allergens: values.allergens.map((a) => Number(a)),
+        active: values.active,
+      });
+      // await updateStock({
+      //   updates: [
+      //     {
+      //       product_id: values.id,
+      //       change: values.quantity - item.
+      //     }
+      //   ]
+      // })
+      dispatch(
+        addSnackbar({ message: "Pomyślnie zapisany zmiany", type: "success" })
       );
+      router.refresh();
+      setIsOpen(false);
     } catch (error) {
       const message = (error as Error).message;
       if (message.startsWith("PWB_ERROR")) {
@@ -111,12 +148,19 @@ export default function ProductTableCellViewer({
   return (
     <Drawer
       direction={isMobile ? "bottom" : "right"}
+      open={isOpen}
       onOpenChange={(b) => {
+        setIsOpen(b);
         if (b) fetchData();
       }}
     >
       <DrawerTrigger asChild>
-        <Button variant="link" className="text-foreground w-fit px-0 text-left">
+        <Button
+          variant="link"
+          className={`text-foreground ${
+            item.active ? "" : "opacity-50"
+          } w-fit px-0 text-left `}
+        >
           {item.name}
         </Button>
       </DrawerTrigger>
@@ -174,18 +218,6 @@ export default function ProductTableCellViewer({
                     </AreaChart>
                   </ChartContainer>
                   <Separator />
-                  <div className="grid gap-2">
-                    <div className="flex gap-2 leading-none font-medium">
-                      Trending up by 5.2% this month{" "}
-                      <IconTrendingUp className="size-4" />
-                    </div>
-                    <div className="text-muted-foreground">
-                      Showing total visitors for the last 6 months. This is just
-                      some random text to test the layout. It spans multiple
-                      lines and should wrap around.
-                    </div>
-                  </div>
-                  <Separator />
                 </>
               )}
               <FormField
@@ -200,105 +232,23 @@ export default function ProductTableCellViewer({
                   </FormItem>
                 )}
               />
-
               <div className="grid grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
-                  name="categoryId"
+                  name="active"
                   render={({ field }) => (
                     <FormItem className="flex flex-col gap-3">
-                      <FormLabel htmlFor="category">Kategoria</FormLabel>
-                      <FormControl>
-                        <Select {...field}>
-                          <SelectTrigger id="category" className="w-full">
-                            <SelectValue placeholder="Wybierz kategorię" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {categories.map((c) => (
-                              <SelectItem
-                                key={c.category_id}
-                                value={`${c.category_id}`}
-                              >
-                                {c.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="cost"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-3">
-                      <FormLabel htmlFor="cost">Cena</FormLabel>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                          <span className="text-muted-foreground">zł</span>
-                        </div>
-                        <FormControl>
-                          <Input
-                            id="cost"
-                            type="number"
-                            min={0}
-                            max={10000}
-                            step={0.01}
-                            placeholder="0.00"
-                            className="pl-9"
-                            {...field}
-                          />
-                        </FormControl>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                control={form.control}
-                name="allergens"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col gap-3">
-                    <FormLabel htmlFor="allergens">Alergeny</FormLabel>
-                    <FormControl>
-                      <MultipleSelector
-                        defaultOptions={allergens.map((a) => ({
-                          label: a.name,
-                          value: `${a.allergen_id}`,
-                        }))}
-                        placeholder="Wybierz alergeny..."
-                        emptyIndicator={
-                          <p className="text-center text-base leading-2 text-gray-600 dark:text-gray-400">
-                            Brak innych alergenów.
-                          </p>
-                        }
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="disabled"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col gap-3">
-                      <FormLabel htmlFor="quantity">
-                        Czy produkt wyłączony?
+                      <FormLabel htmlFor="active">
+                        Czy produkt aktywny?
                       </FormLabel>
                       <div className="inline-flex items-center gap-2">
                         <Switch
-                          id="quantity"
+                          id="active"
                           aria-label="Toggle switch"
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
-                        <Label
-                          htmlFor="quantity"
-                          className="text-sm font-medium"
-                        >
+                        <Label htmlFor="active" className="text-sm font-medium">
                           {field.value ? "Tak" : "Nie"}
                         </Label>
                       </div>
@@ -334,11 +284,145 @@ export default function ProductTableCellViewer({
                   )}
                 />
               </div>
+
+              <FormField
+                control={form.control}
+                name="allergens"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col gap-3">
+                    <FormLabel htmlFor="allergens">Alergeny</FormLabel>
+                    <FormControl>
+                      <MultipleSelector
+                        defaultOptions={allergens.map((a) => ({
+                          label: a.name,
+                          value: `${a.allergen_id}`,
+                        }))}
+                        placeholder="Wybierz alergeny..."
+                        emptyIndicator={
+                          <p className="text-center text-base leading-2 text-gray-600 dark:text-gray-400">
+                            Brak innych alergenów.
+                          </p>
+                        }
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="categoryId"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-3">
+                      <FormLabel htmlFor="category">Kategoria</FormLabel>
+                      <FormControl>
+                        <Select {...field}>
+                          <SelectTrigger id="category" className="w-full">
+                            <SelectValue placeholder="Wybierz kategorię" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {categories.map((c) => (
+                              <SelectItem
+                                key={c.category_id}
+                                value={`${c.category_id}`}
+                              >
+                                {c.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-3">
+                      <FormLabel htmlFor="price">Cena</FormLabel>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <span className="text-muted-foreground">zł</span>
+                        </div>
+                        <FormControl>
+                          <Input
+                            id="price"
+                            type="number"
+                            min={0}
+                            max={10000}
+                            step={0.01}
+                            placeholder="0.00"
+                            className="pl-9"
+                            {...field}
+                          />
+                        </FormControl>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="cost"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-3">
+                      <FormLabel htmlFor="cost">Koszt produkcji</FormLabel>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <span className="text-muted-foreground">zł</span>
+                        </div>
+                        <FormControl>
+                          <Input
+                            id="cost"
+                            type="number"
+                            min={0}
+                            max={10000}
+                            step={0.01}
+                            placeholder="0.00"
+                            className="pl-9"
+                            {...field}
+                          />
+                        </FormControl>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="margin"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-3">
+                      <FormLabel htmlFor="margin">Marża</FormLabel>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <span className="text-muted-foreground">%</span>
+                        </div>
+                        <FormControl>
+                          <Input
+                            id="margin"
+                            type="number"
+                            min={0}
+                            max={100}
+                            step={1}
+                            placeholder="0"
+                            className="pl-9"
+                            {...field}
+                          />
+                        </FormControl>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
             <DrawerFooter>
               <Button onClick={() => onSubmit(form.getValues())}>Zapisz</Button>
               <DrawerClose asChild>
-                <Button variant="outline">Gotowe</Button>
+                <Button variant="outline">Anuluj</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
