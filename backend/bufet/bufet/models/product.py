@@ -32,7 +32,7 @@ class Product(models.Model):
 class ProductStock(models.Model):
     stock_id = models.AutoField(primary_key=True)
     amount = models.IntegerField(validators=[MinValueValidator(0)])
-    last_delivery = models.DateTimeField()
+    last_delivery = models.DateTimeField(null=True, blank=True)
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from bufet.models import Product, ProductCategory, Allergen, ContactAllergens
+from bufet.models import Product, ProductCategory, Allergen, ContactAllergens, ProductStock
 
 class ProductCreateUpdateSerializer(serializers.ModelSerializer):
     category_id = serializers.IntegerField(write_only=True)
@@ -33,6 +33,7 @@ class ProductCreateUpdateSerializer(serializers.ModelSerializer):
         for allergen_id in allergen_ids:
             ContactAllergens.objects.create(product=product, allergen_id=allergen_id)
 
+        ProductStock.objects.create(product=product, amount=0, last_delivery=None)
         return product
 
     def update(self, instance, validated_data):
