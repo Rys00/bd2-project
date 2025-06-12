@@ -38,6 +38,48 @@ class AllProductsView(ListAPIView):
     ).order_by('active_order', 'name')
     serializer_class = ProductSerializer
 
+class ActiveProductsByCategoryView(ListAPIView):
+    serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        category_id = self.kwargs.get("category_id")
+        if not ProductCategory.objects.filter(pk=category_id).exists():
+            raise NotFound(detail=f"Category with id {category_id} does not exist.")
+
+        active_param = self.request.GET.get("active")
+
+        queryset = Product.objects.filter(category_id=category_id)
+
+        if active_param is not None:
+            if active_param.lower() == 'true':
+                queryset = queryset.filter(active=True)
+            elif active_param.lower() == 'false':
+                queryset = queryset.filter(active=False)
+            else:
+                raise ValidationError("Invalid value for 'active'. Use 'true' or 'false'.")
+
+        # Sort active first, then alphabetically
+        return queryset.order_by('-active', 'name')
+
+
+class AllActiveProductsView(ListAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        active_param = self.request.GET.get("active")
+        queryset = Product.objects.all()
+
+        if active_param is not None:
+            if active_param.lower() == 'true':
+                queryset = queryset.filter(active=True)
+            elif active_param.lower() == 'false':
+                queryset = queryset.filter(active=False)
+            else:
+                raise ValidationError("Invalid value for 'active'. Use 'true' or 'false'.")
+
+        return queryset.order_by('-active', 'name')
+
 class AllProductsCategoriesView(ListAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
