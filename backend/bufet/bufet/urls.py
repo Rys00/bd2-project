@@ -24,7 +24,7 @@ from rest_framework_simplejwt.views import (
 from .views.order_view import AllOrdersView, OrderDetailsView, AddOrderView, UpdateOrderView, OrdersByDatesView
 from .views.products_view import ProductDetailView, ProductsByCategoryView, AllProductsCategoriesView, \
     AddProductCategoryView, AddProductView, AllProductsView, UpdateProductView, ProductCategoryDetailView, \
-    DeleteProductCategoryView
+    DeleteProductCategoryView, ActiveProductsByCategoryView, AllActiveProductsView
 from .views.allergens_view import AllergenDetailView, AllAllergensView, AddAllergenView, DeleteAllergenView
 from .views.stock_view import AllStockView, ProductStockView, BulkUpdatingStockView
 
@@ -36,13 +36,15 @@ urlpatterns = [
     path('api/products_category/<int:category_id>', ProductCategoryDetailView.as_view(),name='category-detail'),
     path('api/allergens/<int:pk>', AllergenDetailView.as_view(), name='allergen-detail'),
     path('api/orders/<int:order_id>', OrderDetailsView.as_view(), name='order-detail'),
+    path('api/stock/product/<int:product_id>', ProductStockView.as_view(), name='stock-product'),
     #lists
     path('api/category/<int:category_id>/products', ProductsByCategoryView.as_view(),name='products-by-category'),
     path('api/categories/', AllProductsCategoriesView.as_view(), name='all-products-categories'),
+    path('api/category/<int:category_id>/products/active', ActiveProductsByCategoryView.as_view(),name='active-products-by-category'),
+    path('api/products/active', AllActiveProductsView.as_view(), name='all-products'),
     path('api/allergens/', AllAllergensView.as_view(), name='all-allergens'),
     path('api/products/', AllProductsView.as_view(), name='all-products'),
     path('api/stock/', AllStockView.as_view(), name='all-stock'),
-    path('api/stock/product/<int:product_id>', ProductStockView.as_view(), name='stock-product'),
     path('api/orders', AllOrdersView.as_view(), name='all-orders'),
     path('api/orders/by_dates', OrdersByDatesView.as_view(), name='all-orders-by-dates'),
     #adding
