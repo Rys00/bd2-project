@@ -3,7 +3,10 @@ import { addSnackbar } from "@/lib/store/ui/ui.slice";
 import * as crypto from "crypto";
 import { ZodError } from "zod";
 
-import { invokeTransferWithJSON } from "./misc.server";
+import {
+  invokeMakeBackendRequest,
+  invokeTransferWithJSON,
+} from "./misc.server";
 
 export class PWBError {
   code: number;
@@ -50,37 +53,11 @@ export async function makeBackendRequest<RetType>(
   requestData?: any,
   dispatch?: AppDispatch
 ) {
-  let jwt = "";
-  try {
-    const res = await fetch("/api/jwt");
-    if (res.ok) {
-      jwt = await res.text();
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
-  const config = {
+  const res = await invokeMakeBackendRequest(
+    endpoint,
     method,
-    headers: {
-      "content-type": "application/json;charset=UTF-8",
-      Authorization: `Bearer ${jwt}`,
-    },
-    body: method !== "GET" ? JSON.stringify(requestData) : undefined,
-  };
-
-  let res: Response | undefined = undefined;
-  try {
-    res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${endpoint}`,
-      config
-    );
-  } catch (error) {
-    const message = (error as Error).message;
-
-    if (dispatch) dispatch(addSnackbar({ message: message, type: "error" }));
-    throw error;
-  }
+    method !== "GET" ? JSON.stringify(requestData) : undefined
+  );
 
   const data = await res.json();
   if (res.ok) {

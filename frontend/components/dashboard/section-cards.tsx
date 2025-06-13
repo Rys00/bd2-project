@@ -1,4 +1,7 @@
-import { DailyReportView } from "@/lib/backend-requests/reports";
+import {
+  DailyReportView,
+  fixDailyReportViewArray,
+} from "@/lib/backend-requests/reports";
 import { reduceReport } from "@/utils/reports";
 import ComparingCards from "./comparing-cards";
 
@@ -9,7 +12,9 @@ export function SectionCards({
   dailyReport: DailyReportView;
   sixMonthReport: DailyReportView[];
 }) {
+  dailyReport = fixDailyReportViewArray([dailyReport])[0];
   const day = reduceReport([dailyReport]);
+  sixMonthReport = fixDailyReportViewArray(sixMonthReport);
   const reportCopy = Array.from(sixMonthReport);
   const lastMonth = reportCopy.splice(reportCopy.length - 30, 30);
   const month = reduceReport(lastMonth);

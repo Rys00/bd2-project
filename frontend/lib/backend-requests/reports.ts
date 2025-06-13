@@ -21,14 +21,12 @@ export type DailyCategoryReportView = {
 export async function getDailyReport(
   dispatch?: AppDispatch
 ): Promise<DailyReportView[]> {
-  return (
-    await makeBackendRequest<DailyReportView[]>(`today`, "GET", {}, dispatch)
-  ).map((r) => ({
-    day: new Date(r.day),
-    orders_count: r.orders_count,
-    total_sales: new Prisma.Decimal(r.total_sales || 0),
-    total_profit: new Prisma.Decimal(r.total_profit || 0),
-  }));
+  return await makeBackendRequest<DailyReportView[]>(
+    `today`,
+    "GET",
+    {},
+    dispatch
+  );
 }
 
 export async function getDailyReportsRange(
@@ -42,24 +40,26 @@ export async function getDailyReportsRange(
     { month: "2-digit" },
     { day: "2-digit" },
   ];
-  return (
-    await makeBackendRequest<DailyReportView[]>(
-      `daily-reports/by-dates?start_date=${
-        //
-        formatDate(start_date, options, "-")
-      }&end_date=${
-        //
-        formatDate(end_date, options, "-")
-      }`,
-      "GET",
-      {},
-      dispatch
-    )
-  ).map((r) => ({
+  return await makeBackendRequest<DailyReportView[]>(
+    `daily-reports/by-dates?start_date=${
+      //
+      formatDate(start_date, options, "-")
+    }&end_date=${
+      //
+      formatDate(end_date, options, "-")
+    }`,
+    "GET",
+    {},
+    dispatch
+  );
+}
+
+export function fixDailyReportViewArray(array: DailyReportView[]) {
+  return array.map((r) => ({
     day: new Date(r.day),
     orders_count: r.orders_count,
-    total_sales: new Prisma.Decimal(r.total_sales),
-    total_profit: new Prisma.Decimal(r.total_profit),
+    total_sales: new Prisma.Decimal(r.total_sales || 0),
+    total_profit: new Prisma.Decimal(r.total_profit || 0),
   }));
 }
 
@@ -67,23 +67,14 @@ export async function getDailyCategoryReport(
   categoryId?: number,
   dispatch?: AppDispatch
 ): Promise<DailyCategoryReportView[]> {
-  return (
-    await makeBackendRequest<DailyCategoryReportView[]>(
-      `today/by-categories?${
-        categoryId ? "?category_id=" + categoryId.toString() : ""
-      }`,
-      "GET",
-      {},
-      dispatch
-    )
-  ).map((r) => ({
-    day: new Date(r.day),
-    category_id: r.category_id,
-    category_name: r.category_name,
-    total_sold: r.total_sold,
-    total_value: new Prisma.Decimal(r.total_value || 0),
-    total_profit: new Prisma.Decimal(r.total_profit || 0),
-  }));
+  return await makeBackendRequest<DailyCategoryReportView[]>(
+    `today/by-categories?${
+      categoryId ? "?category_id=" + categoryId.toString() : ""
+    }`,
+    "GET",
+    {},
+    dispatch
+  );
 }
 
 export async function getDailyCategoryReportsRange(
@@ -97,20 +88,24 @@ export async function getDailyCategoryReportsRange(
     { month: "2-digit" },
     { day: "2-digit" },
   ];
-  return (
-    await makeBackendRequest<DailyCategoryReportView[]>(
-      `category-daily-reports/by-dates?start_date=${
-        //
-        formatDate(start_date, options, "-")
-      }&end_date=${
-        //
-        formatDate(end_date, options, "-")
-      }${categoryId ? "&category_id=" + categoryId.toString() : ""}`,
-      "GET",
-      {},
-      dispatch
-    )
-  ).map((r) => ({
+  return await makeBackendRequest<DailyCategoryReportView[]>(
+    `category-daily-reports/by-dates?start_date=${
+      //
+      formatDate(start_date, options, "-")
+    }&end_date=${
+      //
+      formatDate(end_date, options, "-")
+    }${categoryId ? "&category_id=" + categoryId.toString() : ""}`,
+    "GET",
+    {},
+    dispatch
+  );
+}
+
+export function fixDailyCategoryReportViewArray(
+  array: DailyCategoryReportView[]
+) {
+  return array.map((r) => ({
     day: new Date(r.day),
     category_id: r.category_id,
     category_name: r.category_name,

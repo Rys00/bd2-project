@@ -110,9 +110,11 @@ const columns: ColumnDef<ProductView>[] = [
 export function ProductOrderTable({
   title,
   data: initialData,
+  noItemLabel = "Brak wyników.",
 }: {
   title: string;
   data: ProductView[];
+  noItemLabel?: string;
 }) {
   const [data, setData] = React.useState(initialData);
   const [rowSelection, setRowSelection] = React.useState({});
@@ -218,7 +220,7 @@ export function ProductOrderTable({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    Brak wyników.
+                    {noItemLabel}
                   </TableCell>
                 </TableRow>
               )}
