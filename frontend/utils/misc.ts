@@ -203,3 +203,15 @@ export function getWeekdayArray() {
   }
   return arr;
 }
+
+export function formatDate(
+  date: Date,
+  options: Intl.DateTimeFormatOptions[],
+  separator: string
+) {
+  function format(option: Intl.DateTimeFormatOptions) {
+    const formatter = new Intl.DateTimeFormat("en", option);
+    return formatter.format(date);
+  }
+  return options.map(format).join(separator);
+}
