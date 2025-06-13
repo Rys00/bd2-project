@@ -1,4 +1,4 @@
-import { ChartAreaInteractive } from "@/components/dashboard/chart-area-interactive";
+import DashboardChartArea from "@/components/dashboard/dashboard-chart-area";
 import { SectionCards } from "@/components/dashboard/section-cards";
 
 import {
@@ -28,7 +28,7 @@ export default async function Page() {
             sixMonthReport={sixMonthReport}
           />
           <div className="px-4 lg:px-6">
-            <ChartAreaInteractive sixMonthReport={sixMonthReport} />
+            <DashboardChartArea sixMonthsReport={sixMonthReport} />
           </div>
         </div>
       </div>

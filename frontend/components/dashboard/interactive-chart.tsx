@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -25,31 +24,31 @@ import {
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  DailyReportView,
-  fixDailyReportViewArray,
-} from "@/lib/backend-requests/reports";
 import { useEffect, useState } from "react";
 
-const chartConfig = {
-  profit: {
-    label: "Zysk",
-    color: "var(--primary)",
-  },
-  sales: {
-    label: "Przychód",
-    color: "var(--primary)",
-  },
-} satisfies ChartConfig;
-
-export function ChartAreaInteractive({
-  sixMonthReport,
+export function InteractiveChart<
+  T extends {
+    [x: string]: number;
+  }
+>({
+  title,
+  data,
+  config,
 }: {
-  sixMonthReport: DailyReportView[];
+  title: string;
+  data: {
+    date: string;
+    values: T;
+  }[];
+  config: {
+    [Key in keyof T]: {
+      label: string;
+      color: string;
+    };
+  };
 }) {
-  sixMonthReport = fixDailyReportViewArray(sixMonthReport);
   const isMobile = useIsMobile();
-  const [timeRange, setTimeRange] = useState("180d");
+  const [timeRange, setTimeRange] = useState("30d");
 
   useEffect(() => {
     if (isMobile) {
@@ -57,9 +56,9 @@ export function ChartAreaInteractive({
     }
   }, [isMobile]);
 
-  const filteredData = sixMonthReport
-    .filter((report) => {
-      const date = new Date(report.day);
+  const filteredData = data
+    .filter((item) => {
+      const date = new Date(item.date);
       let daysToSubtract = 180;
       if (timeRange === "30d") {
         daysToSubtract = 30;
@@ -70,23 +69,19 @@ export function ChartAreaInteractive({
       startDate.setDate(startDate.getDate() - daysToSubtract);
       return date >= startDate;
     })
-    .map((report) => ({
-      date: report.day,
-      profit: report.total_profit.toNumber(),
-      sales: report.total_sales.toNumber(),
+    .map((item) => ({
+      ...item.values,
+      date: item.date,
     }));
-
-  console.log(filteredData);
 
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Całkowity zysk</CardTitle>
+        <CardTitle>{title}</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
-            Przez ostatnie pół roku
+            Na przestrzeni czasu
           </span>
-          <span className="@[540px]/card:hidden">Ostatnie pół roku</span>
         </CardDescription>
         <CardAction>
           <ToggleGroup
@@ -124,35 +119,32 @@ export function ChartAreaInteractive({
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <ChartContainer
-          config={chartConfig}
+          config={config}
           className="aspect-auto h-[250px] w-full"
         >
           <AreaChart data={filteredData}>
             <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-desktop)"
-                  stopOpacity={1.0}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-desktop)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
+              {Object.keys(config).map((key, index) => (
+                <linearGradient
+                  key={key}
+                  id={`fill-${key}`}
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop
+                    offset="5%"
+                    stopColor={`var(--color-${key})`}
+                    stopOpacity={1.0 * 0.8 ** index}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor={`var(--color-${key})`}
+                    stopOpacity={0.1}
+                  />
+                </linearGradient>
+              ))}
             </defs>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -163,7 +155,7 @@ export function ChartAreaInteractive({
               minTickGap={32}
               tickFormatter={(value) => {
                 const date = new Date(value);
-                return date.toLocaleDateString("en-US", {
+                return date.toLocaleDateString("pl-PL", {
                   month: "short",
                   day: "numeric",
                 });
@@ -175,7 +167,7 @@ export function ChartAreaInteractive({
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
+                    return new Date(value).toLocaleDateString("pl-PL", {
                       month: "short",
                       day: "numeric",
                     });
@@ -184,20 +176,16 @@ export function ChartAreaInteractive({
                 />
               }
             />
-            <Area
-              dataKey="mobile"
-              type="natural"
-              fill="url(#fillMobile)"
-              stroke="var(--color-mobile)"
-              stackId="a"
-            />
-            <Area
-              dataKey="desktop"
-              type="natural"
-              fill="url(#fillDesktop)"
-              stroke="var(--color-desktop)"
-              stackId="a"
-            />
+            {Object.keys(config).map((key) => (
+              <Area
+                key={key}
+                dataKey={key}
+                type="bump"
+                fill={`url(#fill-${key})`}
+                stroke={`var(--color-${key})`}
+                stackId={key}
+              />
+            ))}
           </AreaChart>
         </ChartContainer>
       </CardContent>

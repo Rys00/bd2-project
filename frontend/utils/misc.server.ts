@@ -28,10 +28,11 @@ export async function invokeMakeBackendRequest(
   };
 
   try {
-    return await fetch(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/${endpoint}`,
       config
     );
+    return { status: res.status, data: await res.json() };
   } catch (error) {
     console.log(error);
     throw error;
@@ -44,5 +45,6 @@ export async function generateJwt() {
     secret: process.env.AUTH_SECRET || "",
     salt: "authjs.session-token",
     token: session?.user,
+    maxAge: 30,
   });
 }
