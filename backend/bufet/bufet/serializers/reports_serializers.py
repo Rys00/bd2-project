@@ -1,15 +1,23 @@
 from rest_framework import serializers
-from bufet.models.daily_sales_report import DailySalesReport
-from bufet.models.clients_avg_per_hour import ClientsAvgPerHour
+from bufet.models.reports.today_reports import DailyReportToday, CategoryDailyReportToday, DailyReports, CategoryDailyReports
 
-class DailySalesReportsSerializer(serializers.ModelSerializer):
+class DailyReportsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DailySalesReport
+        model = DailyReports
+        fields = '__all__'
+
+class DailyReportTodaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyReportToday
         fields = '__all__'
 
 
-class ClientsAvgPerHourSerializer(serializers.ModelSerializer):
+class CategoryDailyReportTodaySerializer(serializers.ModelSerializer):
     class Meta:
-        model = ClientsAvgPerHour
+        model = CategoryDailyReportToday
         fields = '__all__'
 
+class CategoryDailyReportsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CategoryDailyReports
+        fields = '__all__'

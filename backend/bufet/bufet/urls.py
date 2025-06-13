@@ -27,6 +27,7 @@ from .views.products_view import ProductDetailView, ProductsByCategoryView, AllP
     DeleteProductCategoryView, ActiveProductsByCategoryView, AllActiveProductsView
 from .views.allergens_view import AllergenDetailView, AllAllergensView, AddAllergenView, DeleteAllergenView
 from .views.stock_view import AllStockView, ProductStockView, BulkUpdatingStockView
+from .views.today_reports_view import DailyReportsView, TodayReport, CategoryDailyReportsView, CategoryTodayReport
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -60,4 +61,9 @@ urlpatterns = [
     path('api/delete/product_category/<int:category_id>', DeleteProductCategoryView.as_view(), name='delete-product-category'),
     path('api/delete/allergen/<int:allergen_id>', DeleteAllergenView.as_view(), name='delete-allergen'),
 
+    #reports
+    path('api/reports/daily-reports/by-dates', DailyReportsView.as_view(), name='daily-reports-by-dates'),
+    path('api/today', TodayReport.as_view(), name='today-report'),
+    path('api/daily-reports/by-dates', CategoryDailyReportsView.as_view(), name='categor-daily-reports-by-dates'),
+    path('api/today/by-categories', CategoryTodayReport.as_view(), name='all-products-categories')
 ]
