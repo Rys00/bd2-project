@@ -56,7 +56,7 @@
 <ownDataTypeParameters>,,2</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="product_id" id="BFA8CC6F-708F-C3B0-C59B-19DA4CDE1D49">
+<Column name="Product_prod_id" id="BFA8CC6F-708F-C3B0-C59B-19DA4CDE1D49">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>A6CFDC5C-CF52-4FBD-5263-D6919A582A67</generatorID>
@@ -71,7 +71,7 @@
 <colAssociation fkAssociation="8DFEBAD3-4FE9-0822-7795-5A33CB316697" referredColumn="B904A1FD-B93F-F3B0-8512-1A032D59FA18"/>
 </associations>
 </Column>
-<Column name="order_id" id="144FCE66-6E3B-8D62-9189-4E9C5BDDB9DC">
+<Column name="Order_order_id" id="144FCE66-6E3B-8D62-9189-4E9C5BDDB9DC">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>BA3A2A70-8196-5044-859F-664B73C4A05A</generatorID>
@@ -85,6 +85,18 @@
 <associations>
 <colAssociation fkAssociation="D5C3E076-07EC-4719-A470-EF22AE0E888C" referredColumn="F3D0BD4A-9811-C355-82FC-0C5F077B3399"/>
 </associations>
+</Column>
+<Column name="unit_price" id="FC2D2C3C-3028-4205-AE80-545566E2344D">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-13 17:18:53 UTC</createdTime>
+<generatorID>2F8A7F7B-6D79-838B-EBE6-86F2068ADA8D</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
@@ -111,7 +123,7 @@
 <colUsage columnID="144FCE66-6E3B-8D62-9189-4E9C5BDDB9DC"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="CC618BF4-37F7-393C-4121-2ECD6369CDE5" name="OrderPosition_Produckt_FK">
+<ind_PK_UK id="CC618BF4-37F7-393C-4121-2ECD6369CDE5" name="OrderPosition_Product_FK">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>A3CEAAA4-4D3D-A2D8-4641-83C3BF249CC2</generatorID>

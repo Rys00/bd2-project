@@ -40,7 +40,7 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="last_delivery" id="A671D9C6-0B2C-DEE1-B093-7B7A54251061">
+<Attribute name="last_updated" id="A671D9C6-0B2C-DEE1-B093-7B7A54251061">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 19:26:34 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
@@ -66,27 +66,15 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="earlies_exp" id="C0981827-27F2-41BD-A67E-3BEEBC8AC9B2">
-<createdBy>martyna</createdBy>
-<createdTime>2025-06-07 20:04:02 UTC</createdTime>
-<ownerDesignName>model</ownerDesignName>
-<engineerTo>
-<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT008</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="8E1EF512-ED27-5720-39EE-5977ACC45E9C" name="ProductStock PK">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 19:26:01 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

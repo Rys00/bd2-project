@@ -31,7 +31,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="last_delivery" id="ED0FC524-A5DD-FB5D-AFD7-8E04EAE57F21">
+<Column name="last_updated" id="ED0FC524-A5DD-FB5D-AFD7-8E04EAE57F21">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>A671D9C6-0B2C-DEE1-B093-7B7A54251061</generatorID>
@@ -42,7 +42,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="product_id" id="9972904F-B238-B481-2AA7-3F53ED143A95">
+<Column name="Product_prod_id" id="9972904F-B238-B481-2AA7-3F53ED143A95">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>76E96E15-6101-DD60-09BF-F15D432F3C77</generatorID>
