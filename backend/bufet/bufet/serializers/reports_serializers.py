@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from bufet.models.reports.avg_customer_dayhour import AvgCustomersByWeekdayHour
 from bufet.models.reports.today_reports import DailyReportToday, CategoryDailyReportToday, DailyReports, CategoryDailyReports
 from bufet.models.reports.stock_snapshot import ProductStockSnapshot
 
@@ -47,4 +49,14 @@ class ProductStockSnapshotSerializer(serializers.ModelSerializer):
             "price",
             "cost",
             "stock_amount",
+        ]
+
+class AvgCustomersByWeekdayHourSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AvgCustomersByWeekdayHour
+        fields = [
+            'weekday_name',
+            'weekday_num',
+            'hour',
+            'avg_customers'
         ]
