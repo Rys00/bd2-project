@@ -84,11 +84,9 @@ export async function makeBackendRequest<RetType>(
 
   const data = await res.json();
   if (res.ok) {
-    console.log(data);
-
     return data as RetType;
   } else {
-    const message = `PWB_ERROR;${res.status}`;
+    const message = `PWB_ERROR;${res.status};${JSON.stringify(data)}`;
     if (dispatch) dispatch(addSnackbar({ message: message, type: "error" }));
     throw new Error(message);
   }

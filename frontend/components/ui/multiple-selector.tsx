@@ -216,6 +216,11 @@ const MultipleSelector = React.forwardRef<
     const [options, setOptions] = React.useState<GroupOption>(
       transToGroupOption(arrayDefaultOptions, groupBy)
     );
+
+    useEffect(() => {
+      setOptions(transToGroupOption(arrayDefaultOptions, groupBy));
+    }, [arrayDefaultOptions, groupBy]);
+
     const [selected, setSelected] = React.useState<Option[]>(
       arrayDefaultOptions.filter((o) => value?.find((v) => v === o.value)) || []
     );

@@ -19,7 +19,7 @@ const Snackbar = ({ id, message, timeout, type }: SnackbarData) => {
         const code = message.split(";")[1];
         switch (code) {
           case "400":
-            setParsedMessage(`400: Złe dane - ${message.split(" - ")[1]}`);
+            setParsedMessage(`400: Złe dane - ${message.split(";")[2]}`);
             break;
           case "401":
             setParsedMessage(`401: Zaloguj się`);

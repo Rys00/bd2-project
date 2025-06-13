@@ -1,8 +1,12 @@
-import { ProductTable } from "@/components/tables/product-table";
+import { ProductManagerTable } from "@/components/tables/product-manager-table";
 import { getProducts } from "@/lib/backend-requests/products";
 
-const OrderPage = async () => {
-  return <div>{<ProductTable data={await getProducts()}></ProductTable>}</div>;
+const ProductsPage = async () => {
+  return (
+    <div>
+      {<ProductManagerTable data={await getProducts()}></ProductManagerTable>}
+    </div>
+  );
 };
 
-export default OrderPage;
+export default ProductsPage;

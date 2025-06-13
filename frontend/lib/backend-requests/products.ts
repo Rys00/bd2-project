@@ -34,9 +34,18 @@ export async function getProductById(
   );
 }
 
-export async function getProducts(dispatch?: AppDispatch) {
+export async function getProducts(
+  mode: "ALL" | "ACTIVE" | "INACTIVE" = "ALL",
+  dispatch?: AppDispatch
+) {
   return await makeBackendRequest<ProductView[]>(
-    `products`,
+    mode === "ALL"
+      ? `products`
+      : mode === "ACTIVE"
+      ? `products/active?active=true`
+      : mode === "INACTIVE"
+      ? `products/active?active=false`
+      : `products`,
     "GET",
     {},
     dispatch
@@ -45,10 +54,17 @@ export async function getProducts(dispatch?: AppDispatch) {
 
 export async function getProductsByCategoryId(
   id: ProductCategory["category_id"],
+  mode: "ALL" | "ACTIVE" | "INACTIVE" = "ALL",
   dispatch?: AppDispatch
 ) {
   return await makeBackendRequest<ProductView[]>(
-    `category/${id}/products`,
+    mode === "ALL"
+      ? `category/${id}/products`
+      : mode === "ACTIVE"
+      ? `category/${id}/products/active?active=true`
+      : mode === "INACTIVE"
+      ? `category/${id}/products/active?active=false`
+      : `category/${id}/products`,
     "GET",
     {},
     dispatch

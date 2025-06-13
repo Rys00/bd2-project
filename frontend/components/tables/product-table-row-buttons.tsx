@@ -3,12 +3,15 @@ import {
   ProductView,
   updateProduct,
 } from "@/lib/backend-requests/products";
-import { useAppDispatch } from "@/lib/store/hooks";
+import { selectCartItems } from "@/lib/store/cart/cart.selector";
+import { updateCart } from "@/lib/store/cart/cart.slice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { addSnackbar } from "@/lib/store/ui/ui.slice";
 import { Prisma, Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
+import { QuantityInput } from "../ui/quantity-input";
 
 export function ButtonDuplicateProduct({ product }: { product: ProductView }) {
   const dispatch = useAppDispatch();
@@ -92,5 +95,36 @@ export function ButtonToggleProductActive({
     <DropdownMenuItem variant="destructive" onClick={() => toggle(!active)}>
       {active ? "Wyłącz" : "Włącz"}
     </DropdownMenuItem>
+  );
+}
+
+export function ButtonChangeCartQuantity({
+  product,
+}: {
+  product: ProductView;
+}) {
+  const cartItem = useAppSelector(selectCartItems).find(
+    (i) => i.product.product_id === product.product_id
+  );
+  const dispatch = useAppDispatch();
+  const [amount, setAmount] = useState(cartItem?.amount || 0);
+
+  const onChange = (v: number) => {
+    dispatch(updateCart({ product, amount: v }));
+    setAmount(v);
+  };
+
+  useEffect(() => {
+    setAmount(cartItem?.amount || 0);
+  }, [cartItem]);
+
+  return (
+    <QuantityInput
+      value={amount}
+      onChange={onChange}
+      min={0}
+      max={product.stock_amount}
+      step={1}
+    />
   );
 }
