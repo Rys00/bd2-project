@@ -18,6 +18,7 @@ export default async function Page() {
     start: sixMonthAgo,
     end: currentDate,
   });
+  sixMonthReport[sixMonthReport.length - 1] = dailyReport;
 
   return (
     <div className="flex flex-1 flex-col">

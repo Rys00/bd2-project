@@ -32,7 +32,11 @@ export async function invokeMakeBackendRequest(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/${endpoint}`,
       config
     );
-    return { status: res.status, data: await res.json() };
+    return {
+      ok: res.ok,
+      status: res.status,
+      data: res.ok ? await res.json() : undefined,
+    };
   } catch (error) {
     console.log(error);
     throw error;
