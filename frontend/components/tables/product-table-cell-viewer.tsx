@@ -100,12 +100,16 @@ export default function ProductTableCellViewer({
     resetValues();
     if (snapshots.length === 0) {
       const currentDate = new Date();
-      const weekAgo = new Date(currentDate.getDate() - 7);
-      const snaps = await getDailyProductSnapshotsRange({
-        productId: item.product_id,
-        start: weekAgo,
-        end: currentDate,
-      });
+      const weekAgo = new Date();
+      weekAgo.setDate(currentDate.getDate() - 7);
+      const snaps = await getDailyProductSnapshotsRange(
+        {
+          productId: item.product_id,
+          start: weekAgo,
+          end: currentDate,
+        },
+        dispatch
+      );
       setSnapshots((prev) =>
         prev.length === 0 ? fixDailyProductSnapshotViewArray(snaps) : prev
       );
@@ -186,7 +190,7 @@ export default function ProductTableCellViewer({
               {!isMobile && (
                 <SimpleChart
                   data={snapshots.map((snapshot) => ({
-                    date: snapshot.snapshot_date.toLocaleString(),
+                    date: snapshot.snapshot_date.toLocaleString("en-US"),
                     values: {
                       quantity: snapshot.stock_amount,
                     },

@@ -18,7 +18,7 @@ const DashboardChartArea = ({
       <InteractiveChart
         title="Całkowity zysk"
         data={sixMonthsReport.map((r) => ({
-          date: r.day.toLocaleString(),
+          date: r.day.toLocaleString("en-US"),
           values: {
             sales: r.total_sales.toNumber(),
             profit: r.total_profit.toNumber(),
@@ -38,7 +38,7 @@ const DashboardChartArea = ({
       <InteractiveChart
         title="Liczba zamówień"
         data={sixMonthsReport.map((r) => ({
-          date: r.day.toLocaleString(),
+          date: r.day.toLocaleString("en-US"),
           values: {
             orders: r.orders_count,
           },
