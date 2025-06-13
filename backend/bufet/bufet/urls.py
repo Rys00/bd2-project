@@ -28,7 +28,8 @@ from .views.products_view import ProductDetailView, ProductsByCategoryView, AllP
 from .views.allergens_view import AllergenDetailView, AllAllergensView, AddAllergenView, DeleteAllergenView
 from .views.stock_snap_views import SingleProductStockHistoryView
 from .views.stock_view import AllStockView, ProductStockView, BulkUpdatingStockView
-from .views.today_reports_view import DailyReportsView, TodayReport, CategoryDailyReportsView, CategoryTodayReport
+from .views.today_reports_view import DailyReportsView, TodayReport, CategoryDailyReportsView, CategoryTodayReport, \
+    CategoryDailyReportsByCatView, CategoryTodayReportByCat
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -66,6 +67,8 @@ urlpatterns = [
     path('api/daily-reports/by-dates', DailyReportsView.as_view(), name='daily-reports-by-dates'),
     path('api/today', TodayReport.as_view(), name='today-report'),
     path('api/category-daily-reports/by-dates', CategoryDailyReportsView.as_view(), name='categor-daily-reports-by-dates'),
-    path('api/today/by-categories', CategoryTodayReport.as_view(), name='all-products-categories'),
+    path('api/category-daily-reports/by-dates-and-cat', CategoryDailyReportsByCatView.as_view(), name='categor-daily-reports-by-dates-and-cat'),
+    path('api/today/by-categories', CategoryTodayReport.as_view(), name='today-by-all-categories'),
+    path('api/today/by-category', CategoryTodayReportByCat.as_view(), name='today-by-category'),
     path('api/stock-snapshots', SingleProductStockHistoryView.as_view(), name='stock-snapshots'),
     ]

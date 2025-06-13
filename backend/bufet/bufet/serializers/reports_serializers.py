@@ -16,12 +16,26 @@ class DailyReportTodaySerializer(serializers.ModelSerializer):
 class CategoryDailyReportTodaySerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryDailyReportToday
-        fields = '__all__'
+        fields =  [
+            'day',
+            'category_id',
+            'category_name',
+            'totals_sold',
+            'total_value',
+            'total_profit'
+        ]
 
 class CategoryDailyReportsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryDailyReports
-        fields = '__all__'
+        fields = [
+            'day',
+            'category_id',
+            'category_name',
+            'totals_sold',
+            'total_value',
+            'total_profit'
+        ]
 
 class ProductStockSnapshotSerializer(serializers.ModelSerializer):
     class Meta:
