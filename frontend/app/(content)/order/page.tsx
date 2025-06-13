@@ -2,6 +2,8 @@
 
 import { ProductOrderTable } from "@/components/tables/product-order-table";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { getCategories } from "@/lib/backend-requests/misc";
 import { addOrder } from "@/lib/backend-requests/orders";
 import { getProducts, ProductView } from "@/lib/backend-requests/products";
@@ -13,14 +15,28 @@ import { purgeCart } from "@/lib/store/cart/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { addSnackbar } from "@/lib/store/ui/ui.slice";
 import { ProductCategory } from "@prisma/client";
+import { ArrowRightIcon, SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const OrderPage = () => {
   const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [products, setProducts] = useState<ProductView[]>([]);
+  const [filter, setFilter] = useState("");
   const cartItems = useAppSelector(selectCartItems);
   const cartTotal = useAppSelector(selectCartTotal);
   const dispatch = useAppDispatch();
+  const categoriesData = categories.map((c) => ({
+    category: c,
+    products: products.filter(
+      (p) =>
+        p.category.category_id === c.category_id &&
+        (!filter ||
+          p.name
+            .toUpperCase()
+            .split(" ")
+            .some((word) => word.startsWith(filter.toUpperCase())))
+    ),
+  }));
 
   async function add() {
     try {
@@ -88,14 +104,42 @@ const OrderPage = () => {
           </div>
         </div>
       </div>
-      <h2 className="pt-6 pl-20 text-2xl">Dodaj do zamówienia:</h2>
-      {categories.map((category) => (
+      <div className="px-20 flex pt-6 flex-col">
+        <h2 className="mb-6 text-2xl">Dodaj do zamówienia:</h2>
+        <div className="*:not-first:mt-2">
+          <Label htmlFor="filter">Filtruj po nazwie</Label>
+          <div className="relative">
+            <Input
+              id="filter"
+              className="peer ps-9 pe-9"
+              placeholder="(np. baton)"
+              type="search"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+            />
+            <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
+              <SearchIcon size={16} />
+            </div>
+            <button
+              className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+              aria-label="Submit search"
+              type="submit"
+            >
+              <ArrowRightIcon size={16} aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </div>
+      {(filter
+        ? categoriesData.toSorted(
+            (a, b) => b.products.length - a.products.length
+          )
+        : categoriesData
+      ).map(({ category, products }) => (
         <div key={category.category_id}>
           <ProductOrderTable
             title={category.name}
-            data={products.filter(
-              (p) => p.category.category_id === category.category_id
-            )}
+            data={products}
           ></ProductOrderTable>
         </div>
       ))}
