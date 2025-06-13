@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from bufet.models.reports.today_reports import DailyReportToday, CategoryDailyReportToday, DailyReports, CategoryDailyReports
+from bufet.models.reports.stock_snapshot import ProductStockSnapshot
 
 class DailyReportsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,3 +22,15 @@ class CategoryDailyReportsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryDailyReports
         fields = '__all__'
+
+class ProductStockSnapshotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductStockSnapshot
+        fields = [
+            "snapshot_date",
+            "product_id",
+            "product_name",
+            "price",
+            "cost",
+            "stock_amount",
+        ]
