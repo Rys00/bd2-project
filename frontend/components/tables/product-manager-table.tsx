@@ -74,7 +74,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { getAllergens, getCategories } from "@/lib/backend-requests/misc";
 import { ProductView } from "@/lib/backend-requests/products";
+import {
+  setCachedAllergens,
+  setCachedCategories,
+} from "@/lib/store/cache/cache.slice";
+import { useAppDispatch } from "@/lib/store/hooks";
 import { Prisma } from "@prisma/client";
 import ProductTableCellViewer from "./product-table-cell-viewer";
 import {
@@ -274,6 +280,16 @@ export function ProductManagerTable({
     useSensor(TouchSensor, {}),
     useSensor(KeyboardSensor, {})
   );
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    const exec = async () => {
+      dispatch(setCachedCategories(await getCategories(dispatch)));
+      dispatch(setCachedAllergens(await getAllergens(dispatch)));
+    };
+    exec();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   React.useEffect(() => {
     setData(initialData);

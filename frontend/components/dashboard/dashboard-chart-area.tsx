@@ -4,7 +4,7 @@ import {
   DailyReportView,
   fixDailyReportViewArray,
 } from "@/lib/backend-requests/reports";
-import { InteractiveChart } from "./interactive-chart";
+import { InteractiveChart } from "../charts/interactive-chart";
 
 const DashboardChartArea = ({
   sixMonthsReport,
