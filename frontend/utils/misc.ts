@@ -53,17 +53,16 @@ export async function makeBackendRequest<RetType>(
   requestData?: any,
   dispatch?: AppDispatch
 ) {
-  const res = await invokeMakeBackendRequest(
+  const { ok, status, data } = await invokeMakeBackendRequest(
     endpoint,
     method,
     method !== "GET" ? JSON.stringify(requestData) : undefined
   );
 
-  const data = await res.json();
-  if (res.ok) {
+  if (ok) {
     return data as RetType;
   } else {
-    const message = `PWB_ERROR;${res.status};${JSON.stringify(data)}`;
+    const message = `PWB_ERROR;${status};${JSON.stringify(data)}`;
     if (dispatch) dispatch(addSnackbar({ message: message, type: "error" }));
     throw new Error(message);
   }

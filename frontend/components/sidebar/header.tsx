@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 const pathTitles = {
   "/dashboard": "Panel statystyczny",
   "/dashboard/orders": "Historia zamówień",
-  "/dashboard/income": "Przychody",
   "/dashboard/products": "Moje produkty",
   "/dashboard/settings": "Ustawienia",
   "/order": "Panel kasjera",

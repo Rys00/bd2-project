@@ -1,4 +1,4 @@
-import { ChartAreaInteractive } from "@/components/dashboard/chart-area-interactive";
+import DashboardChartArea from "@/components/dashboard/dashboard-chart-area";
 import { SectionCards } from "@/components/dashboard/section-cards";
 
 import {
@@ -18,6 +18,7 @@ export default async function Page() {
     start: sixMonthAgo,
     end: currentDate,
   });
+  sixMonthReport[sixMonthReport.length - 1] = dailyReport;
 
   return (
     <div className="flex flex-1 flex-col">
@@ -28,7 +29,7 @@ export default async function Page() {
             sixMonthReport={sixMonthReport}
           />
           <div className="px-4 lg:px-6">
-            <ChartAreaInteractive sixMonthReport={sixMonthReport} />
+            <DashboardChartArea sixMonthsReport={sixMonthReport} />
           </div>
         </div>
       </div>

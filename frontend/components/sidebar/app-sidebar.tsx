@@ -2,7 +2,6 @@
 
 import {
   IconCashRegister,
-  IconChartBar,
   IconCup,
   IconSettings,
   IconShoppingBag,
@@ -35,7 +34,7 @@ const data = {
     {
       title: "Panel statystyczny",
       url: "/dashboard",
-      icon: IconChartBar,
+      icon: IconTrendingUp,
     },
   ],
   navSecondary: [
@@ -50,11 +49,6 @@ const data = {
       name: "Zamówienia",
       url: "/dashboard/orders",
       icon: IconShoppingBag,
-    },
-    {
-      name: "Przychody",
-      url: "/dashboard/income",
-      icon: IconTrendingUp,
     },
     {
       name: "Produkty",

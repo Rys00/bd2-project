@@ -7,3 +7,13 @@ export const selectPreviousSessionStatus = createSelector(
   [selectCacheReducer],
   (cacheReducer) => cacheReducer.previousSessionStatus
 );
+
+export const selectCachedCategories = createSelector(
+  [selectCacheReducer],
+  (cacheReducer) => cacheReducer.categories
+);
+
+export const selectCachedAllergens = createSelector(
+  [selectCacheReducer],
+  (cacheReducer) => cacheReducer.allergens
+);

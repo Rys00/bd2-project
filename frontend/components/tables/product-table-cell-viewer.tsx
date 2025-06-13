@@ -1,29 +1,31 @@
 "use client";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { getAllergens, getCategories } from "@/lib/backend-requests/misc";
 import {
   ProductView,
   updateProduct,
   updateStock,
 } from "@/lib/backend-requests/products";
-import { useAppDispatch } from "@/lib/store/hooks";
+import {
+  DailyProductSnapshotView,
+  fixDailyProductSnapshotViewArray,
+  getDailyProductSnapshotsRange,
+} from "@/lib/backend-requests/reports";
+import {
+  selectCachedAllergens,
+  selectCachedCategories,
+} from "@/lib/store/cache/cache.selector";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { addSnackbar } from "@/lib/store/ui/ui.slice";
 import { ProductDescriptorSchema } from "@/lib/zod/product";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Allergen, Prisma, ProductCategory } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { z } from "zod";
+import { SimpleChart } from "../charts/simple-chart";
 import { Button } from "../ui/button";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "../ui/chart";
 import {
   Drawer,
   DrawerClose,
@@ -45,28 +47,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--primary)",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "var(--primary)",
-  },
-} satisfies ChartConfig;
 
 export default function ProductTableCellViewer({
   item,
@@ -75,8 +56,9 @@ export default function ProductTableCellViewer({
 }) {
   const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
-  const [categories, setCategories] = useState<ProductCategory[]>([]);
-  const [allergens, setAllergens] = useState<Allergen[]>([]);
+  const categories = useAppSelector(selectCachedCategories);
+  const allergens = useAppSelector(selectCachedAllergens);
+  const [snapshots, setSnapshots] = useState<DailyProductSnapshotView[]>([]);
   const form = useForm<z.infer<typeof ProductDescriptorSchema>>({
     resolver: zodResolver(ProductDescriptorSchema),
     defaultValues: {
@@ -116,8 +98,18 @@ export default function ProductTableCellViewer({
 
   const onOpen = async () => {
     resetValues();
-    setCategories(await getCategories(dispatch));
-    setAllergens(await getAllergens(dispatch));
+    if (snapshots.length === 0) {
+      const currentDate = new Date();
+      const weekAgo = new Date(currentDate.getDate() - 7);
+      const snaps = await getDailyProductSnapshotsRange({
+        productId: item.product_id,
+        start: weekAgo,
+        end: currentDate,
+      });
+      setSnapshots((prev) =>
+        prev.length === 0 ? fixDailyProductSnapshotViewArray(snaps) : prev
+      );
+    }
   };
 
   async function onSubmit(values: z.infer<typeof ProductDescriptorSchema>) {
@@ -192,49 +184,20 @@ export default function ProductTableCellViewer({
             </DrawerHeader>
             <div className="flex flex-col gap-4 px-4 text-sm">
               {!isMobile && (
-                <>
-                  <ChartContainer config={chartConfig}>
-                    <AreaChart
-                      accessibilityLayer
-                      data={chartData}
-                      margin={{
-                        left: 0,
-                        right: 10,
-                      }}
-                    >
-                      <CartesianGrid vertical={false} />
-                      <XAxis
-                        dataKey="month"
-                        tickLine={false}
-                        axisLine={false}
-                        tickMargin={8}
-                        tickFormatter={(value) => value.slice(0, 3)}
-                        hide
-                      />
-                      <ChartTooltip
-                        cursor={false}
-                        content={<ChartTooltipContent indicator="dot" />}
-                      />
-                      <Area
-                        dataKey="mobile"
-                        type="natural"
-                        fill="var(--color-mobile)"
-                        fillOpacity={0.6}
-                        stroke="var(--color-mobile)"
-                        stackId="a"
-                      />
-                      <Area
-                        dataKey="desktop"
-                        type="natural"
-                        fill="var(--color-desktop)"
-                        fillOpacity={0.4}
-                        stroke="var(--color-desktop)"
-                        stackId="a"
-                      />
-                    </AreaChart>
-                  </ChartContainer>
-                  <Separator />
-                </>
+                <SimpleChart
+                  data={snapshots.map((snapshot) => ({
+                    date: snapshot.snapshot_date.toLocaleString(),
+                    values: {
+                      quantity: snapshot.stock_amount,
+                    },
+                  }))}
+                  config={{
+                    quantity: {
+                      label: "Ilość",
+                      color: "var(--color-primary)",
+                    },
+                  }}
+                />
               )}
               <FormField
                 control={form.control}
