@@ -23,16 +23,46 @@ WHERE DATE(o.date) = CURRENT_DATE
 GROUP BY c.category_id, c.name;
 
 CREATE MATERIALIZED VIEW daily_report_mv AS
+WITH all_days AS (
+    SELECT generate_series(
+        (SELECT MIN(DATE(date)) FROM bufet_order),
+        CURRENT_DATE,
+        INTERVAL '1 day'
+    )::date AS day
+),
+real_data AS (
+    SELECT
+        DATE(o.date) AS day,
+        COUNT(DISTINCT o.order_id) AS orders_count,
+        SUM(o.sum) AS total_sales,
+        SUM(o.total_profit) AS total_profit
+    FROM bufet_order o
+    GROUP BY DATE(o.date)
+)
 SELECT
-    DATE(o.date) AS day,
-    COUNT(DISTINCT o.order_id) AS orders_count,
-    SUM(o.sum) AS total_sales,
-    SUM(o.total_profit) AS total_profit
-FROM bufet_order o
-GROUP BY DATE(o.date);
+    d.day,
+    COALESCE(r.orders_count, 0) AS orders_count,
+    COALESCE(r.total_sales, 0) AS total_sales,
+    COALESCE(r.total_profit, 0) AS total_profit
+FROM all_days d
+LEFT JOIN real_data r ON r.day = d.day;
 
 CREATE MATERIALIZED VIEW category_daily_report_mv AS
-WITH aggregated_data AS (
+WITH all_days AS (
+    SELECT generate_series(
+        (SELECT MIN(DATE(date)) FROM bufet_order),
+        CURRENT_DATE,
+        INTERVAL '1 day'
+    )::date AS day
+),
+all_categories AS (
+    SELECT category_id, name AS category_name FROM bufet_productcategory
+),
+day_category_grid AS (
+    SELECT d.day, c.category_id, c.category_name
+    FROM all_days d CROSS JOIN all_categories c
+),
+aggregated_data AS (
     SELECT
         DATE(o.date) AS day,
         c.category_id,
@@ -47,14 +77,16 @@ WITH aggregated_data AS (
     GROUP BY DATE(o.date), c.category_id, c.name
 )
 SELECT
-    ROW_NUMBER() OVER (ORDER BY day, category_id) AS id,
-    day,
-    category_id,
-    category_name,
-    totals_sold,
-    total_value,
-    total_profit
-FROM aggregated_data;
+    ROW_NUMBER() OVER (ORDER BY g.day, g.category_id) AS id,
+    g.day,
+    g.category_id,
+    g.category_name,
+    COALESCE(a.totals_sold, 0) AS totals_sold,
+    COALESCE(a.total_value, 0) AS total_value,
+    COALESCE(a.total_profit, 0) AS total_profit
+FROM day_category_grid g
+LEFT JOIN aggregated_data a
+  ON a.day = g.day AND a.category_id = g.category_id;
 
 
 
