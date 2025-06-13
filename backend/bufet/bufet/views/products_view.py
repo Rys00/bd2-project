@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, ValidationError
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.db.models import Case, When, Value, IntegerField
 
@@ -26,9 +26,8 @@ class ProductsByCategoryView(ListAPIView):
             )
         ).order_by('active_order', 'name')
 
-
 class AllProductsView(ListAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Product.objects.annotate(
         active_order=Case(
             When(active=True, then=Value(0)),
@@ -61,9 +60,8 @@ class ActiveProductsByCategoryView(ListAPIView):
         # Sort active first, then alphabetically
         return queryset.order_by('-active', 'name')
 
-
 class AllActiveProductsView(ListAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = ProductSerializer
 
     def get_queryset(self):
@@ -81,6 +79,7 @@ class AllActiveProductsView(ListAPIView):
         return queryset.order_by('-active', 'name')
 
 class AllProductsCategoriesView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
@@ -118,7 +117,6 @@ class UpdateProductView(UpdateAPIView):
         response = super().update(request, *args, **kwargs)
         product = Product.objects.get(pk=response.data['product_id'])
         return Response(ProductSerializer(product).data, status=status.HTTP_200_OK)
-
 
 #deleting by id - only category, since product is used as part of orders history
 class DeleteProductCategoryView(DestroyAPIView):

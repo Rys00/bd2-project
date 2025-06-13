@@ -78,7 +78,7 @@
 <ownDataTypeParameters>1,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="category_id" id="8767155B-1FD6-4232-D97A-DD34181B49B4">
+<Column name="ProductCategory_category_id" id="8767155B-1FD6-4232-D97A-DD34181B49B4">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>66E5EA51-13CC-BC22-489B-C24BDDD5430D</generatorID>
