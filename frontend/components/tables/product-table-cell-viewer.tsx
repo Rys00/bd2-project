@@ -100,7 +100,8 @@ export default function ProductTableCellViewer({
     resetValues();
     if (snapshots.length === 0) {
       const currentDate = new Date();
-      const weekAgo = new Date(currentDate.getDate() - 7);
+      const weekAgo = new Date();
+      weekAgo.setDate(currentDate.getDate() - 7);
       const snaps = await getDailyProductSnapshotsRange(
         {
           productId: item.product_id,
