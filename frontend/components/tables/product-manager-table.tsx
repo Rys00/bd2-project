@@ -157,12 +157,14 @@ const columns: ColumnDef<ProductView>[] = [
     header: "Stan magazynowy",
     cell: ({ row }) => (
       <Badge variant="outline" className="text-muted-foreground px-1.5">
-        {row.original.name === "Done" ? (
+        {row.original.stock_amount >= 50 ? (
           <IconCircleFilled className="fill-green-500 dark:fill-green-400" />
+        ) : row.original.stock_amount >= 10 ? (
+          <IconCircleFilled className="fill-yellow-500 dark:fill-yellow-400" />
         ) : (
           <IconCircleFilled className="fill-red-500 dark:fill-red-400" />
         )}
-        {0}
+        {row.original.stock_amount}
       </Badge>
     ),
   },
@@ -184,7 +186,7 @@ const columns: ColumnDef<ProductView>[] = [
     accessorKey: "alergeny",
     header: () => <div className="w-full text-right">Alergeny</div>,
     cell: ({ row }) => (
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-1">
         {row.original.allergens.map((a) => (
           <Badge
             key={a.allergen_id}
@@ -249,7 +251,11 @@ function DraggableRow({ row }: { row: Row<ProductView> }) {
   );
 }
 
-export function ProductTable({ data: initialData }: { data: ProductView[] }) {
+export function ProductManagerTable({
+  data: initialData,
+}: {
+  data: ProductView[];
+}) {
   const [data, setData] = React.useState(initialData);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -320,10 +326,12 @@ export function ProductTable({ data: initialData }: { data: ProductView[] }) {
       className="w-full flex-col justify-start gap-6 mt-6"
     >
       <div className="flex items-center justify-between px-4 lg:px-6">
-        <span>Zarządzaj produktami</span>
+        <span className="bg-background z-10 px-5 text-xl text-primary">
+          Zarządzaj produktami
+        </span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="z-10">
               <IconLayoutColumns />
               <span className="hidden lg:inline">Dostosuj kolumny</span>
               <span className="lg:hidden">Kolumny</span>

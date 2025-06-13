@@ -86,7 +86,7 @@ export async function makeBackendRequest<RetType>(
   if (res.ok) {
     return data as RetType;
   } else {
-    const message = `PWB_ERROR;${res.status}`;
+    const message = `PWB_ERROR;${res.status};${JSON.stringify(data)}`;
     if (dispatch) dispatch(addSnackbar({ message: message, type: "error" }));
     throw new Error(message);
   }
@@ -182,4 +182,24 @@ export function verifyPassword(password: string, combined: Buffer) {
       }
     );
   });
+}
+
+const weekdays = [
+  "Niedziela",
+  "Poniedziałek",
+  "Wtorek",
+  "Środa",
+  "Czwartek",
+  "Piątek",
+  "Sobota",
+];
+
+export function getWeekdayArray() {
+  const currentDate = new Date();
+  const weekday = currentDate.getDay();
+  const arr = [];
+  for (let i = weekday + 6; i >= weekday; i--) {
+    arr.push(weekdays[i % 7]);
+  }
+  return arr;
 }

@@ -2,7 +2,11 @@
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getAllergens, getCategories } from "@/lib/backend-requests/misc";
-import { ProductView, updateProduct } from "@/lib/backend-requests/products";
+import {
+  ProductView,
+  updateProduct,
+  updateStock,
+} from "@/lib/backend-requests/products";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { addSnackbar } from "@/lib/store/ui/ui.slice";
 import { ProductDescriptorSchema } from "@/lib/zod/product";
@@ -84,13 +88,13 @@ export default function ProductTableCellViewer({
       margin: item.margin,
       allergens: item.allergens.map((a) => `${a.allergen_id}`),
       active: item.active,
-      quantity: 0,
+      quantity: item.stock_amount,
     },
   });
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  useEffect(() => {
+  function resetValues() {
     form.setValue("id", item.product_id);
     form.setValue("name", item.name);
     form.setValue("categoryId", `${item.category.category_id}`);
@@ -102,34 +106,46 @@ export default function ProductTableCellViewer({
       item.allergens.map((a) => `${a.allergen_id}`)
     );
     form.setValue("active", item.active);
-    form.setValue("quantity", 0);
+    form.setValue("quantity", item.stock_amount);
+  }
+
+  useEffect(() => {
+    resetValues();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item]);
 
-  const fetchData = async () => {
+  const onOpen = async () => {
+    resetValues();
     setCategories(await getCategories(dispatch));
     setAllergens(await getAllergens(dispatch));
   };
 
   async function onSubmit(values: z.infer<typeof ProductDescriptorSchema>) {
     try {
-      await updateProduct(values.id, {
-        name: values.name,
-        category_id: Number(values.categoryId),
-        price: new Prisma.Decimal(values.price),
-        cost: new Prisma.Decimal(values.cost),
-        margin: values.margin,
-        allergens: values.allergens.map((a) => Number(a)),
-        active: values.active,
-      });
-      // await updateStock({
-      //   updates: [
-      //     {
-      //       product_id: values.id,
-      //       change: values.quantity - item.
-      //     }
-      //   ]
-      // })
+      await updateProduct(
+        values.id,
+        {
+          name: values.name,
+          category_id: Number(values.categoryId),
+          price: new Prisma.Decimal(values.price),
+          cost: new Prisma.Decimal(values.cost),
+          margin: values.margin,
+          allergens: values.allergens.map((a) => Number(a)),
+          active: values.active,
+        },
+        dispatch
+      );
+      await updateStock(
+        {
+          updates: [
+            {
+              product_id: values.id,
+              change: values.quantity,
+            },
+          ],
+        },
+        dispatch
+      );
       dispatch(
         addSnackbar({ message: "Pomyślnie zapisany zmiany", type: "success" })
       );
@@ -151,7 +167,7 @@ export default function ProductTableCellViewer({
       open={isOpen}
       onOpenChange={(b) => {
         setIsOpen(b);
-        if (b) fetchData();
+        if (b) onOpen();
       }}
     >
       <DrawerTrigger asChild>
