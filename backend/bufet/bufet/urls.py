@@ -62,8 +62,8 @@ urlpatterns = [
     path('api/delete/allergen/<int:allergen_id>', DeleteAllergenView.as_view(), name='delete-allergen'),
 
     #reports
-    path('api/reports/daily-reports/by-dates', DailyReportsView.as_view(), name='daily-reports-by-dates'),
+    path('api/daily-reports/by-dates', DailyReportsView.as_view(), name='daily-reports-by-dates'),
     path('api/today', TodayReport.as_view(), name='today-report'),
-    path('api/daily-reports/by-dates', CategoryDailyReportsView.as_view(), name='categor-daily-reports-by-dates'),
+    path('api/category-daily-reports/by-dates', CategoryDailyReportsView.as_view(), name='categor-daily-reports-by-dates'),
     path('api/today/by-categories', CategoryTodayReport.as_view(), name='all-products-categories')
 ]
