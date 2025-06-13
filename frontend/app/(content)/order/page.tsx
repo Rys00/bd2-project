@@ -83,6 +83,7 @@ const OrderPage = () => {
         <ProductOrderTable
           title={"Zamówienie"}
           data={cartItems.map((i) => i.product)}
+          noItemLabel="Nie dodano żadnych produktów do zamówienia."
         ></ProductOrderTable>
         <div className="flex justify-end">
           <div className="px-10 pb-6 text-xl flex flex-col gap-3">
