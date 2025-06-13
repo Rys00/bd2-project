@@ -95,7 +95,8 @@ INSERT INTO bufet_order (order_id, date, sum, total_profit) VALUES
 (7, '2025-06-10 17:30:00+02', 30.00, 13.00),
 (8, '2025-06-10 18:15:00+02', 25.50, 10.50),
 (9, '2025-06-10 19:00:00+02', 60.00, 26.00),
-(10, '2025-06-10 20:00:00+02', 45.50, 20.00);
+(10, '2025-06-10 20:00:00+02', 45.50, 20.00),
+(11, '2024-12-01 09:30:00+02', 0.00, 0.00);
 
 -- Pozycje zamówień
 INSERT INTO bufet_orderposition (position_id, amount, value, profit, order_id, product_id, unit_price) VALUES
