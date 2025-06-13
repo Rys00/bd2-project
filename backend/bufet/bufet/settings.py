@@ -88,7 +88,7 @@ REST_FRAMEWORK = {
         "bufet.auth.jwt.JWEAuthentication",
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-            'rest_framework.permissions.IsAuthenticated', #temporary
+            'rest_framework.permissions.IsAdminUser', #temporary
     ],
 }
 
