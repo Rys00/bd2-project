@@ -36,7 +36,7 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','bufet-backend']
 
 
 # Application definition
@@ -97,7 +97,7 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = True #for testing
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://bufet-frontend:3000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True

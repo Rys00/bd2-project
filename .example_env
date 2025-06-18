@@ -1,0 +1,14 @@
+DATABASE_URL="postgresql://postgres:password@bufetDB:5432/bufet?schema=public"
+NEXT_PUBLIC_BACKEND_URL=http://bufet-backend:8000/api
+DB_NAME="bufet"
+DB_USER="postgres"
+DB_PASSWORD="password"
+DB_HOST="bufetDB"
+DB_PORT=5432
+
+AUTH_SECRET=supersecretvalueusedtoderivekeys1234567890
+AUTH_SALT=authjs.session-token
+
+AUTH_JWE_ENCRYPTION=A256CBC-HS512
+
+DEBUG=True
