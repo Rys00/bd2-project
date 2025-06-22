@@ -40,6 +40,12 @@ hasło: Admin123.
 
 Do stworzenia aplikacji skorzystaliśmy z następujących technologii:
 
+Technologia bazo-danowa - **PostgreSQL**
+Główna technologia backendowa - **Django**
+Główna technologia frontednowa - **React**
+
+Zbiór wszystkich użytych przez nas technologi możemy zobaczyć poniżej:
+
 <div style="display: flex; gap: 50px; max-width: 500px; flex-wrap: wrap; justify-content: center;">
   <img src="https://www.vectorlogo.zone/logos/docker/docker-tile.svg" alt="Docker" height=60 />
   <img src="https://www.vectorlogo.zone/logos/postgresql/postgresql-icon.svg" alt="PostgreSQL" />
@@ -59,7 +65,25 @@ Do stworzenia aplikacji skorzystaliśmy z następujących technologii:
   <img src="https://raw.githubusercontent.com/dochne/wappalyzer/refs/heads/main/src/images/icons/shadcn-ui.svg" height=60 alt="ShadCN" />
 </div>
 
-Przy wyborze technologii kierowaliśmy się znajomością powyższych technologi, czytelności dokumentacji, dominacji rynku przez nie oraz wystarczania do naszych zapotrzebowań.  Przy wyborze typu bazy danych istotnymi kwestia była możliwości dodawania elementów jak  np. widoki zmaterializowane. Przy doborze technologii backendowej kierowaliśmy się szybkością implementacji poszczególnych zadań oraz stosowanymi w niej ORM, którymi następnie tworzyliśmy większość struktury bazy danych.
+Zadając sobie pytanie jaka technologia będzie najlepsza doszliśmy do następującego wniosku: Otóż krótka odpowiedź to – nie wiadomo. Nigdy nie będziemy mieć pewności, że nasz wybór był w 100% optymalny i nie było nic lepszego, ponieważ ilość dostępnych na rynku technologii i prędkość powstawania nowych jest po prostu zbyt duża. Ponadto optymalna technologia może nie istnieć, jeden wybór może mieć coś lepszego a coś innego gorszego niż drugi wybór. Jednak nie wszystko stracone, wciąż mamy do dyspozycji kilka metryk, którymi możemy się wspomóc podczas wyboru naszej technologii. Metryki te to na przykład (tych używaliśmy):​
+
+- Rozmiar ekosystemu danej technologii, liczba tutoriali, aktywność środowiska​
+
+- Stopień użycia w aplikacjach dużych firm takich jak google, facebook itp.​
+
+- Możliwości rozbudowy, zarówno własnej jak i istniejącymi bibliotekami​
+
+- Próg wejścia, który jest wymagany, żeby zacząć w tym pisać​
+
+- Średni nakład czasu potrzebny do napisania czegoś, na podstawie znalezionych przykładów​
+
+- Analiza wydajnościowa czyli sprawdzanie co jest szybsze​
+
+- Innowacyjność danego rozwiązania, ilość uproszczeń nam zapewnianych​
+
+- Subiektywne odczucia odnośnie danej technologii
+
+Przy użyciu powyższych metry doszliśmy do wniosku iż powyższe technologie są optymalne.
 
 ### Opracowanie modelu pojęciowego (E-R)
 
@@ -102,7 +126,7 @@ Ze względu na wybrany typ bazy danych (Postgres) typ indeksu jest automatycznie
 W celu optymalizacji zapytań do części raportowej zostały opracowane dwa widoki:
 
 - Widok dziennej sprzedaży, który przekazuje informację o: kwocie sprzedaży, liczbie zamówień, przychody - jest on wykorzystywany w panelu statystycznym w górnych 4 widgetach.
-- Widok dziennej sprzedaży z podziałem na kategorie produktów, który informuje o liczbie sprzedanych produktów z danej kategorii, wartości sprzedaży oraz przychodów dla danej kategorii  - jest on zaimplementowany na bazie oraz z gotowymi endpointami, umożliwia to dalszy rozwój aplikacji (zgodnie z informacją od prowadzącego projekt był wystarczająco rozbudowany i nie musieliśmy implementować widoczności tych danych raportowych w widoku aplikacji).
+- Widok dziennej sprzedaży z podziałem na kategorie produktów, który informuje o liczbie sprzedanych produktów z danej kategorii, wartości sprzedaży oraz przychodów dla danej kategorii - jest on zaimplementowany na bazie oraz z gotowymi endpointami, umożliwia to dalszy rozwój aplikacji (zgodnie z informacją od prowadzącego projekt był wystarczająco rozbudowany i nie musieliśmy implementować widoczności tych danych raportowych w widoku aplikacji).
 
 ### Widoki zmaterializowane
 
@@ -110,7 +134,7 @@ W celu optymalizacji zapytań do części raportowej zostały opracowane cztery 
 
 - Widok historii stanu produktu na magazynie - widok przeznaczony głównie do analizy jak zmienia się stan magazynu na przestrzeni kolejnych dni. Dane z tego widoku są widoczne na wykresie w oknie produktu. Na tym widoku zostały założone dwa indeksy - jeden unikalny wymagany oraz index na połączeniu identyfikatora produktu oraz daty zapisu stanu magazynu.
 - Widok historii dziennej sprzedaży na przestrzeni kolejnych dni - przekazuje te same informacje co zwykły widok dziennej sprzedaży, ale zachowuje historię kolejnych dni. Na widoku zostały zastosowane odpowiednio indeksy na dacie, zysku oraz liczbie zamówień w celu możliwości w przyszłości dalszej rozbudowy aplikacji o np. analizę rentowności bądź ruchu klientów w bufecie. Część informacji zapisanych w tym widoku są wykorzystywane do tworzenia wykresów widocznych w panelu statystycznym.
-- Widok historii dziennej sprzedaży z podziałem na kategorie produktów na przestrzeni kolejnych dni, przekazuje te same informacje co widok dziennej sprzedaży z podziałem na kategorie produktów, ale zachowuje historię kolejnych dni.  Widok ma odpowiednio zastosowane wymagany unikalny indeks na numerze wpisu, indeks na połączeniu daty z kategorią produktu w celu optymalizacji zapytań. Widok ten został w pełni zaimplementowany na bazie oraz na backedzie, dalsza implementacja wizualizacji przechowywanym w nim danych na frontedzie nie została wykonana ze względu na informację o wystarczającym rozbudowaniu projektu od prowadzącego.
+- Widok historii dziennej sprzedaży z podziałem na kategorie produktów na przestrzeni kolejnych dni, przekazuje te same informacje co widok dziennej sprzedaży z podziałem na kategorie produktów, ale zachowuje historię kolejnych dni. Widok ma odpowiednio zastosowane wymagany unikalny indeks na numerze wpisu, indeks na połączeniu daty z kategorią produktu w celu optymalizacji zapytań. Widok ten został w pełni zaimplementowany na bazie oraz na backedzie, dalsza implementacja wizualizacji przechowywanym w nim danych na frontedzie nie została wykonana ze względu na informację o wystarczającym rozbudowaniu projektu od prowadzącego.
 - Widok średniego ruchu klienckiego w poszczególnych dniach tygodnia o danych godzinach - widok przeznaczony do przyszłej analizy ruchu w bufecie umożliwiający np. określenie kiedy więcej pracowników bufetu powinno być na zmianie. Zastosowaliśmy indeks złożony na kolumnach dnia tygodnia oraz godzinie. Widok ten został w pełni zaimplementowany na bazie oraz na backedzie, dalsza implementacja wizualizacji przechowywanym w nim danych na frontedzie nie została wykonana ze względu na informację o wystarczającym rozbudowaniu projektu od prowadzącego.
 
 W celu zapewnienia regularnego (codziennego) odświeżania widoków zdecydowaliśmy się na skorzystanie z rozszerzenia do bazy danych jakim jest pg_cron. Uruchomienie sekwencji równoległego odświeżania widoków została opisana w [pg_cron_setup.sql](baza/pg_cron_setup.sql).
@@ -129,4 +153,4 @@ Aplikacja oferuje podsumowania zysku i zamówień w postaci wartości liczbowych
 
 ## Testowanie aplikacji
 
-Przy testowaniu aplikacji korzystaliśmy z opracowanego skryptu wczytującego przykładowe dane, podglądu zawartości tabel dostępnym w pgAdminie oraz widoku narzędzi IDE Pycharm. Poprawność dostarczanych danych, sprawdzenie działania walidacji przekazywanych danych w żądaniach w przyszłości przez frontend dokonywaliśmy przy pomocy narzędzia Postman.  W celu kontroli poprawności tworzenia się wykresów stanu magazynowego produktu został opracowany skrypt *mock.sql*, który umożliwiał podgląd jak będą wyglądały wykresy przez wprowadzeniem automatycznego odświeżania. Również przeprowadziliśmy doświadczalne testy dot. wygody obsługi aplikacji przez osoby z poza projektu. Istotną kwestią, którą testowaliśmy również było sprawdzanie poprawności działania kontroli uprawnień użytkownika w zależności od przekazywanego tokenu JWE.
+Przy testowaniu aplikacji korzystaliśmy z opracowanego skryptu wczytującego przykładowe dane, podglądu zawartości tabel dostępnym w pgAdminie oraz widoku narzędzi IDE Pycharm. Poprawność dostarczanych danych, sprawdzenie działania walidacji przekazywanych danych w żądaniach w przyszłości przez frontend dokonywaliśmy przy pomocy narzędzia Postman. W celu kontroli poprawności tworzenia się wykresów stanu magazynowego produktu został opracowany skrypt _mock.sql_, który umożliwiał podgląd jak będą wyglądały wykresy przez wprowadzeniem automatycznego odświeżania. Również przeprowadziliśmy doświadczalne testy dot. wygody obsługi aplikacji przez osoby z poza projektu. Istotną kwestią, którą testowaliśmy również było sprawdzanie poprawności działania kontroli uprawnień użytkownika w zależności od przekazywanego tokenu JWE.
