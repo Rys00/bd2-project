@@ -20,7 +20,14 @@ Z racji zaprojektowanej przez nas dockeryzacji uruchomienie projektu jest banaln
 ```
 
 następnie odczekać chwilę na budowanie się aplikacji i jeżeli wszystko przebiegło zgodnie z planem to strona powinna być dostępna pod [localhost:3000](http://localhost:3000).
-**Uwaga** - jeżeli chcemy postawić aplikację "na poważnie" powinniśmy wejść w plik `.example_env` zmienić w nim wszystkie wrażliwe wartości wartości tj. `AUTH_SECRET` i `DB_PASSWORD` a następnie ponownie uruchomić powyższą komendę (`./run_app --build`).
+Po wejściu na stronę zostaniemy automatycznie poproszeni o zalogowanie. Możemy założyć własne konto, ale nie będzie ono posiadało uprawnień administratora. Aby zalogować się jako administrator musimy skorzystać z domyślnego konta admina a następujących danych logowania:
+
+```sh
+login: admin@gmail.com
+hasło: Admin123.
+```
+
+**Uwaga** - jeżeli chcemy postawić aplikację "na poważnie" powinniśmy wejść w plik `.example_env` zmienić w nim wszystkie wrażliwe wartości wartości tj. `AUTH_SECRET` i `DB_PASSWORD`. Zmianie powinno także ulec hasło domyślnego admina, którego to hash trzymany jest w `/baza/skrypty_sql/seed.sql` na samej górze pliku. Po wprowadzeniu zmian musimy ponownie uruchomić powyższą komendę (`./run_app --build`).
 
 ### Technologie
 
