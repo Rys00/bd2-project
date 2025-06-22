@@ -57,18 +57,6 @@
 <colAssociation fkAssociation="348A7D00-171D-B411-9D99-4F7C7BC32A46" referredColumn="B904A1FD-B93F-F3B0-8512-1A032D59FA18"/>
 </associations>
 </Column>
-<Column name="earlies_exp" id="6C1F783D-98AC-108B-F866-2FE8B7C6072E">
-<createdBy>martyna</createdBy>
-<createdTime>2025-06-07 20:08:06 UTC</createdTime>
-<generatorID>C0981827-27F2-41BD-A67E-3BEEBC8AC9B2</generatorID>
-<ownerDesignName>model</ownerDesignName>
-<nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT008</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<autoIncrementCycle>false</autoIncrementCycle>
-</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="4C8D5616-5D91-292C-2269-71A0552184DA" name="ProductStock_PK">

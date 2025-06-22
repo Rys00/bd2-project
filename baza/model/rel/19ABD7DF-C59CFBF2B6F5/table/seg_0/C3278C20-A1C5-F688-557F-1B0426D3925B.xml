@@ -69,5 +69,14 @@
 <colUsage columnID="F3D0BD4A-9811-C355-82FC-0C5F077B3399"/>
 </indexColumnUsage>
 </ind_PK_UK>
+<ind_PK_UK id="D82BFD51-CB0E-85D2-4233-89A2A2265285" name="idx_order_date">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-22 12:49:51 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D5A305D0-3500-0005-317E-8898B52A3489"/>
+</indexColumnUsage>
+</ind_PK_UK>
 </indexes>
 </Table>

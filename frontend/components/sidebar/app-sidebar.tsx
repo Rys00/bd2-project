@@ -38,18 +38,18 @@ const data = {
     },
   ],
   navSecondary: [
-    {
-      title: "Ustawienia",
-      url: "/dashboard/settings",
-      icon: IconSettings,
-    },
+    // {
+    //   title: "Ustawienia",
+    //   url: "/dashboard/settings",
+    //   icon: IconSettings,
+    // },
   ],
   documents: [
-    {
-      name: "Zamówienia",
-      url: "/dashboard/orders",
-      icon: IconShoppingBag,
-    },
+    // {
+    //   name: "Zamówienia",
+    //   url: "/dashboard/orders",
+    //   icon: IconShoppingBag,
+    // },
     {
       name: "Produkty",
       url: "/dashboard/products",

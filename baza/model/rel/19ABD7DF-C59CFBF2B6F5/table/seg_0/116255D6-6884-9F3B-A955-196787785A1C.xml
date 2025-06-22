@@ -98,6 +98,17 @@
 <ownDataTypeParameters>,2,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="product_name" id="50AC3DE6-2901-D6CA-F925-6B132B50B313">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-22 12:44:29 UTC</createdTime>
+<generatorID>AFEA5E49-E924-349F-1350-79BE700769FD</generatorID>
+<ownerDesignName>model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="741F4F56-D219-9D77-ED65-10C344A70320" name="OrderPosition_PK">

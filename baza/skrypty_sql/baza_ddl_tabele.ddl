@@ -31,6 +31,11 @@ CREATE TABLE "Order" (
     total_profit NUMBER NOT NULL
 );
 
+CREATE INDEX idx_order_date ON
+    "Order" (
+        "date"
+    ASC );
+
 ALTER TABLE "Order" ADD CONSTRAINT order_pk PRIMARY KEY ( order_id );
 
 CREATE TABLE orderposition (
@@ -40,7 +45,8 @@ CREATE TABLE orderposition (
     profit          NUMBER NOT NULL,
     product_prod_id INTEGER NOT NULL,
     order_order_id  INTEGER NOT NULL,
-    unit_price      NUMBER(2) NOT NULL
+    unit_price      NUMBER(2) NOT NULL,
+    product_name    CLOB NOT NULL
 );
 
 ALTER TABLE orderposition ADD CONSTRAINT orderposition_pk PRIMARY KEY ( position_id );
@@ -55,6 +61,11 @@ CREATE TABLE product (
     productcategory_category_id INTEGER NOT NULL
 );
 
+CREATE INDEX idx_product_category_id ON
+    product (
+        productcategory_category_id
+    ASC );
+
 ALTER TABLE product ADD CONSTRAINT product_pk PRIMARY KEY ( prod_id );
 
 CREATE TABLE productcategory (
@@ -68,8 +79,7 @@ CREATE TABLE productstock (
     stock_id        INTEGER NOT NULL,
     amount          INTEGER NOT NULL,
     last_updated    DATE NOT NULL,
-    product_prod_id INTEGER NOT NULL,
-    earlies_exp     DATE
+    product_prod_id INTEGER NOT NULL
 );
 
 CREATE UNIQUE INDEX productstock__idx ON
@@ -109,10 +119,10 @@ ALTER TABLE productstock
 
 
 
--- Oracle SQL Developer Data Modeler Summary Report: 
--- 
+-- Oracle SQL Developer Data Modeler Summary Report:
+--
 -- CREATE TABLE                             7
--- CREATE INDEX                             1
+-- CREATE INDEX                             3
 -- ALTER TABLE                             13
 -- CREATE VIEW                              0
 -- ALTER VIEW                               0
@@ -139,15 +149,16 @@ ALTER TABLE productstock
 -- CREATE SYNONYM                           0
 -- CREATE TABLESPACE                        0
 -- CREATE USER                              0
--- 
+--
 -- DROP TABLESPACE                          0
 -- DROP DATABASE                            0
--- 
+--
 -- REDACTION POLICY                         0
--- 
+--
 -- ORDS DROP SCHEMA                         0
 -- ORDS ENABLE SCHEMA                       0
 -- ORDS ENABLE OBJECT                       0
--- 
+--
 -- ERRORS                                   0
 -- WARNINGS                                 0
+
