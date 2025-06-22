@@ -3,6 +3,8 @@ FROM node:20-slim
 # Set working directory
 WORKDIR /app
 
+RUN apt-get update -y && apt-get install -y openssl
+
 # Copy package files first for caching
 COPY package*.json ./
 
@@ -15,5 +17,7 @@ COPY . .
 # Generate Prisma client
 RUN npx prisma generate
 
+RUN npm run build
+
 # Start your app
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
