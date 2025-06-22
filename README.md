@@ -1,6 +1,6 @@
 # PROJEKT - Aplikacja do obsługi Bufetu - BufetPW
 
-Wykonali: Martyna Orzechowska, Mateusz Ogniewski, Joanna Jóśko, Filip Fijałkowski, Jakub Sikora
+Wykonali: Martyna Orzechowska, Mateusz Ogniewski, Joanna Jóśko, Filip Fijałkowski, Jakub Sikorski
 
 ## Dokumentacja projektowa
 
