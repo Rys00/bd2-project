@@ -17,7 +17,9 @@ COPY . .
 # Generate Prisma client
 RUN npx prisma generate
 
-RUN npm run build
-
 # Start your app
-CMD ["npm", "start"]
+# Development
+CMD ["npm", "run", "dev"]
+# Production
+# RUN npm run build
+# CMD ["npm", "start"]
