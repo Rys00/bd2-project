@@ -6,8 +6,9 @@ insert into bufet_cuser (
    is_active,
    is_cashier,
    is_staff,
-   password
-) values ('2137', 'admin', 'admin@gamil.com', true, true, true, true, '');
+   password,
+   date_joined
+) values ('2137', 'admin', 'admin@gamil.com', true, true, true, true, '', '2000-01-01 21:37:00+02');
 
 insert into js_user_password_hashes (
    user_id,
