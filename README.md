@@ -59,6 +59,7 @@ Do stworzenia aplikacji skorzystaliśmy z następujących technologii:
   <img src="https://raw.githubusercontent.com/dochne/wappalyzer/refs/heads/main/src/images/icons/shadcn-ui.svg" height=60 alt="ShadCN" />
 </div>
 
+Przy wyborze technologii kierowaliśmy się znajomością powyższych technologi, czytelności dokumentacji, dominacji rynku przez nie oraz wystarczania do naszych zapotrzebowań.  Przy wyborze typu bazy danych istotnymi kwestia była możliwości dodawania elementów jak  np. widoki zmaterializowane. Przy doborze technologii backendowej kierowaliśmy się szybkością implementacji poszczególnych zadań oraz stosowanymi w niej ORM, którymi następnie tworzyliśmy większość struktury bazy danych.
 
 ### Opracowanie modelu pojęciowego (E-R)
 
