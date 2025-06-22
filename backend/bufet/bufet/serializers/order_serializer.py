@@ -8,7 +8,7 @@ class OrderPositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderPosition
         fields = [
-            'product',
+            'product_name',
             'amount',
             'value',
             'profit'
