@@ -19,7 +19,7 @@ RUN npx prisma generate
 
 # Start your app
 # Development
-CMD ["npm", "run", "dev"]
+# CMD ["npm", "run", "dev"]
 # Production
-# RUN npm run build
-# CMD ["npm", "start"]
+RUN npm run build
+CMD ["npm", "start"]

@@ -9,7 +9,7 @@ insert into bufet_cuser (
    password,
    date_joined,
    updated_at
-) values ('2137', 'admin', 'admin@gamil.com', true, true, true, true, '', '2000-01-01 21:37:00+02', '2000-01-01 21:37:00+02');
+) values ('2137', 'admin', 'admin@gmail.com', true, true, true, true, '', '2000-01-01 21:37:00+02', '2000-01-01 21:37:00+02');
 
 insert into js_user_password_hashes (
    user_id,
