@@ -89,14 +89,10 @@ LEFT JOIN aggregated_data a
   ON a.day = g.day AND a.category_id = g.category_id;
 
 
-
--- Indeks po dacie (np. filtrowanie raportów z danego okresu)
 CREATE INDEX idx_daily_report_mv_date ON daily_report_mv(day);
 
--- Indeks po zysku (np. sortowanie po rentowności)
 CREATE INDEX idx_daily_report_mv_profit ON daily_report_mv(total_profit);
 
--- Indeks po liczbie zamówień (np. sortowanie lub analiza najbardziej ruchliwych dni)
 CREATE INDEX idx_daily_report_mv_orders ON daily_report_mv(orders_count);
 
 
@@ -107,10 +103,10 @@ ON category_daily_report_mv(day, category_id);
 CREATE UNIQUE INDEX CONCURRENTLY idx_daily_report_mv_unique
 ON daily_report_mv (day);
 
-REFRESH MATERIALIZED VIEW CONCURRENTLY daily_report_mv;
-
 
 CREATE UNIQUE INDEX CONCURRENTLY idx_category_daily_report_unique
 ON category_daily_report_mv (day, category_id);
+
+REFRESH MATERIALIZED VIEW CONCURRENTLY daily_report_mv;
 
 REFRESH MATERIALIZED VIEW CONCURRENTLY category_daily_report_mv;
