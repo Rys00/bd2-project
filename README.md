@@ -81,7 +81,11 @@ W celu optymalizacji zapytań do bazy danych podjęliśmy następujące decyzje:
 ### Funkcjonalności aplikacji
 
 #### części operacyjnej (transakcyjnej)
+Aplikacja rozróżnia obecnie dwa poziomy dostępu do aplikacji: dostęp na poziomie kasjera umożliwia tworzenie i składanie (również anulowanie) zamówień poprzez wybieranie produktów z listy. Całe zamówienie, widoczne na górze strony, zawiera listę wybranych produktów razem z ich wszystkimi danymi (ilość na stanie, alergeny, zamówione sztuki) oraz sumaryczną cenę za całe zamówienie.
+Kasjer składający zamówienie ma wgląd do dokładnej liczby produktów na stanie, ich ceny oraz zawartych alergenów. Dla ułatwienia składania zamówienia i zwiększenia czytelności listy produkty zostały podzielone na kategorie: Batony, Owoce, Ciepłe Napoje, Zimne Napoje, Przekąski oraz Desery.
+Dostęp na poziomie administratora umożliwia pełne zarządzanie produktami dostępnymi w serwisie i złozonymi w przeszłości zamówieniami. Każdy produkt można dowolnie modyfikować (nazwa, cena, marża ilość na stanie, alergeny). Dodanie nowego produktu dzieje się poprzez skopiowanie istniejącego i zmianę jego danych tak, aby opisywał nowy (np zmiana danych Banana na Pomarańczę, inna nazwa i nieco wyższa cena). Całkowite usunięcie produktu nie jest możliwe w celu zachowania danych archiwalnych (stare zamówienia zawierają dane o usuniętym batonie, który nie istnieje już w bazie danych). Zamiast tego każdy produkt można "wyłączyć z obiegu". Będzie on nadal widoczny dla administratorów, ale nie będzie dostępny do kupienia w części odpowiedzialnej za składanie zamówień.
 
 #### części analityczno-raportowej
+Aplikacja oferuje podsumowania zysku i zamówień w postaci wartości liczbowych oraz wykresów z danego okresu czasu (ostatnie pół roku, 30 dni lub tydzień). Panel statystyczny, dostępny jedynie dla użytkownika posiadającego uprawnienia administratora serwisu, daje wgląd w funkcjonowanie bufetu na przestrzeni czasu. Patrząc na rozłożenie zamówień i zysków możemy obserwować trendy wzrostowe i spadkowe oraz potencjalnie dostosować działanie serwisu do zapotrzebowań klientów zależnie od miesiąca czy pory roku.
 
 ## Testowanie aplikacji
