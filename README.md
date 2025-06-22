@@ -8,7 +8,21 @@ Wykonali: Martyna Orzechowska, Mateusz Ogniewski, Joanna Jóśko, Filip Fijałko
 
 Tematyką projektu jest prosta aplikacja bazodanowa przeznaczona do obsługi bufetu. Aplikacja składa się z części transakcyjnej dotyczącej realizacji zamówień wraz z aktualizacją stanu magazynowego oraz części analitycznej dotyczącej analizy sprzedaży i przychodów w wybranych okresach czasowych.
 
-#### Technologie
+### Postawienie aplikacji
+
+Z racji zaprojektowanej przez nas dockeryzacji uruchomienie projektu jest banalnie proste - wystarczy wpisać na maszynie z włączonym dockerem poniższą komende:
+
+```sh
+# za pierwszym razem lub po wprowadzeniu zmian w kodzie
+./run_app --build
+# przy każdym kolejnym uruchomieniu
+./run_app
+```
+
+następnie odczekać chwilę na budowanie się aplikacji i jeżeli wszystko przebiegło zgodnie z planem to strona powinna być dostępna pod [localhost:3000](http://localhost:3000).
+**Uwaga** - jeżeli chcemy postawić aplikację "na poważnie" powinniśmy wejść w plik `.example_env` zmienić w nim wszystkie wrażliwe wartości wartości tj. `AUTH_SECRET` i `DB_PASSWORD` a następnie ponownie uruchomić powyższą komendę (`./run_app --build`).
+
+### Technologie
 
 Do stworzenia aplikacji skorzystaliśmy z następujących technologii:
 
@@ -71,7 +85,3 @@ W celu optymalizacji zapytań do bazy danych podjęliśmy następujące decyzje:
 #### części analityczno-raportowej
 
 ## Testowanie aplikacji
-
-## Obsługa aplikacji
-
-- jak uruchomić etc.
