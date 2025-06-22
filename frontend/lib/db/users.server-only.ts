@@ -20,6 +20,7 @@ export async function createUserWithEmailNameAndPassword(
   password: string
 ) {
   const hash = (await hashPassword(password)).toString("base64");
+  console.log(hash);
   return await prisma.user.create({
     data: {
       name: name,
