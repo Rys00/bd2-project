@@ -78,7 +78,7 @@
 <ownDataTypeParameters>1,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="category_id" id="8767155B-1FD6-4232-D97A-DD34181B49B4">
+<Column name="ProductCategory_category_id" id="8767155B-1FD6-4232-D97A-DD34181B49B4">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>66E5EA51-13CC-BC22-489B-C24BDDD5430D</generatorID>
@@ -105,6 +105,15 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="B904A1FD-B93F-F3B0-8512-1A032D59FA18"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="65EF6603-F493-362D-866C-18594B769F77" name="idx_product_category_id">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-22 12:50:35 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8767155B-1FD6-4232-D97A-DD34181B49B4"/>
 </indexColumnUsage>
 </ind_PK_UK>
 <ind_PK_UK id="7C53A280-E3A5-D80B-EF5E-FBF794AD41BA" name="Product_ProductCategory_FK">

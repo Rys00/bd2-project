@@ -32,6 +32,7 @@ from .views.stock_snap_views import SingleProductStockHistoryView
 from .views.stock_view import AllStockView, ProductStockView, BulkUpdatingStockView
 from .views.today_reports_view import DailyReportsView, TodayReport, CategoryDailyReportsView, CategoryTodayReport, \
     CategoryDailyReportsByCatView, CategoryTodayReportByCat
+from .views.user_view import MakeUserAdminView, RemoveAdminRightsView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -77,4 +78,9 @@ urlpatterns = [
     path('api/today/by-category', CategoryTodayReportByCat.as_view(), name='today-by-category'),
     path('api/stock-snapshots', SingleProductStockHistoryView.as_view(), name='stock-snapshots'),
     path('api/avg-customers', AvgCustomersByWeekdayHourView.as_view(), name='avg-customers-by-weekday-hour'),
+
+
+    #admin
+    path('api/make-admin', MakeUserAdminView.as_view(), name='make-admin'),
+    path('api/revoke-admin', RemoveAdminRightsView.as_view(), name='revoke-admin'),
     ]

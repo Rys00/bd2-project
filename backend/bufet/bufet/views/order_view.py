@@ -1,6 +1,7 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from bufet.serializers.create_update.add_order_serializer import OrderCreateUpdateSerializer
 from bufet.serializers.order_serializer import OrderSerializer, OrderPositionSerializer
@@ -10,10 +11,12 @@ from django.utils.timezone import make_aware
 
 #list
 class AllOrdersView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
 class OrdersByDatesView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
 
     def get_queryset(self):
@@ -44,6 +47,7 @@ class OrderDetailsView(RetrieveAPIView):
     lookup_field = 'order_id'
 
 class AddOrderView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Order.objects.all()
     serializer_class = OrderCreateUpdateSerializer
 

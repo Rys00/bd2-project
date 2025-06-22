@@ -20,7 +20,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="product_id" id="03CA0DB6-3D34-35EB-9886-C8FAA5758E44">
+<Column name="Product_prod_id" id="03CA0DB6-3D34-35EB-9886-C8FAA5758E44">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>5668203C-498E-89B5-48FE-137B1303C149</generatorID>
@@ -35,7 +35,7 @@
 <colAssociation fkAssociation="89C38BB9-F8AC-2BFD-C4F8-17C03A462C21" referredColumn="B904A1FD-B93F-F3B0-8512-1A032D59FA18"/>
 </associations>
 </Column>
-<Column name="alergen_id" id="81593A02-D9B2-3D0B-F313-F9D8565DE4DD">
+<Column name="Alergen_alergen_id" id="81593A02-D9B2-3D0B-F313-F9D8565DE4DD">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>F7EB8A33-1EDE-5C72-D211-6F0FD20ACA08</generatorID>
@@ -52,7 +52,7 @@
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="4761A8AB-4599-2EC7-5E97-8BB13DAAC071" name="Prod-Alergen_PK">
+<ind_PK_UK id="4761A8AB-4599-2EC7-5E97-8BB13DAAC071" name="ConntactAlergens_PK">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 18:39:26 UTC</createdTime>
 <generatorID>52ED94E3-46B7-379B-0B15-6680FC55443B</generatorID>

@@ -31,7 +31,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="last_delivery" id="ED0FC524-A5DD-FB5D-AFD7-8E04EAE57F21">
+<Column name="last_updated" id="ED0FC524-A5DD-FB5D-AFD7-8E04EAE57F21">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>A671D9C6-0B2C-DEE1-B093-7B7A54251061</generatorID>
@@ -42,7 +42,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="product_id" id="9972904F-B238-B481-2AA7-3F53ED143A95">
+<Column name="Product_prod_id" id="9972904F-B238-B481-2AA7-3F53ED143A95">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 20:08:06 UTC</createdTime>
 <generatorID>76E96E15-6101-DD60-09BF-F15D432F3C77</generatorID>
@@ -56,18 +56,6 @@
 <associations>
 <colAssociation fkAssociation="348A7D00-171D-B411-9D99-4F7C7BC32A46" referredColumn="B904A1FD-B93F-F3B0-8512-1A032D59FA18"/>
 </associations>
-</Column>
-<Column name="earlies_exp" id="6C1F783D-98AC-108B-F866-2FE8B7C6072E">
-<createdBy>martyna</createdBy>
-<createdTime>2025-06-07 20:08:06 UTC</createdTime>
-<generatorID>C0981827-27F2-41BD-A67E-3BEEBC8AC9B2</generatorID>
-<ownerDesignName>model</ownerDesignName>
-<nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT008</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">

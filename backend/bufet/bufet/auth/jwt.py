@@ -21,7 +21,6 @@ def get_derived_encryption_key(secret: str, salt: str) -> bytes:
     return key
 
 def decode_authjs_session(token: str) -> Dict[str, Any]:
-    print(token)
     auth_secret = settings.AUTH_SECRET
     auth_salt = settings.AUTH_SALT
     key_bytes = get_derived_encryption_key(auth_secret, auth_salt)

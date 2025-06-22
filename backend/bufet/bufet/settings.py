@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "bufet",
     "rest_framework",
-    "rest_framework_simplejwt",
     "corsheaders",
     "django_extensions"
 ]
@@ -89,7 +88,7 @@ REST_FRAMEWORK = {
         "bufet.auth.jwt.JWEAuthentication",
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-            'rest_framework.permissions.IsAuthenticated', #temporary
+            'rest_framework.permissions.IsAdminUser', #temporary
     ],
 }
 

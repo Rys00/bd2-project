@@ -95,14 +95,40 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="unit_price" id="2F8A7F7B-6D79-838B-EBE6-86F2068ADA8D">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-13 17:14:20 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="product_name" id="AFEA5E49-E924-349F-1350-79BE700769FD">
+<createdBy>martyna</createdBy>
+<createdTime>2025-06-22 12:41:56 UTC</createdTime>
+<ownerDesignName>model</ownerDesignName>
+<engineerTo>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="06A7D1A4-E1E5-13B7-2D4F-78DD937B9D34" name="OrderPosition PK">
 <createdBy>martyna</createdBy>
 <createdTime>2025-06-07 19:01:37 UTC</createdTime>
 <ownerDesignName>model</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
+<item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
