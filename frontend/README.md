@@ -17,6 +17,8 @@
 
 ## Konfiguracja lokalnego serwera u siebie:
 
+**!!! Zalecana metoda konfiguracji to ta z wykorzystaniem Dockera, opisana w głównym [README](../README.md) projektowym, poniższy opis przedstawia sposób bez użycia dockera w celu postawienia wyłącznie frontendu na lokalnej maszynie !!!**
+
 - Trzeba sobie zainstalować **NodeJS** wraz z **npm**.
   NodeJS to java-scriptowa platforma backendowa, npm to program zarządzający
   pakietami w projekcie. Tu macie link do instrukcji instalacyjnych: [link](https://nodejs.org/en/download/package-manager).

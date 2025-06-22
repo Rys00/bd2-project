@@ -10,7 +10,14 @@ Tematyką projektu jest prosta aplikacja bazodanowa przeznaczona do obsługi buf
 
 ### Postawienie aplikacji
 
-Z racji zaprojektowanej przez nas dockeryzacji uruchomienie projektu jest banalnie proste - wystarczy wpisać na maszynie z włączonym dockerem poniższą komende:
+Na początku kopiujemy repozytorium:
+
+```sh
+git clone https://gitlab-stud.elka.pw.edu.pl/bd2-25l/bd2-25l-z19
+cd bd2-25l-z19
+```
+
+Z racji zaprojektowanej przez nas dockeryzacji uruchomienie projektu jest banalnie proste - wystarczy wpisać na maszynie z włączonym dockerem, będąc w folderze głównym projektu, poniższą komende:
 
 ```sh
 # za pierwszym razem lub po wprowadzeniu zmian w kodzie
@@ -108,6 +115,7 @@ W celu zapewnienia regularnego (codziennego) odświeżania widoków zdecydowali�
 ### Funkcjonalności aplikacji
 
 #### części operacyjnej (transakcyjnej)
+
 Aplikacja rozróżnia obecnie dwa poziomy dostępu do aplikacji: dostęp na poziomie kasjera umożliwia tworzenie i składanie (również anulowanie) zamówień poprzez wybieranie produktów z listy. Całe zamówienie, widoczne na górze strony, zawiera listę wybranych produktów razem z ich wszystkimi danymi (ilość na stanie, alergeny, zamówione sztuki) oraz sumaryczną cenę za całe zamówienie.
 Kasjer składający zamówienie ma wgląd do dokładnej liczby produktów na stanie, ich ceny oraz zawartych alergenów. Dla ułatwienia składania zamówienia i zwiększenia czytelności listy produkty zostały podzielone na kategorie: Batony, Owoce, Ciepłe Napoje, Zimne Napoje, Przekąski oraz Desery.
 Dostęp na poziomie administratora umożliwia pełne zarządzanie produktami dostępnymi w serwisie. Każdy produkt można dowolnie modyfikować (nazwa, cena, marża, ilość na stanie, alergeny). Dodanie nowego produktu dzieje się poprzez skopiowanie istniejącego i zmianę jego danych tak, aby opisywał nowy (np zmiana danych Banana na Pomarańczę, inna nazwa i nieco wyższa cena). Całkowite usunięcie produktu nie jest możliwe w celu zachowania danych archiwalnych (stare zamówienia zawierają dane o usuniętym batonie, który nie istnieje już w bazie danych). Zamiast tego każdy produkt można "wyłączyć z obiegu". Będzie on nadal widoczny dla administratorów, ale nie będzie dostępny do kupienia w części odpowiedzialnej za składanie zamówień.
