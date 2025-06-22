@@ -10,6 +10,8 @@ python3 manage.py migrate bufet
 python3 manage.py makemigrations
 python3 manage.py migrate
 
+psql postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME -a -f /sql/indeks.sql && \
+psql postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME -a -f /sql/trg_product_name_ord_pst.sql && \
 psql postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME -a -f /sql/seed.sql && \
 psql postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME -a -f /sql/avg_clients_weekday.sql && \
 psql postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME -a -f /sql/sales_reports.sql && \
