@@ -12,3 +12,4 @@ AUTH_SALT=authjs.session-token
 AUTH_JWE_ENCRYPTION=A256CBC-HS512
 
 DEBUG=True
+AUTH_TRUST_HOST=http://localhost:3000
