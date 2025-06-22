@@ -59,8 +59,10 @@ Do stworzenia aplikacji skorzystaliśmy z następujących technologii:
   <img src="https://raw.githubusercontent.com/dochne/wappalyzer/refs/heads/main/src/images/icons/shadcn-ui.svg" height=60 alt="ShadCN" />
 </div>
 
+
 ### Opracowanie modelu pojęciowego (E-R)
 
+Przy rozważaniach dotyczących modelowania bazy pominęliśmy celowo modelowanie użytkownika, ponieważ przy zakładanym przez nas dwupoziomowym poziomie uprawnień do aplikacji domyślny model użytkownika oferowany przez wybrane technologie ([Django](https://docs.djangoproject.com/en/5.2/topics/auth/default/), [AuthJS](https://authjs.dev/getting-started/database#models)) jest wystarczający oraz ułatwiło to dalszą implementację aplikacji.
 Przy opracowaniu modelu pojęciowego skupiliśmy się na jak najdokładniejszym odwzorowaniu zależności występujących między obiektami w świecie rzeczywistym w modelu E-R. W związku z tym zdecydowaliśmy się odpowiednio na:
 
 - Odseparowanie stanu magazynowego produktu jako osobą encję - bezpieczeństwo wykonywania transakcji przykładowo zmiana kategorii produktu w tym samym czasie co wykonywanie zamówienia nie przekształci błędnie stanu magazynu.
@@ -126,4 +128,4 @@ Aplikacja oferuje podsumowania zysku i zamówień w postaci wartości liczbowych
 
 ## Testowanie aplikacji
 
-Przy testowaniu aplikacji korzystaliśmy z opracowanego skryptu wczytującego przykładowe dane, podglądu zawartości tabel dostępnym w pgAdminie oraz widoku narzędzi IDE Pycharm. Poprawność dostarczanych danych, sprawdzenie działania walidacji przekazywanych danych w żądaniach w przyszłości przez frontend dokonywaliśmy przy pomocy narzędzia Postman.  W celu kontroli poprawności tworzenia się wykresów stanu magazynowego produktu został opracowany skrypt *mock.sql*, który umożliwiał podgląd jak będą wyglądały wykresy przez wprowadzeniem automatycznego odświeżania. Również przeprowadziliśmy doświadczalne testy dot. wygody obsługi aplikacji przez osoby z poza projektu.
+Przy testowaniu aplikacji korzystaliśmy z opracowanego skryptu wczytującego przykładowe dane, podglądu zawartości tabel dostępnym w pgAdminie oraz widoku narzędzi IDE Pycharm. Poprawność dostarczanych danych, sprawdzenie działania walidacji przekazywanych danych w żądaniach w przyszłości przez frontend dokonywaliśmy przy pomocy narzędzia Postman.  W celu kontroli poprawności tworzenia się wykresów stanu magazynowego produktu został opracowany skrypt *mock.sql*, który umożliwiał podgląd jak będą wyglądały wykresy przez wprowadzeniem automatycznego odświeżania. Również przeprowadziliśmy doświadczalne testy dot. wygody obsługi aplikacji przez osoby z poza projektu. Istotną kwestią, którą testowaliśmy również było sprawdzanie poprawności działania kontroli uprawnień użytkownika w zależności od przekazywanego tokenu JWE. 
