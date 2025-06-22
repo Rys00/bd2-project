@@ -105,7 +105,7 @@ W celu optymalizacji zapytań do części raportowej zostały opracowane dwa wid
 
 ### Widoki zmaterializowane
 
-W celu optymalizacji zapytań do części raportowej zostały opracowane trzy widoki zmaterializowane:
+W celu optymalizacji zapytań do części raportowej zostały opracowane cztery widoki zmaterializowane:
 
 - Widok historii stanu produktu na magazynie - widok przeznaczony głównie do analizy jak zmienia się stan magazynu na przestrzeni kolejnych dni. Dane z tego widoku są widoczne na wykresie w oknie produktu. Na tym widoku zostały założone dwa indeksy - jeden unikalny wymagany oraz index na połączeniu identyfikatora produktu oraz daty zapisu stanu magazynu.
 - Widok historii dziennej sprzedaży na przestrzeni kolejnych dni - przekazuje te same informacje co zwykły widok dziennej sprzedaży, ale zachowuje historię kolejnych dni. Na widoku zostały zastosowane odpowiednio indeksy na dacie, zysku oraz liczbie zamówień w celu możliwości w przyszłości dalszej rozbudowy aplikacji o np. analizę rentowności bądź ruchu klientów w bufecie. Część informacji zapisanych w tym widoku są wykorzystywane do tworzenia wykresów widocznych w panelu statystycznym.
@@ -128,4 +128,4 @@ Aplikacja oferuje podsumowania zysku i zamówień w postaci wartości liczbowych
 
 ## Testowanie aplikacji
 
-Przy testowaniu aplikacji korzystaliśmy z opracowanego skryptu wczytującego przykładowe dane, podglądu zawartości tabel dostępnym w pgAdminie oraz widoku narzędzi IDE Pycharm. Poprawność dostarczanych danych, sprawdzenie działania walidacji przekazywanych danych w żądaniach w przyszłości przez frontend dokonywaliśmy przy pomocy narzędzia Postman.  W celu kontroli poprawności tworzenia się wykresów stanu magazynowego produktu został opracowany skrypt *mock.sql*, który umożliwiał podgląd jak będą wyglądały wykresy przez wprowadzeniem automatycznego odświeżania. Również przeprowadziliśmy doświadczalne testy dot. wygody obsługi aplikacji przez osoby z poza projektu. Istotną kwestią, którą testowaliśmy również było sprawdzanie poprawności działania kontroli uprawnień użytkownika w zależności od przekazywanego tokenu JWE. 
+Przy testowaniu aplikacji korzystaliśmy z opracowanego skryptu wczytującego przykładowe dane, podglądu zawartości tabel dostępnym w pgAdminie oraz widoku narzędzi IDE Pycharm. Poprawność dostarczanych danych, sprawdzenie działania walidacji przekazywanych danych w żądaniach w przyszłości przez frontend dokonywaliśmy przy pomocy narzędzia Postman.  W celu kontroli poprawności tworzenia się wykresów stanu magazynowego produktu został opracowany skrypt *mock.sql*, który umożliwiał podgląd jak będą wyglądały wykresy przez wprowadzeniem automatycznego odświeżania. Również przeprowadziliśmy doświadczalne testy dot. wygody obsługi aplikacji przez osoby z poza projektu. Istotną kwestią, którą testowaliśmy również było sprawdzanie poprawności działania kontroli uprawnień użytkownika w zależności od przekazywanego tokenu JWE.
