@@ -7,7 +7,7 @@
 <item key="19ABD7DF-D5BC-026E-7DA8-C59CFBF2B6F5" value="true"/>
 </engineerTo>
 <sourcePk>BE99176E-B588-E9DF-546C-63704C1444FE</sourcePk>
-<identifying>false</identifying>
+<identifying>true</identifying>
 <nameOnSource>has positions</nameOnSource>
 <nameOnTarget>is part of</nameOnTarget>
 <optionalSource>true</optionalSource>
