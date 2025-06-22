@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  IconCashRegister,
-  IconCup,
-  IconSettings,
-  IconShoppingBag,
-  IconTrendingUp,
-} from "@tabler/icons-react";
+import { IconCashRegister, IconCup, IconTrendingUp } from "@tabler/icons-react";
 import * as React from "react";
 
 import { NavDocuments } from "@/components/sidebar/nav-documents";

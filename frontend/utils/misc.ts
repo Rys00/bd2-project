@@ -3,6 +3,7 @@ import { addSnackbar } from "@/lib/store/ui/ui.slice";
 import * as crypto from "crypto";
 import { ZodError } from "zod";
 
+import { redirect } from "next/navigation";
 import {
   invokeMakeBackendRequest,
   invokeTransferWithJSON,
@@ -64,7 +65,8 @@ export async function makeBackendRequest<RetType>(
   } else {
     const message = `PWB_ERROR;${status};${JSON.stringify(data)}`;
     if (dispatch) dispatch(addSnackbar({ message: message, type: "error" }));
-    throw new Error(message);
+    redirect(`/error?message=${encodeURIComponent(message)}`);
+    // throw new Error(message);
   }
 }
 

@@ -1,3 +1,21 @@
+insert into bufet_cuser (
+   id,
+   name,
+   email,
+   is_superuser,
+   is_active,
+   is_cashier,
+   is_staff,
+   password,
+   date_joined,
+   updated_at
+) values ('2137', 'admin', 'admin@gmail.com', true, true, true, true, '', '2000-01-01 21:37:00+02', '2000-01-01 21:37:00+02');
+
+insert into js_user_password_hashes (
+   user_id,
+   hash
+) values ('2137', 'AAAAIAAAJxDuK/fJ68nb2rqp5jc8hRImO8+itfjWLRJHUkRMFJttJ/P7Kh3D/Rzkas6NeQEDuN/zM3Y7GMbFlsGanLulSCx4IIy8uefuc9sXT5QV+Griq6wcigswIJlqPRXvw8Kdljw=');
+
 -- Kategorie produktów
 insert into bufet_productcategory (
    category_id,

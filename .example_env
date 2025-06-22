@@ -6,9 +6,10 @@ DB_PASSWORD="password"
 DB_HOST="bufetDB"
 DB_PORT=5432
 
-AUTH_SECRET=supersecretvalueusedtoderivekeys1234567890
+AUTH_SECRET=srXFMmUFi38N//p9HEtoGawWw1y8aOecVStMWeuEI7s=
 AUTH_SALT=authjs.session-token
 
 AUTH_JWE_ENCRYPTION=A256CBC-HS512
 
 DEBUG=True
+AUTH_TRUST_HOST=http://localhost:3000
